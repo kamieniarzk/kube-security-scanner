@@ -23,7 +23,8 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web',
-        'io.kubernetes:client-java:15.0.1',
+        'io.kubernetes:client-java:18.0.1',
+        'io.kubernetes:client-java-api-fluent:18.0.1',
         'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0'
 
     compileOnly 'org.projectlombok:lombok'
@@ -38,4 +39,8 @@ tasks.named('test') {
 
 jar {
     enabled = false
+}
+
+bootRun {
+    jvmArgs = ["-Dspring.profiles.active=local"]
 }

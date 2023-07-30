@@ -1,0 +1,5 @@
+environment:
+  in-cluster: false
+
+server:
+  port: 8081

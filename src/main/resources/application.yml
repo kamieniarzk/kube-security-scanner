@@ -1,3 +1,6 @@
 logging:
   level:
     'io.kubernetes': TRACE
+
+environment:
+  in-cluster: true
