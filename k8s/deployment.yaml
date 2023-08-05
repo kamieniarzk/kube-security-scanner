@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-config-scanner-deployment
+  namespace: kube-config-scanner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kube-config-scanner
+  template:
+    metadata:
+      labels:
+        app: kube-config-scanner
+    spec:
+      serviceAccountName: kube-config-scanner-serviceaccount
+      containers:
+        - name: kube-config-scanner
+          image: kamieniarzk/kube-config-scanner:latest
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: temp-storage
+              mountPath: /tmp/storage
+          volumes:
+            - name: temp-storage
+              emptyDir:
+                sizeLimit: "200Mi"

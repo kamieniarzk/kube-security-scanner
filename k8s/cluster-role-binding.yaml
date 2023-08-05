@@ -1,0 +1,12 @@
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kube-config-scanner-clusterrolebinding
+subjects:
+  - kind: ServiceAccount
+    name: kube-config-scanner-serviceaccount
+    namespace: kube-config-scanner
+roleRef:
+  kind: ClusterRole
+  name: kube-config-scanner-clusterrole
+  apiGroup: rbac.authorization.k8s.io
