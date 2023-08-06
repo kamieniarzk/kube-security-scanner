@@ -1,6 +1,8 @@
 package com.kcs.log;
 
+import java.io.InputStream;
+
 public interface LogRepository {
-  Long save(String log);
-  String find(Long id);
+  void save(InputStream log, String podName);
+  String getAsString(String podName);
 }

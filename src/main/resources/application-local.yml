@@ -3,3 +3,7 @@ environment:
 
 server:
   port: 8081
+
+filesystem:
+  log-location: logs
+  temp-storage-location: /tmp/kube-config-scanner/misc

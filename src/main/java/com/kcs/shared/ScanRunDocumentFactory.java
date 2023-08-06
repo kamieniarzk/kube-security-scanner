@@ -1,7 +1,9 @@
 package com.kcs.shared;
 
+import java.time.LocalDateTime;
+
 class ScanRunDocumentFactory {
-  static ScanRunDocument createDocument(ScanRun scanRun) {
-    return new ScanRunDocument(scanRun.id(), scanRun.date(), scanRun.type(), scanRun.podName());
+  static ScanRunDocument createDocument(ScanRunCreate scanRunCreate) {
+    return new ScanRunDocument(null, LocalDateTime.now(), scanRunCreate.type(), scanRunCreate.podName(), false);
   }
 }

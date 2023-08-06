@@ -19,7 +19,6 @@ import io.kubernetes.client.openapi.models.V1Pod;
 import io.kubernetes.client.openapi.models.V1PodList;
 import io.kubernetes.client.openapi.models.V1Status;
 import io.kubernetes.client.util.Yaml;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.kcs.util.KubeApiUtils.*;
@@ -74,8 +73,7 @@ public class KubernetesApiClientWrapper {
     }
   }
 
-  public InputStream getPodLogs(String name) {
-    //    return performApiCall(() -> podLogs.streamNamespacedPodLog(getCurrentNamespace(), lastPodName, null));
+  public InputStream streamPodLogs(String name) {
     return performApiCall(() -> podLogs.streamNamespacedPodLog(getCurrentNamespace(), name, null));
   }
 

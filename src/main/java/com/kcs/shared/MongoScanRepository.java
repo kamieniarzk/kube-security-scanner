@@ -2,7 +2,6 @@ package com.kcs.shared;
 
 import java.util.List;
 
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kcs.NoDataFoundException;
@@ -12,11 +11,12 @@ import lombok.RequiredArgsConstructor;
 @Repository
 @RequiredArgsConstructor
 class MongoScanRepository implements ScanRepository {
+
   private final ScanDocumentRepository documentRepository;
 
   @Override
-  public String save(final ScanRun scanRun) {
-    return documentRepository.save(ScanRunDocumentFactory.createDocument(scanRun)).id();
+  public String save(final ScanRunCreate scanRunCreate) {
+    return documentRepository.save(ScanRunDocumentFactory.createDocument(scanRunCreate)).getId();
   }
 
   @Override
@@ -39,5 +39,24 @@ class MongoScanRepository implements ScanRepository {
         .stream().findFirst()
         .orElseThrow(NoDataFoundException::new)
         .toScanRun();
+  }
+
+  @Override
+  public List<ScanRun> getAllWithoutStoredLogs() {
+    return documentRepository.findWhereLogsStoredNullOrFalse().stream()
+        .map(ScanRunDocument::toScanRun)
+        .toList();
+  }
+
+  @Override
+  public void updateLogsStored(final String id, final Boolean logsStored) {
+    var existingDocument = documentRepository.findById(id);
+    if (existingDocument.isPresent()) {
+      var document = existingDocument.get();
+      document.setLogsStored(logsStored);
+      documentRepository.save(document);
+    } else {
+      throw new NoDataFoundException();
+    }
   }
 }

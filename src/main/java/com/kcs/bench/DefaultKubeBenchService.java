@@ -7,15 +7,13 @@ import org.springframework.stereotype.Service;
 import com.kcs.NoDataFoundException;
 import com.kcs.k8s.KubernetesApiClientWrapper;
 import com.kcs.shared.ScanRepository;
-import com.kcs.shared.ScanRun;
+import com.kcs.shared.ScanRunCreate;
 import com.kcs.shared.ScanType;
 
-import io.kubernetes.client.PodLogs;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.kcs.util.KubeApiUtils.*;
-import static com.kcs.util.MiscUtils.*;
 
 @Slf4j
 @Service
@@ -28,7 +26,7 @@ public class DefaultKubeBenchService implements KubeBenchService {
   @Override
   public String run() {
     deleteExistingJobIfNecessary();
-    k8sApi.createJobFromYamlUrl("https://raw.githubusercontent.com/aquasecurity/kube-bench/main/job.yaml");
+    k8sApi.createJobFromYamlUrl("https://raw.githubusercontent.com/aquasecurity/kube-bench/main/job.yaml"); // TODO - extract to properties
     return persistRunData();
   }
 
@@ -39,18 +37,18 @@ public class DefaultKubeBenchService implements KubeBenchService {
       throw new NoDataFoundException();
     }
 
-    return k8sApi.getPodLogs(lastPodName);
+    return k8sApi.streamPodLogs(lastPodName);
   }
 
   private String persistRunData() {
     var kubeBenchPod = k8sApi.getPodsWithPrefixSortedByCreation("kube-bench").stream().findFirst();
 
     if (kubeBenchPod.isPresent()) {
-      return this.scanRepository.save(new ScanRun(ScanType.KUBE_BENCH, kubeBenchPod.get().getMetadata().getName()));
+      return this.scanRepository.save(new ScanRunCreate(ScanType.KUBE_BENCH, kubeBenchPod.get().getMetadata().getName()));
     }
 
     log.warn("Failed to find pod related to kube bench run");
-    return this.scanRepository.save(new ScanRun(ScanType.KUBE_BENCH, null));
+    return this.scanRepository.save(new ScanRunCreate(ScanType.KUBE_BENCH, null));
   }
 
   private void deleteExistingJobIfNecessary() {
