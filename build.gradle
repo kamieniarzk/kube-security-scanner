@@ -25,7 +25,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web',
         'io.kubernetes:client-java:18.0.1',
         'io.kubernetes:client-java-api-fluent:18.0.1',
-        'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0'
+        'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0',
+        'org.springframework.boot:spring-boot-starter-data-mongodb'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
@@ -42,5 +43,14 @@ jar {
 }
 
 bootRun {
+    doFirst { // export env variables from .env file, only for local dev
+        def envFile = new File('.env')
+        if (envFile.exists()) {
+            envFile.text.eachLine { line ->
+                def (key, value) = line.tokenize('=')
+                environment key, value
+            }
+        }
+    }
     jvmArgs = ["-Dspring.profiles.active=local"]
 }
