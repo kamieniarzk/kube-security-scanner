@@ -6,6 +6,7 @@
 * Use ephemeral pod storage (emptyDir) to store YAML manifests for kube-score
 * Use PVC to persist logs from scan runs 
   * make compatible local-dev configuration
+* (nice to have): configure GitHub workflow to build and push docker image
 
 ### References
 * [kube-hunter](https://github.com/aquasecurity/kube-hunter)
