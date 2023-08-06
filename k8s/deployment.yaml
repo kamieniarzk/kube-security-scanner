@@ -21,8 +21,8 @@ spec:
             - containerPort: 8080
           volumeMounts:
             - name: temp-storage
-              mountPath: /tmp/storage
-          volumes:
-            - name: temp-storage
-              emptyDir:
-                sizeLimit: "200Mi"
+              mountPath: /tmp/kube-config-scanner
+      volumes:
+        - name: temp-storage
+          emptyDir:
+            sizeLimit: "200Mi"

@@ -4,3 +4,6 @@ logging:
 
 environment:
   in-cluster: true
+
+misc-storage-location: /tmp/kube-config-scanner/misc
+log-storage-location: /tmp/kube-config-scanner/logs

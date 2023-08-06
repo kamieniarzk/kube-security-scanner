@@ -1,4 +1,4 @@
-package com.example;
+package com.kcs.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.example;
+package com.kcs.log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class InMemoryLogRepository implements LogRepository {
+class InMemoryLogRepository implements LogRepository {
 
   private final Map<Long, String> logRepository = new HashMap<>();
 

@@ -1,4 +1,4 @@
-package com.example;
+package com.kcs.log;
 
 public interface LogRepository {
   Long save(String log);
