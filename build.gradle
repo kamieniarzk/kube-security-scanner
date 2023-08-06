@@ -52,5 +52,5 @@ bootRun {
             }
         }
     }
-    jvmArgs = ["-Dspring.profiles.active=local"]
+    jvmArgs = ["-Dspring.profiles.active=local", "-Dspring.output.ansi.enabled=ALWAYS"]
 }

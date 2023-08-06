@@ -1,6 +1,7 @@
 package com.kcs.web;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -58,6 +59,10 @@ public class ScanController {
     return this.kubeBenchService.run();
   }
 
+  @GetMapping("lastLogs")
+  String lastRunLogs() throws IOException {
+    return new String(kubeBenchService.getPreviousRunLogs().readAllBytes(), StandardCharsets.UTF_8);
+  }
   @GetMapping
   public List<ScanRun> getAllScans() {
     return scanRepository.getAll();

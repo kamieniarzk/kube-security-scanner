@@ -35,7 +35,8 @@ class MongoScanRepository implements ScanRepository {
 
   @Override
   public ScanRun getMostRecentScanByType(final ScanType type) {
-    return documentRepository.findMostRecentByType(type)
+    return documentRepository.findByTypeSortedByDateAsc(type)
+        .stream().findFirst()
         .orElseThrow(NoDataFoundException::new)
         .toScanRun();
   }
