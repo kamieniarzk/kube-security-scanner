@@ -6,5 +6,5 @@ environment:
   in-cluster: true
 
 filesystem:
-  log-location: /tmp/kube-config-scanner/logs
+  log-location: /kube-config-scanner/logs
   temp-storage-location: /tmp/kube-config-scanner/misc

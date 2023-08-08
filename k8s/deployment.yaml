@@ -22,7 +22,12 @@ spec:
           volumeMounts:
             - name: temp-storage
               mountPath: /tmp/kube-config-scanner
+            - name: logs-storage
+              mountPath: /kube-config-scanner/logs
       volumes:
         - name: temp-storage
           emptyDir:
             sizeLimit: "200Mi"
+        - name: logs-storage
+          persistentVolumeClaim:
+            claimName: kube-config-scanner-pvc
