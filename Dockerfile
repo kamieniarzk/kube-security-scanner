@@ -7,7 +7,7 @@ RUN curl -L "https://github.com/zegl/kube-score/releases/download/v${KUBE_SCORE_
 
 RUN chmod +x /usr/local/bin/kube-score
 
-ARG JAR_FILE=build/libs/*.jar
+ARG JAR_FILE=build/libs/app.jar
 COPY ${JAR_FILE} app.jar
 
 ENTRYPOINT ["java","-jar","/app.jar"]

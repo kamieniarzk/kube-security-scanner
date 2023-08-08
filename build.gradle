@@ -42,6 +42,10 @@ jar {
     enabled = false
 }
 
+bootJar {
+    archiveFileName = "app.jar"
+}
+
 bootRun {
     doFirst { // export env variables from .env file, only for local dev
         def envFile = new File('.env')
