@@ -12,8 +12,10 @@ import org.springframework.stereotype.Component;
 import io.kubernetes.client.PodLogs;
 import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.ApiException;
+import io.kubernetes.client.openapi.apis.AppsV1Api;
 import io.kubernetes.client.openapi.apis.BatchV1Api;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
+import io.kubernetes.client.openapi.models.V1Deployment;
 import io.kubernetes.client.openapi.models.V1Job;
 import io.kubernetes.client.openapi.models.V1Pod;
 import io.kubernetes.client.openapi.models.V1PodList;
@@ -30,16 +32,30 @@ public class KubernetesApiClientWrapper {
   private final CoreV1Api coreApi;
   private final BatchV1Api batchApi;
   private final PodLogs podLogs;
+  private final AppsV1Api appsV1Api;
 
   public KubernetesApiClientWrapper(ApiClient apiClient) {
     this.coreApi = new CoreV1Api(apiClient);
     this.batchApi = new BatchV1Api(apiClient);
     this.podLogs = new PodLogs(apiClient);
+    this.appsV1Api = new AppsV1Api(apiClient);
   }
 
-  public Optional<V1Pod> findPodByName(String name) {
-    return getCurrentNamespacePods().getItems().stream()
+  public Optional<V1Pod> findPod(String name, String namespace) {
+    return getPods(namespace).getItems().stream()
         .filter(pod -> name.equals(pod.getMetadata().getName()))
+        .findFirst();
+  }
+
+  public Optional<V1Deployment> findDeployment(String name, String namespace) {
+    return performApiCall(() -> appsV1Api.listNamespacedDeployment(namespace, null, null, null, null, null, null, null, null, null, null)).getItems().stream()
+        .filter(deployment -> name.equals(deployment.getMetadata().getName()))
+        .findFirst();
+  }
+
+  public Optional<V1Job> findJob(String name, String namespace) {
+    return performApiCall(() -> batchApi.listNamespacedJob(namespace, null, null, null, null, null, null, null, null, null, null)).getItems().stream()
+        .filter(job -> job.getMetadata().getName().equals(name))
         .findFirst();
   }
 
@@ -75,6 +91,12 @@ public class KubernetesApiClientWrapper {
 
   public InputStream streamPodLogs(String name) {
     return performApiCall(() -> podLogs.streamNamespacedPodLog(getCurrentNamespace(), name, null));
+  }
+
+  @Nullable
+  private V1PodList getPods(String namespace) {
+    return performApiCall(
+        () -> coreApi.listNamespacedPod(namespace, null, null, null, null, null, null, null, null, null, null));
   }
 
   @Nullable

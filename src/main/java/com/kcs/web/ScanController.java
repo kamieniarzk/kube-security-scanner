@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.reflect.TypeToken;
 import com.kcs.bench.KubeBenchService;
+import com.kcs.k8s.K8sResourceType;
+import com.kcs.k8s.YamlService;
 import com.kcs.log.LogService;
 import com.kcs.shared.ScanRepository;
 import com.kcs.shared.ScanRun;
@@ -28,6 +31,7 @@ import io.kubernetes.client.openapi.models.V1Pod;
 import io.kubernetes.client.openapi.models.V1PodSpec;
 import io.kubernetes.client.util.Watch;
 import io.kubernetes.client.util.Watch.Response;
+import io.kubernetes.client.util.Yaml;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,31 +40,32 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/scans")
 public class ScanController {
   private final CoreV1Api coreApi;
-  private final BatchV1Api batchApi;
   private final KubeBenchService kubeBenchService;
   private final ScanRepository scanRepository;
-  private final String mongoPwd;
-  private final ApiClient apiClient;
   private final LogService logService;
+  private final YamlService yamlService;
 
-  public ScanController(ApiClient apiClient, @Value("${MONGO_PASSWORD:}") String mongoPwd, KubeBenchService kubeBenchService, ScanRepository scanRepository, LogService logService) {
-    this.apiClient = apiClient;
-    coreApi = new CoreV1Api(apiClient);
-    batchApi = new BatchV1Api(apiClient);
-    this.mongoPwd = mongoPwd;
+  public ScanController(ApiClient apiClient, KubeBenchService kubeBenchService, ScanRepository scanRepository, LogService logService, YamlService yamlService) {
+    this.coreApi = new CoreV1Api(apiClient);
     this.kubeBenchService = kubeBenchService;
     this.scanRepository = scanRepository;
     this.logService = logService;
+    this.yamlService = yamlService;
+  }
+
+  @GetMapping("/yaml-test/{namespace}/{name}")
+  String getResourceAsYaml(@PathVariable String namespace, @PathVariable String name, @RequestParam K8sResourceType resourceType) {
+    return yamlService.getAsYaml(name, namespace, resourceType);
   }
 
   @GetMapping("/test")
-  public List<String> getNodes() {
+  public String getNodes() {
     try {
       return coreApi.listPodForAllNamespaces(null, null, null, null, null, null, null, null, null, null).getItems().stream()
-          .map(V1Pod::getSpec).filter(Objects::nonNull).map(V1PodSpec::getNodeName).toList();
+          .map(Yaml::dump).findFirst().orElse("");
     } catch (ApiException apiException) {
       log.warn("ApiException caught - response code: {}, response body: {}", apiException.getCode(), apiException.getResponseBody());
-      return Collections.emptyList();
+      return "";
     }
   }
 
