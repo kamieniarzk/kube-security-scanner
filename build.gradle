@@ -43,7 +43,7 @@ jar {
 }
 
 bootJar {
-    archiveFileName = "app.jar"
+    archiveFileName = "out.jar"
 }
 
 bootRun {
