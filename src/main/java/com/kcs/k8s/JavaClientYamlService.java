@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@SuppressWarnings("ResultOfMethodCallIgnored")
 class JavaClientYamlService implements YamlService {
 
   private final String tempYamlLocation;
@@ -64,11 +65,15 @@ class JavaClientYamlService implements YamlService {
       throw new IllegalArgumentException("Can not delete directories other than from temp location");
     }
 
-    for (File file : dir.listFiles()) {
-      if (file.isDirectory()) {
-        purgeDirectory(file);
+    var files = dir.listFiles();
+
+    if (files != null) {
+      for (File file : files) {
+        if (file.isDirectory()) {
+          purgeDirectory(file);
+        }
+        file.delete();
       }
-      file.delete();
     }
   }
 }

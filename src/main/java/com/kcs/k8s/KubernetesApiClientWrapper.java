@@ -15,10 +15,13 @@ import io.kubernetes.client.openapi.ApiException;
 import io.kubernetes.client.openapi.apis.AppsV1Api;
 import io.kubernetes.client.openapi.apis.BatchV1Api;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
+import io.kubernetes.client.openapi.apis.NetworkingV1Api;
 import io.kubernetes.client.openapi.apis.RbacAuthorizationV1Api;
 import io.kubernetes.client.openapi.models.V1ClusterRole;
 import io.kubernetes.client.openapi.models.V1Deployment;
 import io.kubernetes.client.openapi.models.V1Job;
+import io.kubernetes.client.openapi.models.V1NetworkPolicy;
+import io.kubernetes.client.openapi.models.V1PersistentVolumeClaim;
 import io.kubernetes.client.openapi.models.V1Pod;
 import io.kubernetes.client.openapi.models.V1PodList;
 import io.kubernetes.client.openapi.models.V1RoleBinding;
@@ -39,6 +42,7 @@ public class KubernetesApiClientWrapper {
   private final PodLogs podLogs;
   private final AppsV1Api appsApi;
   private final RbacAuthorizationV1Api rbacApi;
+  private final NetworkingV1Api networkingApi;
 
   public KubernetesApiClientWrapper(ApiClient apiClient) {
     this.coreApi = new CoreV1Api(apiClient);
@@ -46,6 +50,15 @@ public class KubernetesApiClientWrapper {
     this.podLogs = new PodLogs(apiClient);
     this.appsApi = new AppsV1Api(apiClient);
     this.rbacApi = new RbacAuthorizationV1Api(apiClient);
+    this.networkingApi = new NetworkingV1Api(apiClient);
+  }
+
+  public List<V1NetworkPolicy> getNetworkPoliciesByNamespace(String namespace) {
+    return performApiCall(() -> networkingApi.listNamespacedNetworkPolicy(namespace, null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
+  public List<V1PersistentVolumeClaim> getPersistentVolumeClaimListByNamespace(String namespace) {
+    return performApiCall(() -> coreApi.listNamespacedPersistentVolumeClaim(namespace, null, null, null, null, null, null, null, null, null, null)).getItems();
   }
 
   public List<V1Job> getJobsByNamespace(String namespace) {

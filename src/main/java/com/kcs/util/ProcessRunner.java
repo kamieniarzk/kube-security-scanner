@@ -32,10 +32,10 @@ public class ProcessRunner {
 
     public void consume() {
       new BufferedReader(new InputStreamReader(inputStream)).lines()
-          .forEach(stdIn::append);
+          .forEach(line -> stdIn.append(line).append('\n'));
 
       new BufferedReader(new InputStreamReader(errorStream)).lines()
-          .forEach(stdErr::append);
+          .forEach(line -> stdErr.append(line).append('\n'));
     }
   }
 
