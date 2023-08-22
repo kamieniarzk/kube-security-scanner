@@ -7,4 +7,4 @@ environment:
 
 filesystem:
   log-location: /kube-config-scanner/logs
-  temp-storage-location: /tmp/kube-config-scanner/misc
+  yaml-location: /tmp/kube-config-scanner/yaml

@@ -15,10 +15,15 @@ import io.kubernetes.client.openapi.ApiException;
 import io.kubernetes.client.openapi.apis.AppsV1Api;
 import io.kubernetes.client.openapi.apis.BatchV1Api;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
+import io.kubernetes.client.openapi.apis.RbacAuthorizationV1Api;
+import io.kubernetes.client.openapi.models.V1ClusterRole;
 import io.kubernetes.client.openapi.models.V1Deployment;
 import io.kubernetes.client.openapi.models.V1Job;
 import io.kubernetes.client.openapi.models.V1Pod;
 import io.kubernetes.client.openapi.models.V1PodList;
+import io.kubernetes.client.openapi.models.V1RoleBinding;
+import io.kubernetes.client.openapi.models.V1Service;
+import io.kubernetes.client.openapi.models.V1ServiceAccount;
 import io.kubernetes.client.openapi.models.V1Status;
 import io.kubernetes.client.util.Yaml;
 import lombok.extern.slf4j.Slf4j;
@@ -32,13 +37,43 @@ public class KubernetesApiClientWrapper {
   private final CoreV1Api coreApi;
   private final BatchV1Api batchApi;
   private final PodLogs podLogs;
-  private final AppsV1Api appsV1Api;
+  private final AppsV1Api appsApi;
+  private final RbacAuthorizationV1Api rbacApi;
 
   public KubernetesApiClientWrapper(ApiClient apiClient) {
     this.coreApi = new CoreV1Api(apiClient);
     this.batchApi = new BatchV1Api(apiClient);
     this.podLogs = new PodLogs(apiClient);
-    this.appsV1Api = new AppsV1Api(apiClient);
+    this.appsApi = new AppsV1Api(apiClient);
+    this.rbacApi = new RbacAuthorizationV1Api(apiClient);
+  }
+
+  public List<V1Job> getJobsByNamespace(String namespace) {
+    return performApiCall(() -> batchApi.listNamespacedJob(namespace, null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
+  public List<V1ClusterRole> getClusterRoles() {
+    return performApiCall(() -> rbacApi.listClusterRole(null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
+  public List<V1RoleBinding> getRoleBindingsByNamespace(String namespace) {
+    return performApiCall(() -> rbacApi.listNamespacedRoleBinding(namespace, null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
+  public List<V1ServiceAccount> getServiceAccountsByNamespace(String namespace) {
+    return performApiCall(() -> coreApi.listNamespacedServiceAccount(namespace, null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
+  public List<V1Service> getServicesByNamespace(String namespace) {
+    return performApiCall(() -> coreApi.listNamespacedService(namespace, null, null, null, null, null, null, null,null, null, null)).getItems();
+  }
+
+  public List<V1Deployment> getDeploymentsByNamespace(String namespace) {
+    return performApiCall(() -> appsApi.listNamespacedDeployment(namespace, null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
+  public List<V1Pod> getPodsByNamespace(String namespace) {
+    return getPods(namespace).getItems();
   }
 
   public Optional<V1Pod> findPod(String name, String namespace) {
@@ -48,7 +83,7 @@ public class KubernetesApiClientWrapper {
   }
 
   public Optional<V1Deployment> findDeployment(String name, String namespace) {
-    return performApiCall(() -> appsV1Api.listNamespacedDeployment(namespace, null, null, null, null, null, null, null, null, null, null)).getItems().stream()
+    return performApiCall(() -> appsApi.listNamespacedDeployment(namespace, null, null, null, null, null, null, null, null, null, null)).getItems().stream()
         .filter(deployment -> name.equals(deployment.getMetadata().getName()))
         .findFirst();
   }

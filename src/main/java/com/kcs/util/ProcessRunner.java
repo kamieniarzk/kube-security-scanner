@@ -4,34 +4,40 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ProcessRunner {
 
-  public static int run(String command) throws IOException, InterruptedException {
+  public static RunResult run(String command) throws IOException, InterruptedException {
     var builder = new ProcessBuilder();
     var commandSeparated = command.split(" ");
-    builder.inheritIO().command(commandSeparated);
+    builder.command(commandSeparated);
     var process = builder.start();
-    var streamConsumer = new StreamConsumer(process.getInputStream(), log::info);
-    Executors.newSingleThreadExecutor().submit(streamConsumer);
-    return process.waitFor();
+    var streamConsumer = new StreamConsumer(process.getInputStream(), process.getErrorStream());
+    var exitCode = process.waitFor();
+    streamConsumer.consume();
+    return new RunResult(streamConsumer.stdIn.toString(), streamConsumer.stdErr.toString(), exitCode);
   }
 
   @AllArgsConstructor
-  private static class StreamConsumer implements Runnable {
+  private static class StreamConsumer {
+    @Getter private final StringBuilder stdIn = new StringBuilder();
+    @Getter private final StringBuilder stdErr = new StringBuilder();
     private InputStream inputStream;
-    private Consumer<String> consumer;
+    private InputStream errorStream;
 
-    @Override
-    public void run() {
+    public void consume() {
       new BufferedReader(new InputStreamReader(inputStream)).lines()
-          .forEach(consumer);
+          .forEach(stdIn::append);
+
+      new BufferedReader(new InputStreamReader(errorStream)).lines()
+          .forEach(stdErr::append);
     }
   }
+
+  public record RunResult(String stdIn, String stdErr, int exitCode) { }
 }

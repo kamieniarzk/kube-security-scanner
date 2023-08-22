@@ -1,0 +1,4658 @@
+apiVersion: V1
+kind: ServiceAccount
+metadata:
+  creationTimestamp: '2023-07-29T09:25:56Z'
+  name: default
+  namespace: kube-config-scanner
+  resourceVersion: '207474'
+---
+apiVersion: V1
+kind: Pod
+metadata:
+  creationTimestamp: '2023-07-30T10:41:13Z'
+  generateName: kube-bench-
+  labels:
+    app: kube-bench
+    batch.kubernetes.io/controller-uid: cc71b931-6092-4bf1-8887-d0efa692827e
+    batch.kubernetes.io/job-name: kube-bench
+    controller-uid: cc71b931-6092-4bf1-8887-d0efa692827e
+    job-name: kube-bench
+  name: kube-bench-56wwh
+  namespace: kube-config-scanner
+  resourceVersion: '487225'
+spec:
+  containers:
+  - command:
+    - kube-bench
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imagePullPolicy: IfNotPresent
+    name: kube-bench
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/lib/etcd
+      name: var-lib-etcd
+      readOnly: true
+    - mountPath: /var/lib/kubelet
+      name: var-lib-kubelet
+      readOnly: true
+    - mountPath: /var/lib/kube-scheduler
+      name: var-lib-kube-scheduler
+      readOnly: true
+    - mountPath: /var/lib/kube-controller-manager
+      name: var-lib-kube-controller-manager
+      readOnly: true
+    - mountPath: /etc/systemd
+      name: etc-systemd
+      readOnly: true
+    - mountPath: /lib/systemd/
+      name: lib-systemd
+      readOnly: true
+    - mountPath: /srv/kubernetes/
+      name: srv-kubernetes
+      readOnly: true
+    - mountPath: /etc/kubernetes
+      name: etc-kubernetes
+      readOnly: true
+    - mountPath: /usr/local/mount-from-host/bin
+      name: usr-bin
+      readOnly: true
+    - mountPath: /etc/cni/net.d/
+      name: etc-cni-netd
+      readOnly: true
+    - mountPath: /opt/cni/bin/
+      name: opt-cni-bin
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-s6qfz
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostPID: true
+  nodeName: ubuntu2
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - hostPath:
+      type: ''
+      path: /var/lib/etcd
+    name: var-lib-etcd
+  - hostPath:
+      type: ''
+      path: /var/lib/kubelet
+    name: var-lib-kubelet
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-scheduler
+    name: var-lib-kube-scheduler
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-controller-manager
+    name: var-lib-kube-controller-manager
+  - hostPath:
+      type: ''
+      path: /etc/systemd
+    name: etc-systemd
+  - hostPath:
+      type: ''
+      path: /lib/systemd
+    name: lib-systemd
+  - hostPath:
+      type: ''
+      path: /srv/kubernetes
+    name: srv-kubernetes
+  - hostPath:
+      type: ''
+      path: /etc/kubernetes
+    name: etc-kubernetes
+  - hostPath:
+      type: ''
+      path: /usr/bin
+    name: usr-bin
+  - hostPath:
+      type: ''
+      path: /etc/cni/net.d/
+    name: etc-cni-netd
+  - hostPath:
+      type: ''
+      path: /opt/cni/bin/
+    name: opt-cni-bin
+  - name: kube-api-access-s6qfz
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+---
+apiVersion: V1
+kind: Pod
+metadata:
+  creationTimestamp: '2023-07-30T10:02:14Z'
+  generateName: kube-bench-
+  labels:
+    app: kube-bench
+    batch.kubernetes.io/controller-uid: 0f8e4226-5ce9-4663-8ddd-0a1bbee00a29
+    batch.kubernetes.io/job-name: kube-bench
+    controller-uid: 0f8e4226-5ce9-4663-8ddd-0a1bbee00a29
+    job-name: kube-bench
+  name: kube-bench-8d92t
+  namespace: kube-config-scanner
+  resourceVersion: '244342'
+spec:
+  containers:
+  - command:
+    - kube-bench
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imagePullPolicy: IfNotPresent
+    name: kube-bench
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/lib/etcd
+      name: var-lib-etcd
+      readOnly: true
+    - mountPath: /var/lib/kubelet
+      name: var-lib-kubelet
+      readOnly: true
+    - mountPath: /var/lib/kube-scheduler
+      name: var-lib-kube-scheduler
+      readOnly: true
+    - mountPath: /var/lib/kube-controller-manager
+      name: var-lib-kube-controller-manager
+      readOnly: true
+    - mountPath: /etc/systemd
+      name: etc-systemd
+      readOnly: true
+    - mountPath: /lib/systemd/
+      name: lib-systemd
+      readOnly: true
+    - mountPath: /srv/kubernetes/
+      name: srv-kubernetes
+      readOnly: true
+    - mountPath: /etc/kubernetes
+      name: etc-kubernetes
+      readOnly: true
+    - mountPath: /usr/local/mount-from-host/bin
+      name: usr-bin
+      readOnly: true
+    - mountPath: /etc/cni/net.d/
+      name: etc-cni-netd
+      readOnly: true
+    - mountPath: /opt/cni/bin/
+      name: opt-cni-bin
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-6nf5s
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostPID: true
+  nodeName: ubuntu2
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - hostPath:
+      type: ''
+      path: /var/lib/etcd
+    name: var-lib-etcd
+  - hostPath:
+      type: ''
+      path: /var/lib/kubelet
+    name: var-lib-kubelet
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-scheduler
+    name: var-lib-kube-scheduler
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-controller-manager
+    name: var-lib-kube-controller-manager
+  - hostPath:
+      type: ''
+      path: /etc/systemd
+    name: etc-systemd
+  - hostPath:
+      type: ''
+      path: /lib/systemd
+    name: lib-systemd
+  - hostPath:
+      type: ''
+      path: /srv/kubernetes
+    name: srv-kubernetes
+  - hostPath:
+      type: ''
+      path: /etc/kubernetes
+    name: etc-kubernetes
+  - hostPath:
+      type: ''
+      path: /usr/bin
+    name: usr-bin
+  - hostPath:
+      type: ''
+      path: /etc/cni/net.d/
+    name: etc-cni-netd
+  - hostPath:
+      type: ''
+      path: /opt/cni/bin/
+    name: opt-cni-bin
+  - name: kube-api-access-6nf5s
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+---
+apiVersion: V1
+kind: Pod
+metadata:
+  creationTimestamp: '2023-08-06T10:53:15Z'
+  generateName: kube-bench-
+  labels:
+    app: kube-bench
+    batch.kubernetes.io/controller-uid: 3339f5fe-7d2e-47d7-8425-f6eaf4a053e9
+    batch.kubernetes.io/job-name: kube-bench
+    controller-uid: 3339f5fe-7d2e-47d7-8425-f6eaf4a053e9
+    job-name: kube-bench
+  name: kube-bench-8m572
+  namespace: kube-config-scanner
+  resourceVersion: '487308'
+spec:
+  containers:
+  - command:
+    - kube-bench
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imagePullPolicy: IfNotPresent
+    name: kube-bench
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/lib/etcd
+      name: var-lib-etcd
+      readOnly: true
+    - mountPath: /var/lib/kubelet
+      name: var-lib-kubelet
+      readOnly: true
+    - mountPath: /var/lib/kube-scheduler
+      name: var-lib-kube-scheduler
+      readOnly: true
+    - mountPath: /var/lib/kube-controller-manager
+      name: var-lib-kube-controller-manager
+      readOnly: true
+    - mountPath: /etc/systemd
+      name: etc-systemd
+      readOnly: true
+    - mountPath: /lib/systemd/
+      name: lib-systemd
+      readOnly: true
+    - mountPath: /srv/kubernetes/
+      name: srv-kubernetes
+      readOnly: true
+    - mountPath: /etc/kubernetes
+      name: etc-kubernetes
+      readOnly: true
+    - mountPath: /usr/local/mount-from-host/bin
+      name: usr-bin
+      readOnly: true
+    - mountPath: /etc/cni/net.d/
+      name: etc-cni-netd
+      readOnly: true
+    - mountPath: /opt/cni/bin/
+      name: opt-cni-bin
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-shk8n
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostPID: true
+  nodeName: ubuntu2
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - hostPath:
+      type: ''
+      path: /var/lib/etcd
+    name: var-lib-etcd
+  - hostPath:
+      type: ''
+      path: /var/lib/kubelet
+    name: var-lib-kubelet
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-scheduler
+    name: var-lib-kube-scheduler
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-controller-manager
+    name: var-lib-kube-controller-manager
+  - hostPath:
+      type: ''
+      path: /etc/systemd
+    name: etc-systemd
+  - hostPath:
+      type: ''
+      path: /lib/systemd
+    name: lib-systemd
+  - hostPath:
+      type: ''
+      path: /srv/kubernetes
+    name: srv-kubernetes
+  - hostPath:
+      type: ''
+      path: /etc/kubernetes
+    name: etc-kubernetes
+  - hostPath:
+      type: ''
+      path: /usr/bin
+    name: usr-bin
+  - hostPath:
+      type: ''
+      path: /etc/cni/net.d/
+    name: etc-cni-netd
+  - hostPath:
+      type: ''
+      path: /opt/cni/bin/
+    name: opt-cni-bin
+  - name: kube-api-access-shk8n
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+---
+apiVersion: V1
+kind: Pod
+metadata:
+  creationTimestamp: '2023-08-06T16:51:44Z'
+  generateName: kube-bench-
+  labels:
+    app: kube-bench
+    batch.kubernetes.io/controller-uid: 83a1c202-ab97-47d2-8e95-4c9d87a644c3
+    batch.kubernetes.io/job-name: kube-bench
+    controller-uid: 83a1c202-ab97-47d2-8e95-4c9d87a644c3
+    job-name: kube-bench
+  name: kube-bench-lc6r6
+  namespace: kube-config-scanner
+  resourceVersion: '496080'
+spec:
+  containers:
+  - command:
+    - kube-bench
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imagePullPolicy: IfNotPresent
+    name: kube-bench
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/lib/etcd
+      name: var-lib-etcd
+      readOnly: true
+    - mountPath: /var/lib/kubelet
+      name: var-lib-kubelet
+      readOnly: true
+    - mountPath: /var/lib/kube-scheduler
+      name: var-lib-kube-scheduler
+      readOnly: true
+    - mountPath: /var/lib/kube-controller-manager
+      name: var-lib-kube-controller-manager
+      readOnly: true
+    - mountPath: /etc/systemd
+      name: etc-systemd
+      readOnly: true
+    - mountPath: /lib/systemd/
+      name: lib-systemd
+      readOnly: true
+    - mountPath: /srv/kubernetes/
+      name: srv-kubernetes
+      readOnly: true
+    - mountPath: /etc/kubernetes
+      name: etc-kubernetes
+      readOnly: true
+    - mountPath: /usr/local/mount-from-host/bin
+      name: usr-bin
+      readOnly: true
+    - mountPath: /etc/cni/net.d/
+      name: etc-cni-netd
+      readOnly: true
+    - mountPath: /opt/cni/bin/
+      name: opt-cni-bin
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-s7l4n
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostPID: true
+  nodeName: ubuntu2
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - hostPath:
+      type: ''
+      path: /var/lib/etcd
+    name: var-lib-etcd
+  - hostPath:
+      type: ''
+      path: /var/lib/kubelet
+    name: var-lib-kubelet
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-scheduler
+    name: var-lib-kube-scheduler
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-controller-manager
+    name: var-lib-kube-controller-manager
+  - hostPath:
+      type: ''
+      path: /etc/systemd
+    name: etc-systemd
+  - hostPath:
+      type: ''
+      path: /lib/systemd
+    name: lib-systemd
+  - hostPath:
+      type: ''
+      path: /srv/kubernetes
+    name: srv-kubernetes
+  - hostPath:
+      type: ''
+      path: /etc/kubernetes
+    name: etc-kubernetes
+  - hostPath:
+      type: ''
+      path: /usr/bin
+    name: usr-bin
+  - hostPath:
+      type: ''
+      path: /etc/cni/net.d/
+    name: etc-cni-netd
+  - hostPath:
+      type: ''
+      path: /opt/cni/bin/
+    name: opt-cni-bin
+  - name: kube-api-access-s7l4n
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+---
+apiVersion: V1
+kind: Pod
+metadata:
+  creationTimestamp: '2023-08-06T16:58:27Z'
+  generateName: kube-bench-
+  labels:
+    app: kube-bench
+    batch.kubernetes.io/controller-uid: 5a293f28-aa82-482a-83ef-ceed3f1ac604
+    batch.kubernetes.io/job-name: kube-bench
+    controller-uid: 5a293f28-aa82-482a-83ef-ceed3f1ac604
+    job-name: kube-bench
+  name: kube-bench-pqcs8
+  namespace: kube-config-scanner
+  resourceVersion: '496361'
+spec:
+  containers:
+  - command:
+    - kube-bench
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imagePullPolicy: IfNotPresent
+    name: kube-bench
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/lib/etcd
+      name: var-lib-etcd
+      readOnly: true
+    - mountPath: /var/lib/kubelet
+      name: var-lib-kubelet
+      readOnly: true
+    - mountPath: /var/lib/kube-scheduler
+      name: var-lib-kube-scheduler
+      readOnly: true
+    - mountPath: /var/lib/kube-controller-manager
+      name: var-lib-kube-controller-manager
+      readOnly: true
+    - mountPath: /etc/systemd
+      name: etc-systemd
+      readOnly: true
+    - mountPath: /lib/systemd/
+      name: lib-systemd
+      readOnly: true
+    - mountPath: /srv/kubernetes/
+      name: srv-kubernetes
+      readOnly: true
+    - mountPath: /etc/kubernetes
+      name: etc-kubernetes
+      readOnly: true
+    - mountPath: /usr/local/mount-from-host/bin
+      name: usr-bin
+      readOnly: true
+    - mountPath: /etc/cni/net.d/
+      name: etc-cni-netd
+      readOnly: true
+    - mountPath: /opt/cni/bin/
+      name: opt-cni-bin
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-xgfjb
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostPID: true
+  nodeName: ubuntu2
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - hostPath:
+      type: ''
+      path: /var/lib/etcd
+    name: var-lib-etcd
+  - hostPath:
+      type: ''
+      path: /var/lib/kubelet
+    name: var-lib-kubelet
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-scheduler
+    name: var-lib-kube-scheduler
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-controller-manager
+    name: var-lib-kube-controller-manager
+  - hostPath:
+      type: ''
+      path: /etc/systemd
+    name: etc-systemd
+  - hostPath:
+      type: ''
+      path: /lib/systemd
+    name: lib-systemd
+  - hostPath:
+      type: ''
+      path: /srv/kubernetes
+    name: srv-kubernetes
+  - hostPath:
+      type: ''
+      path: /etc/kubernetes
+    name: etc-kubernetes
+  - hostPath:
+      type: ''
+      path: /usr/bin
+    name: usr-bin
+  - hostPath:
+      type: ''
+      path: /etc/cni/net.d/
+    name: etc-cni-netd
+  - hostPath:
+      type: ''
+      path: /opt/cni/bin/
+    name: opt-cni-bin
+  - name: kube-api-access-xgfjb
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+---
+apiVersion: V1
+kind: Pod
+metadata:
+  creationTimestamp: '2023-08-06T10:55:49Z'
+  generateName: kube-bench-
+  labels:
+    app: kube-bench
+    batch.kubernetes.io/controller-uid: ba9022c5-cb6a-4551-bee1-bc53285098b4
+    batch.kubernetes.io/job-name: kube-bench
+    controller-uid: ba9022c5-cb6a-4551-bee1-bc53285098b4
+    job-name: kube-bench
+  name: kube-bench-zhptc
+  namespace: kube-config-scanner
+  resourceVersion: '495896'
+spec:
+  containers:
+  - command:
+    - kube-bench
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imagePullPolicy: IfNotPresent
+    name: kube-bench
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/lib/etcd
+      name: var-lib-etcd
+      readOnly: true
+    - mountPath: /var/lib/kubelet
+      name: var-lib-kubelet
+      readOnly: true
+    - mountPath: /var/lib/kube-scheduler
+      name: var-lib-kube-scheduler
+      readOnly: true
+    - mountPath: /var/lib/kube-controller-manager
+      name: var-lib-kube-controller-manager
+      readOnly: true
+    - mountPath: /etc/systemd
+      name: etc-systemd
+      readOnly: true
+    - mountPath: /lib/systemd/
+      name: lib-systemd
+      readOnly: true
+    - mountPath: /srv/kubernetes/
+      name: srv-kubernetes
+      readOnly: true
+    - mountPath: /etc/kubernetes
+      name: etc-kubernetes
+      readOnly: true
+    - mountPath: /usr/local/mount-from-host/bin
+      name: usr-bin
+      readOnly: true
+    - mountPath: /etc/cni/net.d/
+      name: etc-cni-netd
+      readOnly: true
+    - mountPath: /opt/cni/bin/
+      name: opt-cni-bin
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-7q94n
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostPID: true
+  nodeName: ubuntu2
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - hostPath:
+      type: ''
+      path: /var/lib/etcd
+    name: var-lib-etcd
+  - hostPath:
+      type: ''
+      path: /var/lib/kubelet
+    name: var-lib-kubelet
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-scheduler
+    name: var-lib-kube-scheduler
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-controller-manager
+    name: var-lib-kube-controller-manager
+  - hostPath:
+      type: ''
+      path: /etc/systemd
+    name: etc-systemd
+  - hostPath:
+      type: ''
+      path: /lib/systemd
+    name: lib-systemd
+  - hostPath:
+      type: ''
+      path: /srv/kubernetes
+    name: srv-kubernetes
+  - hostPath:
+      type: ''
+      path: /etc/kubernetes
+    name: etc-kubernetes
+  - hostPath:
+      type: ''
+      path: /usr/bin
+    name: usr-bin
+  - hostPath:
+      type: ''
+      path: /etc/cni/net.d/
+    name: etc-cni-netd
+  - hostPath:
+      type: ''
+      path: /opt/cni/bin/
+    name: opt-cni-bin
+  - name: kube-api-access-7q94n
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+---
+metadata:
+  annotations:
+    batch.kubernetes.io/job-tracking: ''
+  creationTimestamp: '2023-08-06T17:09:18Z'
+  generation: 1
+  labels:
+    app: kube-bench
+    batch.kubernetes.io/controller-uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+    batch.kubernetes.io/job-name: kube-bench
+    controller-uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+    job-name: kube-bench
+  managedFields:
+  - apiVersion: batch/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:app: {}
+      f:spec:
+        f:backoffLimit: {}
+        f:completionMode: {}
+        f:completions: {}
+        f:parallelism: {}
+        f:suspend: {}
+        f:template:
+          f:metadata:
+            f:labels:
+              .: {}
+              f:app: {}
+          f:spec:
+            f:containers:
+              k:{"name":"kube-bench"}:
+                .: {}
+                f:command: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+                f:volumeMounts:
+                  .: {}
+                  k:{"mountPath":"/etc/cni/net.d/"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/etc/kubernetes"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/etc/systemd"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/lib/systemd/"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/opt/cni/bin/"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/srv/kubernetes/"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/usr/local/mount-from-host/bin"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/var/lib/etcd"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/var/lib/kube-controller-manager"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/var/lib/kube-scheduler"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/var/lib/kubelet"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+            f:dnsPolicy: {}
+            f:hostPID: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:terminationGracePeriodSeconds: {}
+            f:volumes:
+              .: {}
+              k:{"name":"etc-cni-netd"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"etc-kubernetes"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"etc-systemd"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"lib-systemd"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"opt-cni-bin"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"srv-kubernetes"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"usr-bin"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"var-lib-etcd"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"var-lib-kube-controller-manager"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"var-lib-kube-scheduler"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"var-lib-kubelet"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+    manager: Kubernetes Java Client
+    operation: Update
+    time: '2023-08-06T17:09:18Z'
+  - apiVersion: batch/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:completionTime: {}
+        f:conditions: {}
+        f:ready: {}
+        f:startTime: {}
+        f:succeeded: {}
+        f:uncountedTerminatedPods: {}
+    manager: k3s
+    operation: Update
+    subresource: status
+    time: '2023-08-06T17:09:22Z'
+  name: kube-bench
+  namespace: kube-config-scanner
+  resourceVersion: '496384'
+  uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+spec:
+  backoffLimit: 6
+  completionMode: NonIndexed
+  completions: 1
+  parallelism: 1
+  selector:
+    matchLabels:
+      batch.kubernetes.io/controller-uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+  suspend: false
+  template:
+    metadata:
+      labels:
+        app: kube-bench
+        batch.kubernetes.io/controller-uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+        batch.kubernetes.io/job-name: kube-bench
+        controller-uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+        job-name: kube-bench
+    spec:
+      containers:
+      - command:
+        - kube-bench
+        image: docker.io/aquasec/kube-bench:v0.6.17
+        imagePullPolicy: IfNotPresent
+        name: kube-bench
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/lib/etcd
+          name: var-lib-etcd
+          readOnly: true
+        - mountPath: /var/lib/kubelet
+          name: var-lib-kubelet
+          readOnly: true
+        - mountPath: /var/lib/kube-scheduler
+          name: var-lib-kube-scheduler
+          readOnly: true
+        - mountPath: /var/lib/kube-controller-manager
+          name: var-lib-kube-controller-manager
+          readOnly: true
+        - mountPath: /etc/systemd
+          name: etc-systemd
+          readOnly: true
+        - mountPath: /lib/systemd/
+          name: lib-systemd
+          readOnly: true
+        - mountPath: /srv/kubernetes/
+          name: srv-kubernetes
+          readOnly: true
+        - mountPath: /etc/kubernetes
+          name: etc-kubernetes
+          readOnly: true
+        - mountPath: /usr/local/mount-from-host/bin
+          name: usr-bin
+          readOnly: true
+        - mountPath: /etc/cni/net.d/
+          name: etc-cni-netd
+          readOnly: true
+        - mountPath: /opt/cni/bin/
+          name: opt-cni-bin
+          readOnly: true
+      dnsPolicy: ClusterFirst
+      hostPID: true
+      restartPolicy: Never
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - hostPath:
+          type: ''
+          path: /var/lib/etcd
+        name: var-lib-etcd
+      - hostPath:
+          type: ''
+          path: /var/lib/kubelet
+        name: var-lib-kubelet
+      - hostPath:
+          type: ''
+          path: /var/lib/kube-scheduler
+        name: var-lib-kube-scheduler
+      - hostPath:
+          type: ''
+          path: /var/lib/kube-controller-manager
+        name: var-lib-kube-controller-manager
+      - hostPath:
+          type: ''
+          path: /etc/systemd
+        name: etc-systemd
+      - hostPath:
+          type: ''
+          path: /lib/systemd
+        name: lib-systemd
+      - hostPath:
+          type: ''
+          path: /srv/kubernetes
+        name: srv-kubernetes
+      - hostPath:
+          type: ''
+          path: /etc/kubernetes
+        name: etc-kubernetes
+      - hostPath:
+          type: ''
+          path: /usr/bin
+        name: usr-bin
+      - hostPath:
+          type: ''
+          path: /etc/cni/net.d/
+        name: etc-cni-netd
+      - hostPath:
+          type: ''
+          path: /opt/cni/bin/
+        name: opt-cni-bin
+status:
+  completionTime: '2023-08-06T17:09:22Z'
+  conditions:
+  - type: Complete
+    lastProbeTime: '2023-08-06T17:09:22Z'
+    lastTransitionTime: '2023-08-06T17:09:22Z'
+    status: 'True'
+  ready: 0
+  startTime: '2023-08-06T17:09:18Z'
+  succeeded: 1
+  uncountedTerminatedPods: {}
+---
+apiVersion: V1
+kind: Pod
+metadata:
+  creationTimestamp: '2023-08-09T18:20:57Z'
+  generateName: kube-config-scanner-deployment-6d6c5b7d76-
+  labels:
+    app: kube-config-scanner
+    pod-template-hash: 6d6c5b7d76
+  name: kube-config-scanner-deployment-6d6c5b7d76-b77d5
+  namespace: kube-config-scanner
+  ownerReferences:
+  - apiVersion: apps/v1
+    kind: ReplicaSet
+    blockOwnerDeletion: true
+    controller: true
+    name: kube-config-scanner-deployment-6d6c5b7d76
+    uid: a56a964d-0191-4c68-bcda-3f3d8f709b06
+  resourceVersion: '602490'
+spec:
+  containers:
+  - env:
+    - name: SPRING_DATA_MONGODB_URI
+      valueFrom:
+        secretKeyRef:
+          key: SPRING_DATA_MONGODB_URI
+          name: mongodb-secret
+    - name: SPRING_DATA_MONGODB_DATABASE
+      valueFrom:
+        secretKeyRef:
+          key: SPRING_DATA_MONGODB_DATABASE
+          name: mongodb-secret
+    image: kamieniarzk/kube-config-scanner:latest
+    imagePullPolicy: Always
+    name: kube-config-scanner
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /tmp/kube-config-scanner
+      name: temp-storage
+    - mountPath: /kube-config-scanner/logs
+      name: logs-storage
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-gw6rr
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: ubuntu2
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: kube-config-scanner-serviceaccount
+  serviceAccountName: kube-config-scanner-serviceaccount
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - emptyDir:
+      sizeLimit: 200Mi
+    name: temp-storage
+  - name: logs-storage
+    persistentVolumeClaim:
+      claimName: kube-config-scanner-pvc
+  - name: kube-api-access-gw6rr
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+---
+apiVersion: V1
+kind: Deployment
+metadata:
+  creationTimestamp: '2023-07-29T09:30:12Z'
+  generation: 19
+  name: kube-config-scanner-deployment
+  namespace: kube-config-scanner
+  resourceVersion: '602504'
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: kube-config-scanner
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/restartedAt: '2023-08-09T18:08:33Z'
+      labels:
+        app: kube-config-scanner
+    spec:
+      containers:
+      - env:
+        - name: SPRING_DATA_MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              key: SPRING_DATA_MONGODB_URI
+              name: mongodb-secret
+        - name: SPRING_DATA_MONGODB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              key: SPRING_DATA_MONGODB_DATABASE
+              name: mongodb-secret
+        image: kamieniarzk/kube-config-scanner:latest
+        imagePullPolicy: Always
+        name: kube-config-scanner
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /tmp/kube-config-scanner
+          name: temp-storage
+        - mountPath: /kube-config-scanner/logs
+          name: logs-storage
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: kube-config-scanner-serviceaccount
+      serviceAccountName: kube-config-scanner-serviceaccount
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir:
+          sizeLimit: 200Mi
+        name: temp-storage
+      - name: logs-storage
+        persistentVolumeClaim:
+          claimName: kube-config-scanner-pvc
+---
+apiVersion: V1
+kind: ServiceAccount
+metadata:
+  creationTimestamp: '2023-07-29T14:27:42Z'
+  name: kube-config-scanner-serviceaccount
+  namespace: kube-config-scanner
+  resourceVersion: '215086'
+---
+apiVersion: V1
+kind: Service
+metadata:
+  creationTimestamp: '2023-07-29T09:30:12Z'
+  name: kube-config-scanner
+  namespace: kube-config-scanner
+  resourceVersion: '207584'
+spec:
+  type: NodePort
+  clusterIP: 10.43.151.85
+  clusterIPs:
+  - 10.43.151.85
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 31060
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: kube-config-scanner
+  sessionAffinity: None
+---
+metadata:
+  creationTimestamp: '2023-07-29T09:25:56Z'
+  name: default
+  namespace: kube-config-scanner
+  resourceVersion: '207474'
+  uid: 449af671-4193-485d-9853-fd2aad77ea81
+---
+metadata:
+  creationTimestamp: '2023-07-30T10:41:13Z'
+  generateName: kube-bench-
+  labels:
+    app: kube-bench
+    batch.kubernetes.io/controller-uid: cc71b931-6092-4bf1-8887-d0efa692827e
+    batch.kubernetes.io/job-name: kube-bench
+    controller-uid: cc71b931-6092-4bf1-8887-d0efa692827e
+    job-name: kube-bench
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:generateName: {}
+        f:labels:
+          .: {}
+          f:app: {}
+          f:batch.kubernetes.io/controller-uid: {}
+          f:batch.kubernetes.io/job-name: {}
+          f:controller-uid: {}
+          f:job-name: {}
+      f:spec:
+        f:containers:
+          k:{"name":"kube-bench"}:
+            .: {}
+            f:command: {}
+            f:image: {}
+            f:imagePullPolicy: {}
+            f:name: {}
+            f:resources: {}
+            f:terminationMessagePath: {}
+            f:terminationMessagePolicy: {}
+            f:volumeMounts:
+              .: {}
+              k:{"mountPath":"/etc/cni/net.d/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/etc/kubernetes"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/etc/systemd"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/lib/systemd/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/opt/cni/bin/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/srv/kubernetes/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/usr/local/mount-from-host/bin"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/etcd"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kube-controller-manager"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kube-scheduler"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kubelet"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+        f:dnsPolicy: {}
+        f:enableServiceLinks: {}
+        f:hostPID: {}
+        f:restartPolicy: {}
+        f:schedulerName: {}
+        f:securityContext: {}
+        f:terminationGracePeriodSeconds: {}
+        f:volumes:
+          .: {}
+          k:{"name":"etc-cni-netd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"etc-kubernetes"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"etc-systemd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"lib-systemd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"opt-cni-bin"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"srv-kubernetes"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"usr-bin"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-etcd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kube-controller-manager"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kube-scheduler"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kubelet"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+    manager: k3s
+    operation: Update
+    time: '2023-07-30T10:41:13Z'
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:conditions:
+          k:{"type":"ContainersReady"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Initialized"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Ready"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:containerStatuses: {}
+        f:hostIP: {}
+        f:phase: {}
+        f:podIP: {}
+        f:podIPs:
+          .: {}
+          k:{"ip":"10.42.1.14"}:
+            .: {}
+            f:ip: {}
+        f:startTime: {}
+    manager: k3s
+    operation: Update
+    subresource: status
+    time: '2023-07-30T10:41:17Z'
+  name: kube-bench-56wwh
+  namespace: kube-config-scanner
+  resourceVersion: '487225'
+  uid: c0122198-8e71-48d6-aac3-5b3c5c9f9424
+spec:
+  containers:
+  - command:
+    - kube-bench
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imagePullPolicy: IfNotPresent
+    name: kube-bench
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/lib/etcd
+      name: var-lib-etcd
+      readOnly: true
+    - mountPath: /var/lib/kubelet
+      name: var-lib-kubelet
+      readOnly: true
+    - mountPath: /var/lib/kube-scheduler
+      name: var-lib-kube-scheduler
+      readOnly: true
+    - mountPath: /var/lib/kube-controller-manager
+      name: var-lib-kube-controller-manager
+      readOnly: true
+    - mountPath: /etc/systemd
+      name: etc-systemd
+      readOnly: true
+    - mountPath: /lib/systemd/
+      name: lib-systemd
+      readOnly: true
+    - mountPath: /srv/kubernetes/
+      name: srv-kubernetes
+      readOnly: true
+    - mountPath: /etc/kubernetes
+      name: etc-kubernetes
+      readOnly: true
+    - mountPath: /usr/local/mount-from-host/bin
+      name: usr-bin
+      readOnly: true
+    - mountPath: /etc/cni/net.d/
+      name: etc-cni-netd
+      readOnly: true
+    - mountPath: /opt/cni/bin/
+      name: opt-cni-bin
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-s6qfz
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostPID: true
+  nodeName: ubuntu2
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - hostPath:
+      type: ''
+      path: /var/lib/etcd
+    name: var-lib-etcd
+  - hostPath:
+      type: ''
+      path: /var/lib/kubelet
+    name: var-lib-kubelet
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-scheduler
+    name: var-lib-kube-scheduler
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-controller-manager
+    name: var-lib-kube-controller-manager
+  - hostPath:
+      type: ''
+      path: /etc/systemd
+    name: etc-systemd
+  - hostPath:
+      type: ''
+      path: /lib/systemd
+    name: lib-systemd
+  - hostPath:
+      type: ''
+      path: /srv/kubernetes
+    name: srv-kubernetes
+  - hostPath:
+      type: ''
+      path: /etc/kubernetes
+    name: etc-kubernetes
+  - hostPath:
+      type: ''
+      path: /usr/bin
+    name: usr-bin
+  - hostPath:
+      type: ''
+      path: /etc/cni/net.d/
+    name: etc-cni-netd
+  - hostPath:
+      type: ''
+      path: /opt/cni/bin/
+    name: opt-cni-bin
+  - name: kube-api-access-s6qfz
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - type: Initialized
+    lastTransitionTime: '2023-07-30T10:41:13Z'
+    reason: PodCompleted
+    status: 'True'
+  - type: Ready
+    lastTransitionTime: '2023-07-30T10:41:13Z'
+    reason: PodCompleted
+    status: 'False'
+  - type: ContainersReady
+    lastTransitionTime: '2023-07-30T10:41:13Z'
+    reason: PodCompleted
+    status: 'False'
+  - type: PodScheduled
+    lastTransitionTime: '2023-07-30T10:41:13Z'
+    status: 'True'
+  containerStatuses:
+  - containerID: containerd://daca9971a170c7749ea86bbcd7711313d9c859decf327de80452bd50772e4db8
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imageID: docker.io/aquasec/kube-bench@sha256:6672264accce02567ac0cda92407c9e4045f7e694c68286ce4e956d196e0e43b
+    lastState: {}
+    name: kube-bench
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: containerd://daca9971a170c7749ea86bbcd7711313d9c859decf327de80452bd50772e4db8
+        exitCode: 0
+        finishedAt: '2023-07-30T10:41:14Z'
+        reason: Completed
+        startedAt: '2023-07-30T10:41:14Z'
+  hostIP: 192.168.123.202
+  phase: Succeeded
+  podIP: 10.42.1.14
+  podIPs:
+  - ip: 10.42.1.14
+  qosClass: BestEffort
+  startTime: '2023-07-30T10:41:13Z'
+---
+metadata:
+  creationTimestamp: '2023-07-30T10:02:14Z'
+  generateName: kube-bench-
+  labels:
+    app: kube-bench
+    batch.kubernetes.io/controller-uid: 0f8e4226-5ce9-4663-8ddd-0a1bbee00a29
+    batch.kubernetes.io/job-name: kube-bench
+    controller-uid: 0f8e4226-5ce9-4663-8ddd-0a1bbee00a29
+    job-name: kube-bench
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:generateName: {}
+        f:labels:
+          .: {}
+          f:app: {}
+          f:batch.kubernetes.io/controller-uid: {}
+          f:batch.kubernetes.io/job-name: {}
+          f:controller-uid: {}
+          f:job-name: {}
+      f:spec:
+        f:containers:
+          k:{"name":"kube-bench"}:
+            .: {}
+            f:command: {}
+            f:image: {}
+            f:imagePullPolicy: {}
+            f:name: {}
+            f:resources: {}
+            f:terminationMessagePath: {}
+            f:terminationMessagePolicy: {}
+            f:volumeMounts:
+              .: {}
+              k:{"mountPath":"/etc/cni/net.d/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/etc/kubernetes"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/etc/systemd"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/lib/systemd/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/opt/cni/bin/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/srv/kubernetes/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/usr/local/mount-from-host/bin"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/etcd"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kube-controller-manager"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kube-scheduler"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kubelet"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+        f:dnsPolicy: {}
+        f:enableServiceLinks: {}
+        f:hostPID: {}
+        f:restartPolicy: {}
+        f:schedulerName: {}
+        f:securityContext: {}
+        f:terminationGracePeriodSeconds: {}
+        f:volumes:
+          .: {}
+          k:{"name":"etc-cni-netd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"etc-kubernetes"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"etc-systemd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"lib-systemd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"opt-cni-bin"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"srv-kubernetes"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"usr-bin"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-etcd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kube-controller-manager"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kube-scheduler"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kubelet"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+    manager: k3s
+    operation: Update
+    time: '2023-07-30T10:02:14Z'
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:conditions:
+          k:{"type":"ContainersReady"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Initialized"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Ready"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:containerStatuses: {}
+        f:hostIP: {}
+        f:phase: {}
+        f:podIP: {}
+        f:podIPs:
+          .: {}
+          k:{"ip":"10.42.1.13"}:
+            .: {}
+            f:ip: {}
+        f:startTime: {}
+    manager: k3s
+    operation: Update
+    subresource: status
+    time: '2023-07-30T10:02:18Z'
+  name: kube-bench-8d92t
+  namespace: kube-config-scanner
+  resourceVersion: '244342'
+  uid: 2c4ccac4-b811-46b0-860d-550e9d9008f5
+spec:
+  containers:
+  - command:
+    - kube-bench
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imagePullPolicy: IfNotPresent
+    name: kube-bench
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/lib/etcd
+      name: var-lib-etcd
+      readOnly: true
+    - mountPath: /var/lib/kubelet
+      name: var-lib-kubelet
+      readOnly: true
+    - mountPath: /var/lib/kube-scheduler
+      name: var-lib-kube-scheduler
+      readOnly: true
+    - mountPath: /var/lib/kube-controller-manager
+      name: var-lib-kube-controller-manager
+      readOnly: true
+    - mountPath: /etc/systemd
+      name: etc-systemd
+      readOnly: true
+    - mountPath: /lib/systemd/
+      name: lib-systemd
+      readOnly: true
+    - mountPath: /srv/kubernetes/
+      name: srv-kubernetes
+      readOnly: true
+    - mountPath: /etc/kubernetes
+      name: etc-kubernetes
+      readOnly: true
+    - mountPath: /usr/local/mount-from-host/bin
+      name: usr-bin
+      readOnly: true
+    - mountPath: /etc/cni/net.d/
+      name: etc-cni-netd
+      readOnly: true
+    - mountPath: /opt/cni/bin/
+      name: opt-cni-bin
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-6nf5s
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostPID: true
+  nodeName: ubuntu2
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - hostPath:
+      type: ''
+      path: /var/lib/etcd
+    name: var-lib-etcd
+  - hostPath:
+      type: ''
+      path: /var/lib/kubelet
+    name: var-lib-kubelet
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-scheduler
+    name: var-lib-kube-scheduler
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-controller-manager
+    name: var-lib-kube-controller-manager
+  - hostPath:
+      type: ''
+      path: /etc/systemd
+    name: etc-systemd
+  - hostPath:
+      type: ''
+      path: /lib/systemd
+    name: lib-systemd
+  - hostPath:
+      type: ''
+      path: /srv/kubernetes
+    name: srv-kubernetes
+  - hostPath:
+      type: ''
+      path: /etc/kubernetes
+    name: etc-kubernetes
+  - hostPath:
+      type: ''
+      path: /usr/bin
+    name: usr-bin
+  - hostPath:
+      type: ''
+      path: /etc/cni/net.d/
+    name: etc-cni-netd
+  - hostPath:
+      type: ''
+      path: /opt/cni/bin/
+    name: opt-cni-bin
+  - name: kube-api-access-6nf5s
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - type: Initialized
+    lastTransitionTime: '2023-07-30T10:02:14Z'
+    reason: PodCompleted
+    status: 'True'
+  - type: Ready
+    lastTransitionTime: '2023-07-30T10:02:14Z'
+    reason: PodCompleted
+    status: 'False'
+  - type: ContainersReady
+    lastTransitionTime: '2023-07-30T10:02:14Z'
+    reason: PodCompleted
+    status: 'False'
+  - type: PodScheduled
+    lastTransitionTime: '2023-07-30T10:02:14Z'
+    status: 'True'
+  containerStatuses:
+  - containerID: containerd://3d371458adab98823d970ba1e2c169323c2e05cc779beb7b0ee65dca5f513ef6
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imageID: docker.io/aquasec/kube-bench@sha256:6672264accce02567ac0cda92407c9e4045f7e694c68286ce4e956d196e0e43b
+    lastState: {}
+    name: kube-bench
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: containerd://3d371458adab98823d970ba1e2c169323c2e05cc779beb7b0ee65dca5f513ef6
+        exitCode: 0
+        finishedAt: '2023-07-30T10:02:15Z'
+        reason: Completed
+        startedAt: '2023-07-30T10:02:15Z'
+  hostIP: 192.168.123.202
+  phase: Succeeded
+  podIP: 10.42.1.13
+  podIPs:
+  - ip: 10.42.1.13
+  qosClass: BestEffort
+  startTime: '2023-07-30T10:02:14Z'
+---
+metadata:
+  creationTimestamp: '2023-08-06T10:53:15Z'
+  generateName: kube-bench-
+  labels:
+    app: kube-bench
+    batch.kubernetes.io/controller-uid: 3339f5fe-7d2e-47d7-8425-f6eaf4a053e9
+    batch.kubernetes.io/job-name: kube-bench
+    controller-uid: 3339f5fe-7d2e-47d7-8425-f6eaf4a053e9
+    job-name: kube-bench
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:generateName: {}
+        f:labels:
+          .: {}
+          f:app: {}
+          f:batch.kubernetes.io/controller-uid: {}
+          f:batch.kubernetes.io/job-name: {}
+          f:controller-uid: {}
+          f:job-name: {}
+      f:spec:
+        f:containers:
+          k:{"name":"kube-bench"}:
+            .: {}
+            f:command: {}
+            f:image: {}
+            f:imagePullPolicy: {}
+            f:name: {}
+            f:resources: {}
+            f:terminationMessagePath: {}
+            f:terminationMessagePolicy: {}
+            f:volumeMounts:
+              .: {}
+              k:{"mountPath":"/etc/cni/net.d/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/etc/kubernetes"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/etc/systemd"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/lib/systemd/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/opt/cni/bin/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/srv/kubernetes/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/usr/local/mount-from-host/bin"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/etcd"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kube-controller-manager"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kube-scheduler"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kubelet"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+        f:dnsPolicy: {}
+        f:enableServiceLinks: {}
+        f:hostPID: {}
+        f:restartPolicy: {}
+        f:schedulerName: {}
+        f:securityContext: {}
+        f:terminationGracePeriodSeconds: {}
+        f:volumes:
+          .: {}
+          k:{"name":"etc-cni-netd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"etc-kubernetes"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"etc-systemd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"lib-systemd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"opt-cni-bin"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"srv-kubernetes"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"usr-bin"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-etcd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kube-controller-manager"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kube-scheduler"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kubelet"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+    manager: k3s
+    operation: Update
+    time: '2023-08-06T10:53:15Z'
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:conditions:
+          k:{"type":"ContainersReady"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Initialized"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Ready"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:containerStatuses: {}
+        f:hostIP: {}
+        f:phase: {}
+        f:podIP: {}
+        f:podIPs:
+          .: {}
+          k:{"ip":"10.42.1.20"}:
+            .: {}
+            f:ip: {}
+        f:startTime: {}
+    manager: k3s
+    operation: Update
+    subresource: status
+    time: '2023-08-06T10:53:19Z'
+  name: kube-bench-8m572
+  namespace: kube-config-scanner
+  resourceVersion: '487308'
+  uid: ff0a785c-2155-416a-b884-7952bf9d4dab
+spec:
+  containers:
+  - command:
+    - kube-bench
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imagePullPolicy: IfNotPresent
+    name: kube-bench
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/lib/etcd
+      name: var-lib-etcd
+      readOnly: true
+    - mountPath: /var/lib/kubelet
+      name: var-lib-kubelet
+      readOnly: true
+    - mountPath: /var/lib/kube-scheduler
+      name: var-lib-kube-scheduler
+      readOnly: true
+    - mountPath: /var/lib/kube-controller-manager
+      name: var-lib-kube-controller-manager
+      readOnly: true
+    - mountPath: /etc/systemd
+      name: etc-systemd
+      readOnly: true
+    - mountPath: /lib/systemd/
+      name: lib-systemd
+      readOnly: true
+    - mountPath: /srv/kubernetes/
+      name: srv-kubernetes
+      readOnly: true
+    - mountPath: /etc/kubernetes
+      name: etc-kubernetes
+      readOnly: true
+    - mountPath: /usr/local/mount-from-host/bin
+      name: usr-bin
+      readOnly: true
+    - mountPath: /etc/cni/net.d/
+      name: etc-cni-netd
+      readOnly: true
+    - mountPath: /opt/cni/bin/
+      name: opt-cni-bin
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-shk8n
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostPID: true
+  nodeName: ubuntu2
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - hostPath:
+      type: ''
+      path: /var/lib/etcd
+    name: var-lib-etcd
+  - hostPath:
+      type: ''
+      path: /var/lib/kubelet
+    name: var-lib-kubelet
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-scheduler
+    name: var-lib-kube-scheduler
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-controller-manager
+    name: var-lib-kube-controller-manager
+  - hostPath:
+      type: ''
+      path: /etc/systemd
+    name: etc-systemd
+  - hostPath:
+      type: ''
+      path: /lib/systemd
+    name: lib-systemd
+  - hostPath:
+      type: ''
+      path: /srv/kubernetes
+    name: srv-kubernetes
+  - hostPath:
+      type: ''
+      path: /etc/kubernetes
+    name: etc-kubernetes
+  - hostPath:
+      type: ''
+      path: /usr/bin
+    name: usr-bin
+  - hostPath:
+      type: ''
+      path: /etc/cni/net.d/
+    name: etc-cni-netd
+  - hostPath:
+      type: ''
+      path: /opt/cni/bin/
+    name: opt-cni-bin
+  - name: kube-api-access-shk8n
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - type: Initialized
+    lastTransitionTime: '2023-08-06T10:53:15Z'
+    reason: PodCompleted
+    status: 'True'
+  - type: Ready
+    lastTransitionTime: '2023-08-06T10:53:15Z'
+    reason: PodCompleted
+    status: 'False'
+  - type: ContainersReady
+    lastTransitionTime: '2023-08-06T10:53:15Z'
+    reason: PodCompleted
+    status: 'False'
+  - type: PodScheduled
+    lastTransitionTime: '2023-08-06T10:53:15Z'
+    status: 'True'
+  containerStatuses:
+  - containerID: containerd://4a0fd5b37bfc84c3086b0e2cc421a59c786d67578f52e7d49a0284e6914dd40a
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imageID: docker.io/aquasec/kube-bench@sha256:6672264accce02567ac0cda92407c9e4045f7e694c68286ce4e956d196e0e43b
+    lastState: {}
+    name: kube-bench
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: containerd://4a0fd5b37bfc84c3086b0e2cc421a59c786d67578f52e7d49a0284e6914dd40a
+        exitCode: 0
+        finishedAt: '2023-08-06T10:53:16Z'
+        reason: Completed
+        startedAt: '2023-08-06T10:53:16Z'
+  hostIP: 192.168.123.202
+  phase: Succeeded
+  podIP: 10.42.1.20
+  podIPs:
+  - ip: 10.42.1.20
+  qosClass: BestEffort
+  startTime: '2023-08-06T10:53:15Z'
+---
+metadata:
+  creationTimestamp: '2023-08-06T16:51:44Z'
+  generateName: kube-bench-
+  labels:
+    app: kube-bench
+    batch.kubernetes.io/controller-uid: 83a1c202-ab97-47d2-8e95-4c9d87a644c3
+    batch.kubernetes.io/job-name: kube-bench
+    controller-uid: 83a1c202-ab97-47d2-8e95-4c9d87a644c3
+    job-name: kube-bench
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:generateName: {}
+        f:labels:
+          .: {}
+          f:app: {}
+          f:batch.kubernetes.io/controller-uid: {}
+          f:batch.kubernetes.io/job-name: {}
+          f:controller-uid: {}
+          f:job-name: {}
+      f:spec:
+        f:containers:
+          k:{"name":"kube-bench"}:
+            .: {}
+            f:command: {}
+            f:image: {}
+            f:imagePullPolicy: {}
+            f:name: {}
+            f:resources: {}
+            f:terminationMessagePath: {}
+            f:terminationMessagePolicy: {}
+            f:volumeMounts:
+              .: {}
+              k:{"mountPath":"/etc/cni/net.d/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/etc/kubernetes"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/etc/systemd"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/lib/systemd/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/opt/cni/bin/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/srv/kubernetes/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/usr/local/mount-from-host/bin"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/etcd"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kube-controller-manager"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kube-scheduler"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kubelet"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+        f:dnsPolicy: {}
+        f:enableServiceLinks: {}
+        f:hostPID: {}
+        f:restartPolicy: {}
+        f:schedulerName: {}
+        f:securityContext: {}
+        f:terminationGracePeriodSeconds: {}
+        f:volumes:
+          .: {}
+          k:{"name":"etc-cni-netd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"etc-kubernetes"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"etc-systemd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"lib-systemd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"opt-cni-bin"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"srv-kubernetes"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"usr-bin"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-etcd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kube-controller-manager"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kube-scheduler"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kubelet"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+    manager: k3s
+    operation: Update
+    time: '2023-08-06T16:51:44Z'
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:conditions:
+          k:{"type":"ContainersReady"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Initialized"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Ready"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:containerStatuses: {}
+        f:hostIP: {}
+        f:phase: {}
+        f:podIP: {}
+        f:podIPs:
+          .: {}
+          k:{"ip":"10.42.1.22"}:
+            .: {}
+            f:ip: {}
+        f:startTime: {}
+    manager: k3s
+    operation: Update
+    subresource: status
+    time: '2023-08-06T16:51:48Z'
+  name: kube-bench-lc6r6
+  namespace: kube-config-scanner
+  resourceVersion: '496080'
+  uid: b821ffce-3fd2-44ae-a32b-cb6667ba04cc
+spec:
+  containers:
+  - command:
+    - kube-bench
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imagePullPolicy: IfNotPresent
+    name: kube-bench
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/lib/etcd
+      name: var-lib-etcd
+      readOnly: true
+    - mountPath: /var/lib/kubelet
+      name: var-lib-kubelet
+      readOnly: true
+    - mountPath: /var/lib/kube-scheduler
+      name: var-lib-kube-scheduler
+      readOnly: true
+    - mountPath: /var/lib/kube-controller-manager
+      name: var-lib-kube-controller-manager
+      readOnly: true
+    - mountPath: /etc/systemd
+      name: etc-systemd
+      readOnly: true
+    - mountPath: /lib/systemd/
+      name: lib-systemd
+      readOnly: true
+    - mountPath: /srv/kubernetes/
+      name: srv-kubernetes
+      readOnly: true
+    - mountPath: /etc/kubernetes
+      name: etc-kubernetes
+      readOnly: true
+    - mountPath: /usr/local/mount-from-host/bin
+      name: usr-bin
+      readOnly: true
+    - mountPath: /etc/cni/net.d/
+      name: etc-cni-netd
+      readOnly: true
+    - mountPath: /opt/cni/bin/
+      name: opt-cni-bin
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-s7l4n
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostPID: true
+  nodeName: ubuntu2
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - hostPath:
+      type: ''
+      path: /var/lib/etcd
+    name: var-lib-etcd
+  - hostPath:
+      type: ''
+      path: /var/lib/kubelet
+    name: var-lib-kubelet
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-scheduler
+    name: var-lib-kube-scheduler
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-controller-manager
+    name: var-lib-kube-controller-manager
+  - hostPath:
+      type: ''
+      path: /etc/systemd
+    name: etc-systemd
+  - hostPath:
+      type: ''
+      path: /lib/systemd
+    name: lib-systemd
+  - hostPath:
+      type: ''
+      path: /srv/kubernetes
+    name: srv-kubernetes
+  - hostPath:
+      type: ''
+      path: /etc/kubernetes
+    name: etc-kubernetes
+  - hostPath:
+      type: ''
+      path: /usr/bin
+    name: usr-bin
+  - hostPath:
+      type: ''
+      path: /etc/cni/net.d/
+    name: etc-cni-netd
+  - hostPath:
+      type: ''
+      path: /opt/cni/bin/
+    name: opt-cni-bin
+  - name: kube-api-access-s7l4n
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - type: Initialized
+    lastTransitionTime: '2023-08-06T16:51:44Z'
+    reason: PodCompleted
+    status: 'True'
+  - type: Ready
+    lastTransitionTime: '2023-08-06T16:51:46Z'
+    reason: PodCompleted
+    status: 'False'
+  - type: ContainersReady
+    lastTransitionTime: '2023-08-06T16:51:46Z'
+    reason: PodCompleted
+    status: 'False'
+  - type: PodScheduled
+    lastTransitionTime: '2023-08-06T16:51:44Z'
+    status: 'True'
+  containerStatuses:
+  - containerID: containerd://23d3d7e9d423701d4b551bfc45e7111ba2007031371fe2cf52e97e0f5bb344e3
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imageID: docker.io/aquasec/kube-bench@sha256:6672264accce02567ac0cda92407c9e4045f7e694c68286ce4e956d196e0e43b
+    lastState: {}
+    name: kube-bench
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: containerd://23d3d7e9d423701d4b551bfc45e7111ba2007031371fe2cf52e97e0f5bb344e3
+        exitCode: 0
+        finishedAt: '2023-08-06T16:51:45Z'
+        reason: Completed
+        startedAt: '2023-08-06T16:51:45Z'
+  hostIP: 192.168.123.202
+  phase: Succeeded
+  podIP: 10.42.1.22
+  podIPs:
+  - ip: 10.42.1.22
+  qosClass: BestEffort
+  startTime: '2023-08-06T16:51:44Z'
+---
+metadata:
+  creationTimestamp: '2023-08-06T16:58:27Z'
+  generateName: kube-bench-
+  labels:
+    app: kube-bench
+    batch.kubernetes.io/controller-uid: 5a293f28-aa82-482a-83ef-ceed3f1ac604
+    batch.kubernetes.io/job-name: kube-bench
+    controller-uid: 5a293f28-aa82-482a-83ef-ceed3f1ac604
+    job-name: kube-bench
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:generateName: {}
+        f:labels:
+          .: {}
+          f:app: {}
+          f:batch.kubernetes.io/controller-uid: {}
+          f:batch.kubernetes.io/job-name: {}
+          f:controller-uid: {}
+          f:job-name: {}
+      f:spec:
+        f:containers:
+          k:{"name":"kube-bench"}:
+            .: {}
+            f:command: {}
+            f:image: {}
+            f:imagePullPolicy: {}
+            f:name: {}
+            f:resources: {}
+            f:terminationMessagePath: {}
+            f:terminationMessagePolicy: {}
+            f:volumeMounts:
+              .: {}
+              k:{"mountPath":"/etc/cni/net.d/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/etc/kubernetes"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/etc/systemd"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/lib/systemd/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/opt/cni/bin/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/srv/kubernetes/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/usr/local/mount-from-host/bin"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/etcd"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kube-controller-manager"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kube-scheduler"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kubelet"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+        f:dnsPolicy: {}
+        f:enableServiceLinks: {}
+        f:hostPID: {}
+        f:restartPolicy: {}
+        f:schedulerName: {}
+        f:securityContext: {}
+        f:terminationGracePeriodSeconds: {}
+        f:volumes:
+          .: {}
+          k:{"name":"etc-cni-netd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"etc-kubernetes"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"etc-systemd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"lib-systemd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"opt-cni-bin"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"srv-kubernetes"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"usr-bin"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-etcd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kube-controller-manager"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kube-scheduler"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kubelet"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+    manager: k3s
+    operation: Update
+    time: '2023-08-06T16:58:27Z'
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:conditions:
+          k:{"type":"ContainersReady"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Initialized"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Ready"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:containerStatuses: {}
+        f:hostIP: {}
+        f:phase: {}
+        f:podIP: {}
+        f:podIPs:
+          .: {}
+          k:{"ip":"10.42.1.23"}:
+            .: {}
+            f:ip: {}
+        f:startTime: {}
+    manager: k3s
+    operation: Update
+    subresource: status
+    time: '2023-08-06T16:58:31Z'
+  name: kube-bench-pqcs8
+  namespace: kube-config-scanner
+  resourceVersion: '496361'
+  uid: 3459717d-182a-4a4a-b286-59f3a9772cb3
+spec:
+  containers:
+  - command:
+    - kube-bench
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imagePullPolicy: IfNotPresent
+    name: kube-bench
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/lib/etcd
+      name: var-lib-etcd
+      readOnly: true
+    - mountPath: /var/lib/kubelet
+      name: var-lib-kubelet
+      readOnly: true
+    - mountPath: /var/lib/kube-scheduler
+      name: var-lib-kube-scheduler
+      readOnly: true
+    - mountPath: /var/lib/kube-controller-manager
+      name: var-lib-kube-controller-manager
+      readOnly: true
+    - mountPath: /etc/systemd
+      name: etc-systemd
+      readOnly: true
+    - mountPath: /lib/systemd/
+      name: lib-systemd
+      readOnly: true
+    - mountPath: /srv/kubernetes/
+      name: srv-kubernetes
+      readOnly: true
+    - mountPath: /etc/kubernetes
+      name: etc-kubernetes
+      readOnly: true
+    - mountPath: /usr/local/mount-from-host/bin
+      name: usr-bin
+      readOnly: true
+    - mountPath: /etc/cni/net.d/
+      name: etc-cni-netd
+      readOnly: true
+    - mountPath: /opt/cni/bin/
+      name: opt-cni-bin
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-xgfjb
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostPID: true
+  nodeName: ubuntu2
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - hostPath:
+      type: ''
+      path: /var/lib/etcd
+    name: var-lib-etcd
+  - hostPath:
+      type: ''
+      path: /var/lib/kubelet
+    name: var-lib-kubelet
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-scheduler
+    name: var-lib-kube-scheduler
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-controller-manager
+    name: var-lib-kube-controller-manager
+  - hostPath:
+      type: ''
+      path: /etc/systemd
+    name: etc-systemd
+  - hostPath:
+      type: ''
+      path: /lib/systemd
+    name: lib-systemd
+  - hostPath:
+      type: ''
+      path: /srv/kubernetes
+    name: srv-kubernetes
+  - hostPath:
+      type: ''
+      path: /etc/kubernetes
+    name: etc-kubernetes
+  - hostPath:
+      type: ''
+      path: /usr/bin
+    name: usr-bin
+  - hostPath:
+      type: ''
+      path: /etc/cni/net.d/
+    name: etc-cni-netd
+  - hostPath:
+      type: ''
+      path: /opt/cni/bin/
+    name: opt-cni-bin
+  - name: kube-api-access-xgfjb
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - type: Initialized
+    lastTransitionTime: '2023-08-06T16:58:27Z'
+    reason: PodCompleted
+    status: 'True'
+  - type: Ready
+    lastTransitionTime: '2023-08-06T16:58:27Z'
+    reason: PodCompleted
+    status: 'False'
+  - type: ContainersReady
+    lastTransitionTime: '2023-08-06T16:58:27Z'
+    reason: PodCompleted
+    status: 'False'
+  - type: PodScheduled
+    lastTransitionTime: '2023-08-06T16:58:27Z'
+    status: 'True'
+  containerStatuses:
+  - containerID: containerd://557324c4da174caff092d217ce852a7c4d59cd14a96d81f4776ea1d3e7483bcc
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imageID: docker.io/aquasec/kube-bench@sha256:6672264accce02567ac0cda92407c9e4045f7e694c68286ce4e956d196e0e43b
+    lastState: {}
+    name: kube-bench
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: containerd://557324c4da174caff092d217ce852a7c4d59cd14a96d81f4776ea1d3e7483bcc
+        exitCode: 0
+        finishedAt: '2023-08-06T16:58:28Z'
+        reason: Completed
+        startedAt: '2023-08-06T16:58:28Z'
+  hostIP: 192.168.123.202
+  phase: Succeeded
+  podIP: 10.42.1.23
+  podIPs:
+  - ip: 10.42.1.23
+  qosClass: BestEffort
+  startTime: '2023-08-06T16:58:27Z'
+---
+metadata:
+  creationTimestamp: '2023-08-06T10:55:49Z'
+  generateName: kube-bench-
+  labels:
+    app: kube-bench
+    batch.kubernetes.io/controller-uid: ba9022c5-cb6a-4551-bee1-bc53285098b4
+    batch.kubernetes.io/job-name: kube-bench
+    controller-uid: ba9022c5-cb6a-4551-bee1-bc53285098b4
+    job-name: kube-bench
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:generateName: {}
+        f:labels:
+          .: {}
+          f:app: {}
+          f:batch.kubernetes.io/controller-uid: {}
+          f:batch.kubernetes.io/job-name: {}
+          f:controller-uid: {}
+          f:job-name: {}
+      f:spec:
+        f:containers:
+          k:{"name":"kube-bench"}:
+            .: {}
+            f:command: {}
+            f:image: {}
+            f:imagePullPolicy: {}
+            f:name: {}
+            f:resources: {}
+            f:terminationMessagePath: {}
+            f:terminationMessagePolicy: {}
+            f:volumeMounts:
+              .: {}
+              k:{"mountPath":"/etc/cni/net.d/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/etc/kubernetes"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/etc/systemd"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/lib/systemd/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/opt/cni/bin/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/srv/kubernetes/"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/usr/local/mount-from-host/bin"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/etcd"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kube-controller-manager"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kube-scheduler"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+              k:{"mountPath":"/var/lib/kubelet"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+                f:readOnly: {}
+        f:dnsPolicy: {}
+        f:enableServiceLinks: {}
+        f:hostPID: {}
+        f:restartPolicy: {}
+        f:schedulerName: {}
+        f:securityContext: {}
+        f:terminationGracePeriodSeconds: {}
+        f:volumes:
+          .: {}
+          k:{"name":"etc-cni-netd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"etc-kubernetes"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"etc-systemd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"lib-systemd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"opt-cni-bin"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"srv-kubernetes"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"usr-bin"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-etcd"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kube-controller-manager"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kube-scheduler"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+          k:{"name":"var-lib-kubelet"}:
+            .: {}
+            f:hostPath:
+              .: {}
+              f:path: {}
+              f:type: {}
+            f:name: {}
+    manager: k3s
+    operation: Update
+    time: '2023-08-06T10:55:49Z'
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:conditions:
+          k:{"type":"ContainersReady"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Initialized"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Ready"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:containerStatuses: {}
+        f:hostIP: {}
+        f:phase: {}
+        f:podIP: {}
+        f:podIPs:
+          .: {}
+          k:{"ip":"10.42.1.21"}:
+            .: {}
+            f:ip: {}
+        f:startTime: {}
+    manager: k3s
+    operation: Update
+    subresource: status
+    time: '2023-08-06T10:55:53Z'
+  name: kube-bench-zhptc
+  namespace: kube-config-scanner
+  resourceVersion: '495896'
+  uid: ade7c821-f8e2-4abc-b9c2-97d392543abb
+spec:
+  containers:
+  - command:
+    - kube-bench
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imagePullPolicy: IfNotPresent
+    name: kube-bench
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/lib/etcd
+      name: var-lib-etcd
+      readOnly: true
+    - mountPath: /var/lib/kubelet
+      name: var-lib-kubelet
+      readOnly: true
+    - mountPath: /var/lib/kube-scheduler
+      name: var-lib-kube-scheduler
+      readOnly: true
+    - mountPath: /var/lib/kube-controller-manager
+      name: var-lib-kube-controller-manager
+      readOnly: true
+    - mountPath: /etc/systemd
+      name: etc-systemd
+      readOnly: true
+    - mountPath: /lib/systemd/
+      name: lib-systemd
+      readOnly: true
+    - mountPath: /srv/kubernetes/
+      name: srv-kubernetes
+      readOnly: true
+    - mountPath: /etc/kubernetes
+      name: etc-kubernetes
+      readOnly: true
+    - mountPath: /usr/local/mount-from-host/bin
+      name: usr-bin
+      readOnly: true
+    - mountPath: /etc/cni/net.d/
+      name: etc-cni-netd
+      readOnly: true
+    - mountPath: /opt/cni/bin/
+      name: opt-cni-bin
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-7q94n
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostPID: true
+  nodeName: ubuntu2
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - hostPath:
+      type: ''
+      path: /var/lib/etcd
+    name: var-lib-etcd
+  - hostPath:
+      type: ''
+      path: /var/lib/kubelet
+    name: var-lib-kubelet
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-scheduler
+    name: var-lib-kube-scheduler
+  - hostPath:
+      type: ''
+      path: /var/lib/kube-controller-manager
+    name: var-lib-kube-controller-manager
+  - hostPath:
+      type: ''
+      path: /etc/systemd
+    name: etc-systemd
+  - hostPath:
+      type: ''
+      path: /lib/systemd
+    name: lib-systemd
+  - hostPath:
+      type: ''
+      path: /srv/kubernetes
+    name: srv-kubernetes
+  - hostPath:
+      type: ''
+      path: /etc/kubernetes
+    name: etc-kubernetes
+  - hostPath:
+      type: ''
+      path: /usr/bin
+    name: usr-bin
+  - hostPath:
+      type: ''
+      path: /etc/cni/net.d/
+    name: etc-cni-netd
+  - hostPath:
+      type: ''
+      path: /opt/cni/bin/
+    name: opt-cni-bin
+  - name: kube-api-access-7q94n
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - type: Initialized
+    lastTransitionTime: '2023-08-06T10:55:49Z'
+    reason: PodCompleted
+    status: 'True'
+  - type: Ready
+    lastTransitionTime: '2023-08-06T10:55:51Z'
+    reason: PodCompleted
+    status: 'False'
+  - type: ContainersReady
+    lastTransitionTime: '2023-08-06T10:55:51Z'
+    reason: PodCompleted
+    status: 'False'
+  - type: PodScheduled
+    lastTransitionTime: '2023-08-06T10:55:49Z'
+    status: 'True'
+  containerStatuses:
+  - containerID: containerd://12658abeee3f213dfc4c0a2fb199ac2dbdaca597abf06c324e1504ea9c5ba6ca
+    image: docker.io/aquasec/kube-bench:v0.6.17
+    imageID: docker.io/aquasec/kube-bench@sha256:6672264accce02567ac0cda92407c9e4045f7e694c68286ce4e956d196e0e43b
+    lastState: {}
+    name: kube-bench
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: containerd://12658abeee3f213dfc4c0a2fb199ac2dbdaca597abf06c324e1504ea9c5ba6ca
+        exitCode: 0
+        finishedAt: '2023-08-06T10:55:50Z'
+        reason: Completed
+        startedAt: '2023-08-06T10:55:50Z'
+  hostIP: 192.168.123.202
+  phase: Succeeded
+  podIP: 10.42.1.21
+  podIPs:
+  - ip: 10.42.1.21
+  qosClass: BestEffort
+  startTime: '2023-08-06T10:55:49Z'
+---
+metadata:
+  annotations:
+    batch.kubernetes.io/job-tracking: ''
+  creationTimestamp: '2023-08-06T17:09:18Z'
+  generation: 1
+  labels:
+    app: kube-bench
+    batch.kubernetes.io/controller-uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+    batch.kubernetes.io/job-name: kube-bench
+    controller-uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+    job-name: kube-bench
+  managedFields:
+  - apiVersion: batch/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:app: {}
+      f:spec:
+        f:backoffLimit: {}
+        f:completionMode: {}
+        f:completions: {}
+        f:parallelism: {}
+        f:suspend: {}
+        f:template:
+          f:metadata:
+            f:labels:
+              .: {}
+              f:app: {}
+          f:spec:
+            f:containers:
+              k:{"name":"kube-bench"}:
+                .: {}
+                f:command: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+                f:volumeMounts:
+                  .: {}
+                  k:{"mountPath":"/etc/cni/net.d/"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/etc/kubernetes"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/etc/systemd"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/lib/systemd/"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/opt/cni/bin/"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/srv/kubernetes/"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/usr/local/mount-from-host/bin"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/var/lib/etcd"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/var/lib/kube-controller-manager"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/var/lib/kube-scheduler"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+                  k:{"mountPath":"/var/lib/kubelet"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:readOnly: {}
+            f:dnsPolicy: {}
+            f:hostPID: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:terminationGracePeriodSeconds: {}
+            f:volumes:
+              .: {}
+              k:{"name":"etc-cni-netd"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"etc-kubernetes"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"etc-systemd"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"lib-systemd"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"opt-cni-bin"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"srv-kubernetes"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"usr-bin"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"var-lib-etcd"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"var-lib-kube-controller-manager"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"var-lib-kube-scheduler"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"var-lib-kubelet"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+    manager: Kubernetes Java Client
+    operation: Update
+    time: '2023-08-06T17:09:18Z'
+  - apiVersion: batch/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:completionTime: {}
+        f:conditions: {}
+        f:ready: {}
+        f:startTime: {}
+        f:succeeded: {}
+        f:uncountedTerminatedPods: {}
+    manager: k3s
+    operation: Update
+    subresource: status
+    time: '2023-08-06T17:09:22Z'
+  name: kube-bench
+  namespace: kube-config-scanner
+  resourceVersion: '496384'
+  uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+spec:
+  backoffLimit: 6
+  completionMode: NonIndexed
+  completions: 1
+  parallelism: 1
+  selector:
+    matchLabels:
+      batch.kubernetes.io/controller-uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+  suspend: false
+  template:
+    metadata:
+      labels:
+        app: kube-bench
+        batch.kubernetes.io/controller-uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+        batch.kubernetes.io/job-name: kube-bench
+        controller-uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+        job-name: kube-bench
+    spec:
+      containers:
+      - command:
+        - kube-bench
+        image: docker.io/aquasec/kube-bench:v0.6.17
+        imagePullPolicy: IfNotPresent
+        name: kube-bench
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/lib/etcd
+          name: var-lib-etcd
+          readOnly: true
+        - mountPath: /var/lib/kubelet
+          name: var-lib-kubelet
+          readOnly: true
+        - mountPath: /var/lib/kube-scheduler
+          name: var-lib-kube-scheduler
+          readOnly: true
+        - mountPath: /var/lib/kube-controller-manager
+          name: var-lib-kube-controller-manager
+          readOnly: true
+        - mountPath: /etc/systemd
+          name: etc-systemd
+          readOnly: true
+        - mountPath: /lib/systemd/
+          name: lib-systemd
+          readOnly: true
+        - mountPath: /srv/kubernetes/
+          name: srv-kubernetes
+          readOnly: true
+        - mountPath: /etc/kubernetes
+          name: etc-kubernetes
+          readOnly: true
+        - mountPath: /usr/local/mount-from-host/bin
+          name: usr-bin
+          readOnly: true
+        - mountPath: /etc/cni/net.d/
+          name: etc-cni-netd
+          readOnly: true
+        - mountPath: /opt/cni/bin/
+          name: opt-cni-bin
+          readOnly: true
+      dnsPolicy: ClusterFirst
+      hostPID: true
+      restartPolicy: Never
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - hostPath:
+          type: ''
+          path: /var/lib/etcd
+        name: var-lib-etcd
+      - hostPath:
+          type: ''
+          path: /var/lib/kubelet
+        name: var-lib-kubelet
+      - hostPath:
+          type: ''
+          path: /var/lib/kube-scheduler
+        name: var-lib-kube-scheduler
+      - hostPath:
+          type: ''
+          path: /var/lib/kube-controller-manager
+        name: var-lib-kube-controller-manager
+      - hostPath:
+          type: ''
+          path: /etc/systemd
+        name: etc-systemd
+      - hostPath:
+          type: ''
+          path: /lib/systemd
+        name: lib-systemd
+      - hostPath:
+          type: ''
+          path: /srv/kubernetes
+        name: srv-kubernetes
+      - hostPath:
+          type: ''
+          path: /etc/kubernetes
+        name: etc-kubernetes
+      - hostPath:
+          type: ''
+          path: /usr/bin
+        name: usr-bin
+      - hostPath:
+          type: ''
+          path: /etc/cni/net.d/
+        name: etc-cni-netd
+      - hostPath:
+          type: ''
+          path: /opt/cni/bin/
+        name: opt-cni-bin
+status:
+  completionTime: '2023-08-06T17:09:22Z'
+  conditions:
+  - type: Complete
+    lastProbeTime: '2023-08-06T17:09:22Z'
+    lastTransitionTime: '2023-08-06T17:09:22Z'
+    status: 'True'
+  ready: 0
+  startTime: '2023-08-06T17:09:18Z'
+  succeeded: 1
+  uncountedTerminatedPods: {}
+---
+metadata:
+  annotations:
+    kubectl.kubernetes.io/restartedAt: '2023-08-09T18:08:33Z'
+  creationTimestamp: '2023-08-09T18:20:57Z'
+  generateName: kube-config-scanner-deployment-6d6c5b7d76-
+  labels:
+    app: kube-config-scanner
+    pod-template-hash: 6d6c5b7d76
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kubectl.kubernetes.io/restartedAt: {}
+        f:generateName: {}
+        f:labels:
+          .: {}
+          f:app: {}
+          f:pod-template-hash: {}
+        f:ownerReferences:
+          .: {}
+          k:{"uid":"a56a964d-0191-4c68-bcda-3f3d8f709b06"}: {}
+      f:spec:
+        f:containers:
+          k:{"name":"kube-config-scanner"}:
+            .: {}
+            f:env:
+              .: {}
+              k:{"name":"SPRING_DATA_MONGODB_DATABASE"}:
+                .: {}
+                f:name: {}
+                f:valueFrom:
+                  .: {}
+                  f:secretKeyRef: {}
+              k:{"name":"SPRING_DATA_MONGODB_URI"}:
+                .: {}
+                f:name: {}
+                f:valueFrom:
+                  .: {}
+                  f:secretKeyRef: {}
+            f:image: {}
+            f:imagePullPolicy: {}
+            f:name: {}
+            f:ports:
+              .: {}
+              k:{"containerPort":8080,"protocol":"TCP"}:
+                .: {}
+                f:containerPort: {}
+                f:protocol: {}
+            f:resources: {}
+            f:terminationMessagePath: {}
+            f:terminationMessagePolicy: {}
+            f:volumeMounts:
+              .: {}
+              k:{"mountPath":"/kube-config-scanner/logs"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+              k:{"mountPath":"/tmp/kube-config-scanner"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+        f:dnsPolicy: {}
+        f:enableServiceLinks: {}
+        f:restartPolicy: {}
+        f:schedulerName: {}
+        f:securityContext: {}
+        f:serviceAccount: {}
+        f:serviceAccountName: {}
+        f:terminationGracePeriodSeconds: {}
+        f:volumes:
+          .: {}
+          k:{"name":"logs-storage"}:
+            .: {}
+            f:name: {}
+            f:persistentVolumeClaim:
+              .: {}
+              f:claimName: {}
+          k:{"name":"temp-storage"}:
+            .: {}
+            f:emptyDir:
+              .: {}
+              f:sizeLimit: {}
+            f:name: {}
+    manager: k3s
+    operation: Update
+    time: '2023-08-09T18:20:57Z'
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:conditions:
+          k:{"type":"ContainersReady"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Initialized"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Ready"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:status: {}
+            f:type: {}
+        f:containerStatuses: {}
+        f:hostIP: {}
+        f:phase: {}
+        f:podIP: {}
+        f:podIPs:
+          .: {}
+          k:{"ip":"10.42.1.32"}:
+            .: {}
+            f:ip: {}
+        f:startTime: {}
+    manager: k3s
+    operation: Update
+    subresource: status
+    time: '2023-08-09T18:20:59Z'
+  name: kube-config-scanner-deployment-6d6c5b7d76-b77d5
+  namespace: kube-config-scanner
+  ownerReferences:
+  - apiVersion: apps/v1
+    kind: ReplicaSet
+    blockOwnerDeletion: true
+    controller: true
+    name: kube-config-scanner-deployment-6d6c5b7d76
+    uid: a56a964d-0191-4c68-bcda-3f3d8f709b06
+  resourceVersion: '602490'
+  uid: 74cc8d81-1235-4287-9b3a-3815f9465b61
+spec:
+  containers:
+  - env:
+    - name: SPRING_DATA_MONGODB_URI
+      valueFrom:
+        secretKeyRef:
+          key: SPRING_DATA_MONGODB_URI
+          name: mongodb-secret
+    - name: SPRING_DATA_MONGODB_DATABASE
+      valueFrom:
+        secretKeyRef:
+          key: SPRING_DATA_MONGODB_DATABASE
+          name: mongodb-secret
+    image: kamieniarzk/kube-config-scanner:latest
+    imagePullPolicy: Always
+    name: kube-config-scanner
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /tmp/kube-config-scanner
+      name: temp-storage
+    - mountPath: /kube-config-scanner/logs
+      name: logs-storage
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-gw6rr
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: ubuntu2
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: kube-config-scanner-serviceaccount
+  serviceAccountName: kube-config-scanner-serviceaccount
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - emptyDir:
+      sizeLimit: 200Mi
+    name: temp-storage
+  - name: logs-storage
+    persistentVolumeClaim:
+      claimName: kube-config-scanner-pvc
+  - name: kube-api-access-gw6rr
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - type: Initialized
+    lastTransitionTime: '2023-08-09T18:20:57Z'
+    status: 'True'
+  - type: Ready
+    lastTransitionTime: '2023-08-09T18:20:59Z'
+    status: 'True'
+  - type: ContainersReady
+    lastTransitionTime: '2023-08-09T18:20:59Z'
+    status: 'True'
+  - type: PodScheduled
+    lastTransitionTime: '2023-08-09T18:20:57Z'
+    status: 'True'
+  containerStatuses:
+  - containerID: containerd://325d2bc37419417a53e03c33990e684eef941ef1993e9960e6fe8e494c9d7791
+    image: docker.io/kamieniarzk/kube-config-scanner:latest
+    imageID: docker.io/kamieniarzk/kube-config-scanner@sha256:ab929cf968a55751e40ebef1cb009e568220882ee065fe986b64044ed4a5967b
+    lastState: {}
+    name: kube-config-scanner
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: '2023-08-09T18:20:59Z'
+  hostIP: 192.168.123.202
+  phase: Running
+  podIP: 10.42.1.32
+  podIPs:
+  - ip: 10.42.1.32
+  qosClass: BestEffort
+  startTime: '2023-08-09T18:20:57Z'
+---
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: '17'
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"kube-config-scanner-deployment","namespace":"kube-config-scanner"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"kube-config-scanner"}},"template":{"metadata":{"labels":{"app":"kube-config-scanner"}},"spec":{"containers":[{"env":[{"name":"SPRING_DATA_MONGODB_URI","valueFrom":{"secretKeyRef":{"key":"SPRING_DATA_MONGODB_URI","name":"mongodb-secret"}}},{"name":"SPRING_DATA_MONGODB_DATABASE","valueFrom":{"secretKeyRef":{"key":"SPRING_DATA_MONGODB_DATABASE","name":"mongodb-secret"}}}],"image":"kamieniarzk/kube-config-scanner:latest","name":"kube-config-scanner","ports":[{"containerPort":8080}],"volumeMounts":[{"mountPath":"/tmp/kube-config-scanner","name":"temp-storage"},{"mountPath":"/kube-config-scanner/logs","name":"logs-storage"}]}],"serviceAccountName":"kube-config-scanner-serviceaccount","volumes":[{"emptyDir":{"sizeLimit":"200Mi"},"name":"temp-storage"},{"name":"logs-storage","persistentVolumeClaim":{"claimName":"kube-config-scanner-pvc"}}]}}}}
+  creationTimestamp: '2023-07-29T09:30:12Z'
+  generation: 19
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:template:
+          f:metadata:
+            f:annotations:
+              .: {}
+              f:kubectl.kubernetes.io/restartedAt: {}
+    manager: dashboard
+    operation: Update
+    time: '2023-08-09T18:08:33Z'
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+      f:spec:
+        f:progressDeadlineSeconds: {}
+        f:revisionHistoryLimit: {}
+        f:selector: {}
+        f:strategy:
+          f:rollingUpdate:
+            .: {}
+            f:maxSurge: {}
+            f:maxUnavailable: {}
+          f:type: {}
+        f:template:
+          f:metadata:
+            f:labels:
+              .: {}
+              f:app: {}
+          f:spec:
+            f:containers:
+              k:{"name":"kube-config-scanner"}:
+                .: {}
+                f:env:
+                  .: {}
+                  k:{"name":"SPRING_DATA_MONGODB_DATABASE"}:
+                    .: {}
+                    f:name: {}
+                    f:valueFrom:
+                      .: {}
+                      f:secretKeyRef: {}
+                  k:{"name":"SPRING_DATA_MONGODB_URI"}:
+                    .: {}
+                    f:name: {}
+                    f:valueFrom:
+                      .: {}
+                      f:secretKeyRef: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:ports:
+                  .: {}
+                  k:{"containerPort":8080,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:protocol: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+                f:volumeMounts:
+                  .: {}
+                  k:{"mountPath":"/kube-config-scanner/logs"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                  k:{"mountPath":"/tmp/kube-config-scanner"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+            f:dnsPolicy: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:serviceAccount: {}
+            f:serviceAccountName: {}
+            f:terminationGracePeriodSeconds: {}
+            f:volumes:
+              .: {}
+              k:{"name":"logs-storage"}:
+                .: {}
+                f:name: {}
+                f:persistentVolumeClaim:
+                  .: {}
+                  f:claimName: {}
+              k:{"name":"temp-storage"}:
+                .: {}
+                f:emptyDir:
+                  .: {}
+                  f:sizeLimit: {}
+                f:name: {}
+    manager: kubectl-client-side-apply
+    operation: Update
+    time: '2023-08-09T18:20:56Z'
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:deployment.kubernetes.io/revision: {}
+      f:status:
+        f:availableReplicas: {}
+        f:conditions:
+          .: {}
+          k:{"type":"Available"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Progressing"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:observedGeneration: {}
+        f:readyReplicas: {}
+        f:replicas: {}
+        f:updatedReplicas: {}
+    manager: k3s
+    operation: Update
+    subresource: status
+    time: 2023-08-09T18:21Z
+  name: kube-config-scanner-deployment
+  namespace: kube-config-scanner
+  resourceVersion: '602504'
+  uid: bbeda7ef-c43d-44bc-b301-74b7a4fc16b9
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: kube-config-scanner
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/restartedAt: '2023-08-09T18:08:33Z'
+      labels:
+        app: kube-config-scanner
+    spec:
+      containers:
+      - env:
+        - name: SPRING_DATA_MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              key: SPRING_DATA_MONGODB_URI
+              name: mongodb-secret
+        - name: SPRING_DATA_MONGODB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              key: SPRING_DATA_MONGODB_DATABASE
+              name: mongodb-secret
+        image: kamieniarzk/kube-config-scanner:latest
+        imagePullPolicy: Always
+        name: kube-config-scanner
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /tmp/kube-config-scanner
+          name: temp-storage
+        - mountPath: /kube-config-scanner/logs
+          name: logs-storage
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: kube-config-scanner-serviceaccount
+      serviceAccountName: kube-config-scanner-serviceaccount
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir:
+          sizeLimit: 200Mi
+        name: temp-storage
+      - name: logs-storage
+        persistentVolumeClaim:
+          claimName: kube-config-scanner-pvc
+status:
+  availableReplicas: 1
+  conditions:
+  - type: Available
+    lastTransitionTime: '2023-08-09T18:08:40Z'
+    lastUpdateTime: '2023-08-09T18:08:40Z'
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: 'True'
+  - type: Progressing
+    lastTransitionTime: '2023-08-08T18:29:30Z'
+    lastUpdateTime: 2023-08-09T18:21Z
+    message: ReplicaSet "kube-config-scanner-deployment-6d6c5b7d76" has successfully
+      progressed.
+    reason: NewReplicaSetAvailable
+    status: 'True'
+  observedGeneration: 19
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
+---
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"ServiceAccount","metadata":{"annotations":{},"name":"kube-config-scanner-serviceaccount","namespace":"kube-config-scanner"}}
+  creationTimestamp: '2023-07-29T14:27:42Z'
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+    manager: kubectl-client-side-apply
+    operation: Update
+    time: '2023-07-29T14:27:42Z'
+  name: kube-config-scanner-serviceaccount
+  namespace: kube-config-scanner
+  resourceVersion: '215086'
+  uid: c8de0b1c-238a-45a6-ae43-25a5e9835c61
+---
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"kube-config-scanner","namespace":"kube-config-scanner"},"spec":{"ports":[{"port":8080}],"selector":{"app":"kube-config-scanner"},"type":"NodePort"}}
+  creationTimestamp: '2023-07-29T09:30:12Z'
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+      f:spec:
+        f:externalTrafficPolicy: {}
+        f:internalTrafficPolicy: {}
+        f:ports:
+          .: {}
+          k:{"port":8080,"protocol":"TCP"}:
+            .: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+        f:selector: {}
+        f:sessionAffinity: {}
+        f:type: {}
+    manager: kubectl-client-side-apply
+    operation: Update
+    time: '2023-07-29T09:30:12Z'
+  name: kube-config-scanner
+  namespace: kube-config-scanner
+  resourceVersion: '207584'
+  uid: d1d310cc-4e1c-4687-b34f-98056aceb8d7
+spec:
+  type: NodePort
+  clusterIP: 10.43.151.85
+  clusterIPs:
+  - 10.43.151.85
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 31060
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: kube-config-scanner
+  sessionAffinity: None
+status:
+  loadBalancer: {}
+---

@@ -19,9 +19,11 @@ import com.kcs.bench.KubeBenchService;
 import com.kcs.k8s.K8sResourceType;
 import com.kcs.k8s.YamlService;
 import com.kcs.log.LogService;
+import com.kcs.score.KubeScoreService;
 import com.kcs.shared.ScanRepository;
 import com.kcs.shared.ScanRun;
 import com.kcs.util.MiscUtils;
+import com.kcs.util.ProcessRunner;
 
 import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.ApiException;
@@ -44,18 +46,23 @@ public class ScanController {
   private final ScanRepository scanRepository;
   private final LogService logService;
   private final YamlService yamlService;
+  private final KubeScoreService kubeScoreService;
 
-  public ScanController(ApiClient apiClient, KubeBenchService kubeBenchService, ScanRepository scanRepository, LogService logService, YamlService yamlService) {
+  public ScanController(ApiClient apiClient, KubeBenchService kubeBenchService,
+      ScanRepository scanRepository, LogService logService,
+      YamlService yamlService, KubeScoreService kubeScoreService) {
     this.coreApi = new CoreV1Api(apiClient);
     this.kubeBenchService = kubeBenchService;
     this.scanRepository = scanRepository;
     this.logService = logService;
     this.yamlService = yamlService;
+    this.kubeScoreService = kubeScoreService;
   }
 
-  @GetMapping("/yaml-test/{namespace}/{name}")
-  String getResourceAsYaml(@PathVariable String namespace, @PathVariable String name, @RequestParam K8sResourceType resourceType) {
-    return yamlService.getAsYaml(name, namespace, resourceType);
+  @PostMapping("/kube-score/{namespace}")
+  String score(@PathVariable String namespace) throws IOException, InterruptedException {
+//    return ProcessRunner.run("ls -ltr").stdIn();
+    return kubeScoreService.score(namespace);
   }
 
   @GetMapping("/test")

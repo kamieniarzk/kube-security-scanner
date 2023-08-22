@@ -1,0 +1,2747 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE2OTAxMDcwODMwHhcNMjMwNzIzMTAxMTIzWhcNMzMwNzIwMTAxMTIz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE2OTAxMDcwODMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAAT4uIEV1G41v9Rzkgs3e0JHx2TYA8OS+jk93gebXtOo
+      Q0LMUJReFoAe8Eb0b/t9bNKhwNiVSwn8BfX3i1Mz0Evro0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUU8+HCSRZD+bnpnpHtwaV
+      grtG+T4wCgYIKoZIzj0EAwIDSAAwRQIhAO3lNAJpWVZhSezsHN+gVOcBNHKGLZCz
+      jXt70PgsJUVhAiAkWg3Q/I1qBHmo7xST1/7IqZnT6KyKrGeHFvH1SvdGNQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2023-07-29T09:25:56Z"
+    name: kube-root-ca.crt
+    namespace: kube-config-scanner
+    resourceVersion: "207475"
+    uid: 65a1b524-40b7-4274-b6e6-6003603212a2
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Endpoints
+  metadata:
+    creationTimestamp: "2023-07-29T09:30:12Z"
+    name: kube-config-scanner
+    namespace: kube-config-scanner
+    resourceVersion: "602500"
+    uid: 5fee46bb-e4fb-4b3f-88b9-e21c6355f0dc
+  subsets:
+  - addresses:
+    - ip: 10.42.1.32
+      nodeName: ubuntu2
+      targetRef:
+        kind: Pod
+        name: kube-config-scanner-deployment-6d6c5b7d76-b77d5
+        namespace: kube-config-scanner
+        uid: 74cc8d81-1235-4287-9b3a-3815f9465b61
+    ports:
+    - port: 8080
+      protocol: TCP
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"kube-config-scanner-pvc","namespace":"kube-config-scanner"},"spec":{"accessModes":["ReadWriteMany"],"resources":{"requests":{"storage":"1Gi"}}}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: rancher.io/local-path
+      volume.kubernetes.io/selected-node: ubuntu2
+      volume.kubernetes.io/storage-provisioner: rancher.io/local-path
+    creationTimestamp: "2023-08-08T18:13:09Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: kube-config-scanner-pvc
+    namespace: kube-config-scanner
+    resourceVersion: "567823"
+    uid: 0c0fff6d-ac52-4393-a3ad-c3095b1585b8
+  spec:
+    accessModes:
+    - ReadWriteMany
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: local-path
+    volumeMode: Filesystem
+    volumeName: pvc-0c0fff6d-ac52-4393-a3ad-c3095b1585b8
+  status:
+    accessModes:
+    - ReadWriteMany
+    capacity:
+      storage: 1Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2023-07-30T10:02:14Z"
+    generateName: kube-bench-
+    labels:
+      app: kube-bench
+      batch.kubernetes.io/controller-uid: 0f8e4226-5ce9-4663-8ddd-0a1bbee00a29
+      batch.kubernetes.io/job-name: kube-bench
+      controller-uid: 0f8e4226-5ce9-4663-8ddd-0a1bbee00a29
+      job-name: kube-bench
+    name: kube-bench-8d92t
+    namespace: kube-config-scanner
+    resourceVersion: "244342"
+    uid: 2c4ccac4-b811-46b0-860d-550e9d9008f5
+  spec:
+    containers:
+    - command:
+      - kube-bench
+      image: docker.io/aquasec/kube-bench:v0.6.17
+      imagePullPolicy: IfNotPresent
+      name: kube-bench
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/etcd
+        name: var-lib-etcd
+        readOnly: true
+      - mountPath: /var/lib/kubelet
+        name: var-lib-kubelet
+        readOnly: true
+      - mountPath: /var/lib/kube-scheduler
+        name: var-lib-kube-scheduler
+        readOnly: true
+      - mountPath: /var/lib/kube-controller-manager
+        name: var-lib-kube-controller-manager
+        readOnly: true
+      - mountPath: /etc/systemd
+        name: etc-systemd
+        readOnly: true
+      - mountPath: /lib/systemd/
+        name: lib-systemd
+        readOnly: true
+      - mountPath: /srv/kubernetes/
+        name: srv-kubernetes
+        readOnly: true
+      - mountPath: /etc/kubernetes
+        name: etc-kubernetes
+        readOnly: true
+      - mountPath: /usr/local/mount-from-host/bin
+        name: usr-bin
+        readOnly: true
+      - mountPath: /etc/cni/net.d/
+        name: etc-cni-netd
+        readOnly: true
+      - mountPath: /opt/cni/bin/
+        name: opt-cni-bin
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-6nf5s
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostPID: true
+    nodeName: ubuntu2
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - hostPath:
+        path: /var/lib/etcd
+        type: ""
+      name: var-lib-etcd
+    - hostPath:
+        path: /var/lib/kubelet
+        type: ""
+      name: var-lib-kubelet
+    - hostPath:
+        path: /var/lib/kube-scheduler
+        type: ""
+      name: var-lib-kube-scheduler
+    - hostPath:
+        path: /var/lib/kube-controller-manager
+        type: ""
+      name: var-lib-kube-controller-manager
+    - hostPath:
+        path: /etc/systemd
+        type: ""
+      name: etc-systemd
+    - hostPath:
+        path: /lib/systemd
+        type: ""
+      name: lib-systemd
+    - hostPath:
+        path: /srv/kubernetes
+        type: ""
+      name: srv-kubernetes
+    - hostPath:
+        path: /etc/kubernetes
+        type: ""
+      name: etc-kubernetes
+    - hostPath:
+        path: /usr/bin
+        type: ""
+      name: usr-bin
+    - hostPath:
+        path: /etc/cni/net.d/
+        type: ""
+      name: etc-cni-netd
+    - hostPath:
+        path: /opt/cni/bin/
+        type: ""
+      name: opt-cni-bin
+    - name: kube-api-access-6nf5s
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-07-30T10:02:14Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-07-30T10:02:14Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-07-30T10:02:14Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-07-30T10:02:14Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://3d371458adab98823d970ba1e2c169323c2e05cc779beb7b0ee65dca5f513ef6
+      image: docker.io/aquasec/kube-bench:v0.6.17
+      imageID: docker.io/aquasec/kube-bench@sha256:6672264accce02567ac0cda92407c9e4045f7e694c68286ce4e956d196e0e43b
+      lastState: {}
+      name: kube-bench
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://3d371458adab98823d970ba1e2c169323c2e05cc779beb7b0ee65dca5f513ef6
+          exitCode: 0
+          finishedAt: "2023-07-30T10:02:15Z"
+          reason: Completed
+          startedAt: "2023-07-30T10:02:15Z"
+    hostIP: 192.168.123.202
+    phase: Succeeded
+    podIP: 10.42.1.13
+    podIPs:
+    - ip: 10.42.1.13
+    qosClass: BestEffort
+    startTime: "2023-07-30T10:02:14Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2023-07-30T10:41:13Z"
+    generateName: kube-bench-
+    labels:
+      app: kube-bench
+      batch.kubernetes.io/controller-uid: cc71b931-6092-4bf1-8887-d0efa692827e
+      batch.kubernetes.io/job-name: kube-bench
+      controller-uid: cc71b931-6092-4bf1-8887-d0efa692827e
+      job-name: kube-bench
+    name: kube-bench-56wwh
+    namespace: kube-config-scanner
+    resourceVersion: "487225"
+    uid: c0122198-8e71-48d6-aac3-5b3c5c9f9424
+  spec:
+    containers:
+    - command:
+      - kube-bench
+      image: docker.io/aquasec/kube-bench:v0.6.17
+      imagePullPolicy: IfNotPresent
+      name: kube-bench
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/etcd
+        name: var-lib-etcd
+        readOnly: true
+      - mountPath: /var/lib/kubelet
+        name: var-lib-kubelet
+        readOnly: true
+      - mountPath: /var/lib/kube-scheduler
+        name: var-lib-kube-scheduler
+        readOnly: true
+      - mountPath: /var/lib/kube-controller-manager
+        name: var-lib-kube-controller-manager
+        readOnly: true
+      - mountPath: /etc/systemd
+        name: etc-systemd
+        readOnly: true
+      - mountPath: /lib/systemd/
+        name: lib-systemd
+        readOnly: true
+      - mountPath: /srv/kubernetes/
+        name: srv-kubernetes
+        readOnly: true
+      - mountPath: /etc/kubernetes
+        name: etc-kubernetes
+        readOnly: true
+      - mountPath: /usr/local/mount-from-host/bin
+        name: usr-bin
+        readOnly: true
+      - mountPath: /etc/cni/net.d/
+        name: etc-cni-netd
+        readOnly: true
+      - mountPath: /opt/cni/bin/
+        name: opt-cni-bin
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-s6qfz
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostPID: true
+    nodeName: ubuntu2
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - hostPath:
+        path: /var/lib/etcd
+        type: ""
+      name: var-lib-etcd
+    - hostPath:
+        path: /var/lib/kubelet
+        type: ""
+      name: var-lib-kubelet
+    - hostPath:
+        path: /var/lib/kube-scheduler
+        type: ""
+      name: var-lib-kube-scheduler
+    - hostPath:
+        path: /var/lib/kube-controller-manager
+        type: ""
+      name: var-lib-kube-controller-manager
+    - hostPath:
+        path: /etc/systemd
+        type: ""
+      name: etc-systemd
+    - hostPath:
+        path: /lib/systemd
+        type: ""
+      name: lib-systemd
+    - hostPath:
+        path: /srv/kubernetes
+        type: ""
+      name: srv-kubernetes
+    - hostPath:
+        path: /etc/kubernetes
+        type: ""
+      name: etc-kubernetes
+    - hostPath:
+        path: /usr/bin
+        type: ""
+      name: usr-bin
+    - hostPath:
+        path: /etc/cni/net.d/
+        type: ""
+      name: etc-cni-netd
+    - hostPath:
+        path: /opt/cni/bin/
+        type: ""
+      name: opt-cni-bin
+    - name: kube-api-access-s6qfz
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-07-30T10:41:13Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-07-30T10:41:13Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-07-30T10:41:13Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-07-30T10:41:13Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://daca9971a170c7749ea86bbcd7711313d9c859decf327de80452bd50772e4db8
+      image: docker.io/aquasec/kube-bench:v0.6.17
+      imageID: docker.io/aquasec/kube-bench@sha256:6672264accce02567ac0cda92407c9e4045f7e694c68286ce4e956d196e0e43b
+      lastState: {}
+      name: kube-bench
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://daca9971a170c7749ea86bbcd7711313d9c859decf327de80452bd50772e4db8
+          exitCode: 0
+          finishedAt: "2023-07-30T10:41:14Z"
+          reason: Completed
+          startedAt: "2023-07-30T10:41:14Z"
+    hostIP: 192.168.123.202
+    phase: Succeeded
+    podIP: 10.42.1.14
+    podIPs:
+    - ip: 10.42.1.14
+    qosClass: BestEffort
+    startTime: "2023-07-30T10:41:13Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2023-08-06T10:53:15Z"
+    generateName: kube-bench-
+    labels:
+      app: kube-bench
+      batch.kubernetes.io/controller-uid: 3339f5fe-7d2e-47d7-8425-f6eaf4a053e9
+      batch.kubernetes.io/job-name: kube-bench
+      controller-uid: 3339f5fe-7d2e-47d7-8425-f6eaf4a053e9
+      job-name: kube-bench
+    name: kube-bench-8m572
+    namespace: kube-config-scanner
+    resourceVersion: "487308"
+    uid: ff0a785c-2155-416a-b884-7952bf9d4dab
+  spec:
+    containers:
+    - command:
+      - kube-bench
+      image: docker.io/aquasec/kube-bench:v0.6.17
+      imagePullPolicy: IfNotPresent
+      name: kube-bench
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/etcd
+        name: var-lib-etcd
+        readOnly: true
+      - mountPath: /var/lib/kubelet
+        name: var-lib-kubelet
+        readOnly: true
+      - mountPath: /var/lib/kube-scheduler
+        name: var-lib-kube-scheduler
+        readOnly: true
+      - mountPath: /var/lib/kube-controller-manager
+        name: var-lib-kube-controller-manager
+        readOnly: true
+      - mountPath: /etc/systemd
+        name: etc-systemd
+        readOnly: true
+      - mountPath: /lib/systemd/
+        name: lib-systemd
+        readOnly: true
+      - mountPath: /srv/kubernetes/
+        name: srv-kubernetes
+        readOnly: true
+      - mountPath: /etc/kubernetes
+        name: etc-kubernetes
+        readOnly: true
+      - mountPath: /usr/local/mount-from-host/bin
+        name: usr-bin
+        readOnly: true
+      - mountPath: /etc/cni/net.d/
+        name: etc-cni-netd
+        readOnly: true
+      - mountPath: /opt/cni/bin/
+        name: opt-cni-bin
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-shk8n
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostPID: true
+    nodeName: ubuntu2
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - hostPath:
+        path: /var/lib/etcd
+        type: ""
+      name: var-lib-etcd
+    - hostPath:
+        path: /var/lib/kubelet
+        type: ""
+      name: var-lib-kubelet
+    - hostPath:
+        path: /var/lib/kube-scheduler
+        type: ""
+      name: var-lib-kube-scheduler
+    - hostPath:
+        path: /var/lib/kube-controller-manager
+        type: ""
+      name: var-lib-kube-controller-manager
+    - hostPath:
+        path: /etc/systemd
+        type: ""
+      name: etc-systemd
+    - hostPath:
+        path: /lib/systemd
+        type: ""
+      name: lib-systemd
+    - hostPath:
+        path: /srv/kubernetes
+        type: ""
+      name: srv-kubernetes
+    - hostPath:
+        path: /etc/kubernetes
+        type: ""
+      name: etc-kubernetes
+    - hostPath:
+        path: /usr/bin
+        type: ""
+      name: usr-bin
+    - hostPath:
+        path: /etc/cni/net.d/
+        type: ""
+      name: etc-cni-netd
+    - hostPath:
+        path: /opt/cni/bin/
+        type: ""
+      name: opt-cni-bin
+    - name: kube-api-access-shk8n
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-06T10:53:15Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-06T10:53:15Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-06T10:53:15Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-06T10:53:15Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://4a0fd5b37bfc84c3086b0e2cc421a59c786d67578f52e7d49a0284e6914dd40a
+      image: docker.io/aquasec/kube-bench:v0.6.17
+      imageID: docker.io/aquasec/kube-bench@sha256:6672264accce02567ac0cda92407c9e4045f7e694c68286ce4e956d196e0e43b
+      lastState: {}
+      name: kube-bench
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://4a0fd5b37bfc84c3086b0e2cc421a59c786d67578f52e7d49a0284e6914dd40a
+          exitCode: 0
+          finishedAt: "2023-08-06T10:53:16Z"
+          reason: Completed
+          startedAt: "2023-08-06T10:53:16Z"
+    hostIP: 192.168.123.202
+    phase: Succeeded
+    podIP: 10.42.1.20
+    podIPs:
+    - ip: 10.42.1.20
+    qosClass: BestEffort
+    startTime: "2023-08-06T10:53:15Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2023-08-06T10:55:49Z"
+    generateName: kube-bench-
+    labels:
+      app: kube-bench
+      batch.kubernetes.io/controller-uid: ba9022c5-cb6a-4551-bee1-bc53285098b4
+      batch.kubernetes.io/job-name: kube-bench
+      controller-uid: ba9022c5-cb6a-4551-bee1-bc53285098b4
+      job-name: kube-bench
+    name: kube-bench-zhptc
+    namespace: kube-config-scanner
+    resourceVersion: "495896"
+    uid: ade7c821-f8e2-4abc-b9c2-97d392543abb
+  spec:
+    containers:
+    - command:
+      - kube-bench
+      image: docker.io/aquasec/kube-bench:v0.6.17
+      imagePullPolicy: IfNotPresent
+      name: kube-bench
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/etcd
+        name: var-lib-etcd
+        readOnly: true
+      - mountPath: /var/lib/kubelet
+        name: var-lib-kubelet
+        readOnly: true
+      - mountPath: /var/lib/kube-scheduler
+        name: var-lib-kube-scheduler
+        readOnly: true
+      - mountPath: /var/lib/kube-controller-manager
+        name: var-lib-kube-controller-manager
+        readOnly: true
+      - mountPath: /etc/systemd
+        name: etc-systemd
+        readOnly: true
+      - mountPath: /lib/systemd/
+        name: lib-systemd
+        readOnly: true
+      - mountPath: /srv/kubernetes/
+        name: srv-kubernetes
+        readOnly: true
+      - mountPath: /etc/kubernetes
+        name: etc-kubernetes
+        readOnly: true
+      - mountPath: /usr/local/mount-from-host/bin
+        name: usr-bin
+        readOnly: true
+      - mountPath: /etc/cni/net.d/
+        name: etc-cni-netd
+        readOnly: true
+      - mountPath: /opt/cni/bin/
+        name: opt-cni-bin
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7q94n
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostPID: true
+    nodeName: ubuntu2
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - hostPath:
+        path: /var/lib/etcd
+        type: ""
+      name: var-lib-etcd
+    - hostPath:
+        path: /var/lib/kubelet
+        type: ""
+      name: var-lib-kubelet
+    - hostPath:
+        path: /var/lib/kube-scheduler
+        type: ""
+      name: var-lib-kube-scheduler
+    - hostPath:
+        path: /var/lib/kube-controller-manager
+        type: ""
+      name: var-lib-kube-controller-manager
+    - hostPath:
+        path: /etc/systemd
+        type: ""
+      name: etc-systemd
+    - hostPath:
+        path: /lib/systemd
+        type: ""
+      name: lib-systemd
+    - hostPath:
+        path: /srv/kubernetes
+        type: ""
+      name: srv-kubernetes
+    - hostPath:
+        path: /etc/kubernetes
+        type: ""
+      name: etc-kubernetes
+    - hostPath:
+        path: /usr/bin
+        type: ""
+      name: usr-bin
+    - hostPath:
+        path: /etc/cni/net.d/
+        type: ""
+      name: etc-cni-netd
+    - hostPath:
+        path: /opt/cni/bin/
+        type: ""
+      name: opt-cni-bin
+    - name: kube-api-access-7q94n
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-06T10:55:49Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-06T10:55:51Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-06T10:55:51Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-06T10:55:49Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://12658abeee3f213dfc4c0a2fb199ac2dbdaca597abf06c324e1504ea9c5ba6ca
+      image: docker.io/aquasec/kube-bench:v0.6.17
+      imageID: docker.io/aquasec/kube-bench@sha256:6672264accce02567ac0cda92407c9e4045f7e694c68286ce4e956d196e0e43b
+      lastState: {}
+      name: kube-bench
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://12658abeee3f213dfc4c0a2fb199ac2dbdaca597abf06c324e1504ea9c5ba6ca
+          exitCode: 0
+          finishedAt: "2023-08-06T10:55:50Z"
+          reason: Completed
+          startedAt: "2023-08-06T10:55:50Z"
+    hostIP: 192.168.123.202
+    phase: Succeeded
+    podIP: 10.42.1.21
+    podIPs:
+    - ip: 10.42.1.21
+    qosClass: BestEffort
+    startTime: "2023-08-06T10:55:49Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2023-08-06T16:51:44Z"
+    generateName: kube-bench-
+    labels:
+      app: kube-bench
+      batch.kubernetes.io/controller-uid: 83a1c202-ab97-47d2-8e95-4c9d87a644c3
+      batch.kubernetes.io/job-name: kube-bench
+      controller-uid: 83a1c202-ab97-47d2-8e95-4c9d87a644c3
+      job-name: kube-bench
+    name: kube-bench-lc6r6
+    namespace: kube-config-scanner
+    resourceVersion: "496080"
+    uid: b821ffce-3fd2-44ae-a32b-cb6667ba04cc
+  spec:
+    containers:
+    - command:
+      - kube-bench
+      image: docker.io/aquasec/kube-bench:v0.6.17
+      imagePullPolicy: IfNotPresent
+      name: kube-bench
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/etcd
+        name: var-lib-etcd
+        readOnly: true
+      - mountPath: /var/lib/kubelet
+        name: var-lib-kubelet
+        readOnly: true
+      - mountPath: /var/lib/kube-scheduler
+        name: var-lib-kube-scheduler
+        readOnly: true
+      - mountPath: /var/lib/kube-controller-manager
+        name: var-lib-kube-controller-manager
+        readOnly: true
+      - mountPath: /etc/systemd
+        name: etc-systemd
+        readOnly: true
+      - mountPath: /lib/systemd/
+        name: lib-systemd
+        readOnly: true
+      - mountPath: /srv/kubernetes/
+        name: srv-kubernetes
+        readOnly: true
+      - mountPath: /etc/kubernetes
+        name: etc-kubernetes
+        readOnly: true
+      - mountPath: /usr/local/mount-from-host/bin
+        name: usr-bin
+        readOnly: true
+      - mountPath: /etc/cni/net.d/
+        name: etc-cni-netd
+        readOnly: true
+      - mountPath: /opt/cni/bin/
+        name: opt-cni-bin
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-s7l4n
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostPID: true
+    nodeName: ubuntu2
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - hostPath:
+        path: /var/lib/etcd
+        type: ""
+      name: var-lib-etcd
+    - hostPath:
+        path: /var/lib/kubelet
+        type: ""
+      name: var-lib-kubelet
+    - hostPath:
+        path: /var/lib/kube-scheduler
+        type: ""
+      name: var-lib-kube-scheduler
+    - hostPath:
+        path: /var/lib/kube-controller-manager
+        type: ""
+      name: var-lib-kube-controller-manager
+    - hostPath:
+        path: /etc/systemd
+        type: ""
+      name: etc-systemd
+    - hostPath:
+        path: /lib/systemd
+        type: ""
+      name: lib-systemd
+    - hostPath:
+        path: /srv/kubernetes
+        type: ""
+      name: srv-kubernetes
+    - hostPath:
+        path: /etc/kubernetes
+        type: ""
+      name: etc-kubernetes
+    - hostPath:
+        path: /usr/bin
+        type: ""
+      name: usr-bin
+    - hostPath:
+        path: /etc/cni/net.d/
+        type: ""
+      name: etc-cni-netd
+    - hostPath:
+        path: /opt/cni/bin/
+        type: ""
+      name: opt-cni-bin
+    - name: kube-api-access-s7l4n
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-06T16:51:44Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-06T16:51:46Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-06T16:51:46Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-06T16:51:44Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://23d3d7e9d423701d4b551bfc45e7111ba2007031371fe2cf52e97e0f5bb344e3
+      image: docker.io/aquasec/kube-bench:v0.6.17
+      imageID: docker.io/aquasec/kube-bench@sha256:6672264accce02567ac0cda92407c9e4045f7e694c68286ce4e956d196e0e43b
+      lastState: {}
+      name: kube-bench
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://23d3d7e9d423701d4b551bfc45e7111ba2007031371fe2cf52e97e0f5bb344e3
+          exitCode: 0
+          finishedAt: "2023-08-06T16:51:45Z"
+          reason: Completed
+          startedAt: "2023-08-06T16:51:45Z"
+    hostIP: 192.168.123.202
+    phase: Succeeded
+    podIP: 10.42.1.22
+    podIPs:
+    - ip: 10.42.1.22
+    qosClass: BestEffort
+    startTime: "2023-08-06T16:51:44Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2023-08-06T16:58:27Z"
+    generateName: kube-bench-
+    labels:
+      app: kube-bench
+      batch.kubernetes.io/controller-uid: 5a293f28-aa82-482a-83ef-ceed3f1ac604
+      batch.kubernetes.io/job-name: kube-bench
+      controller-uid: 5a293f28-aa82-482a-83ef-ceed3f1ac604
+      job-name: kube-bench
+    name: kube-bench-pqcs8
+    namespace: kube-config-scanner
+    resourceVersion: "496361"
+    uid: 3459717d-182a-4a4a-b286-59f3a9772cb3
+  spec:
+    containers:
+    - command:
+      - kube-bench
+      image: docker.io/aquasec/kube-bench:v0.6.17
+      imagePullPolicy: IfNotPresent
+      name: kube-bench
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/etcd
+        name: var-lib-etcd
+        readOnly: true
+      - mountPath: /var/lib/kubelet
+        name: var-lib-kubelet
+        readOnly: true
+      - mountPath: /var/lib/kube-scheduler
+        name: var-lib-kube-scheduler
+        readOnly: true
+      - mountPath: /var/lib/kube-controller-manager
+        name: var-lib-kube-controller-manager
+        readOnly: true
+      - mountPath: /etc/systemd
+        name: etc-systemd
+        readOnly: true
+      - mountPath: /lib/systemd/
+        name: lib-systemd
+        readOnly: true
+      - mountPath: /srv/kubernetes/
+        name: srv-kubernetes
+        readOnly: true
+      - mountPath: /etc/kubernetes
+        name: etc-kubernetes
+        readOnly: true
+      - mountPath: /usr/local/mount-from-host/bin
+        name: usr-bin
+        readOnly: true
+      - mountPath: /etc/cni/net.d/
+        name: etc-cni-netd
+        readOnly: true
+      - mountPath: /opt/cni/bin/
+        name: opt-cni-bin
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-xgfjb
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostPID: true
+    nodeName: ubuntu2
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - hostPath:
+        path: /var/lib/etcd
+        type: ""
+      name: var-lib-etcd
+    - hostPath:
+        path: /var/lib/kubelet
+        type: ""
+      name: var-lib-kubelet
+    - hostPath:
+        path: /var/lib/kube-scheduler
+        type: ""
+      name: var-lib-kube-scheduler
+    - hostPath:
+        path: /var/lib/kube-controller-manager
+        type: ""
+      name: var-lib-kube-controller-manager
+    - hostPath:
+        path: /etc/systemd
+        type: ""
+      name: etc-systemd
+    - hostPath:
+        path: /lib/systemd
+        type: ""
+      name: lib-systemd
+    - hostPath:
+        path: /srv/kubernetes
+        type: ""
+      name: srv-kubernetes
+    - hostPath:
+        path: /etc/kubernetes
+        type: ""
+      name: etc-kubernetes
+    - hostPath:
+        path: /usr/bin
+        type: ""
+      name: usr-bin
+    - hostPath:
+        path: /etc/cni/net.d/
+        type: ""
+      name: etc-cni-netd
+    - hostPath:
+        path: /opt/cni/bin/
+        type: ""
+      name: opt-cni-bin
+    - name: kube-api-access-xgfjb
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-06T16:58:27Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-06T16:58:27Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-06T16:58:27Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-06T16:58:27Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://557324c4da174caff092d217ce852a7c4d59cd14a96d81f4776ea1d3e7483bcc
+      image: docker.io/aquasec/kube-bench:v0.6.17
+      imageID: docker.io/aquasec/kube-bench@sha256:6672264accce02567ac0cda92407c9e4045f7e694c68286ce4e956d196e0e43b
+      lastState: {}
+      name: kube-bench
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://557324c4da174caff092d217ce852a7c4d59cd14a96d81f4776ea1d3e7483bcc
+          exitCode: 0
+          finishedAt: "2023-08-06T16:58:28Z"
+          reason: Completed
+          startedAt: "2023-08-06T16:58:28Z"
+    hostIP: 192.168.123.202
+    phase: Succeeded
+    podIP: 10.42.1.23
+    podIPs:
+    - ip: 10.42.1.23
+    qosClass: BestEffort
+    startTime: "2023-08-06T16:58:27Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/restartedAt: "2023-08-09T18:08:33Z"
+    creationTimestamp: "2023-08-09T18:20:57Z"
+    generateName: kube-config-scanner-deployment-6d6c5b7d76-
+    labels:
+      app: kube-config-scanner
+      pod-template-hash: 6d6c5b7d76
+    name: kube-config-scanner-deployment-6d6c5b7d76-b77d5
+    namespace: kube-config-scanner
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: kube-config-scanner-deployment-6d6c5b7d76
+      uid: a56a964d-0191-4c68-bcda-3f3d8f709b06
+    resourceVersion: "602490"
+    uid: 74cc8d81-1235-4287-9b3a-3815f9465b61
+  spec:
+    containers:
+    - env:
+      - name: SPRING_DATA_MONGODB_URI
+        valueFrom:
+          secretKeyRef:
+            key: SPRING_DATA_MONGODB_URI
+            name: mongodb-secret
+      - name: SPRING_DATA_MONGODB_DATABASE
+        valueFrom:
+          secretKeyRef:
+            key: SPRING_DATA_MONGODB_DATABASE
+            name: mongodb-secret
+      image: kamieniarzk/kube-config-scanner:latest
+      imagePullPolicy: Always
+      name: kube-config-scanner
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /tmp/kube-config-scanner
+        name: temp-storage
+      - mountPath: /kube-config-scanner/logs
+        name: logs-storage
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-gw6rr
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ubuntu2
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: kube-config-scanner-serviceaccount
+    serviceAccountName: kube-config-scanner-serviceaccount
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - emptyDir:
+        sizeLimit: 200Mi
+      name: temp-storage
+    - name: logs-storage
+      persistentVolumeClaim:
+        claimName: kube-config-scanner-pvc
+    - name: kube-api-access-gw6rr
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-09T18:20:57Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-09T18:20:59Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-09T18:20:59Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-08-09T18:20:57Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://325d2bc37419417a53e03c33990e684eef941ef1993e9960e6fe8e494c9d7791
+      image: docker.io/kamieniarzk/kube-config-scanner:latest
+      imageID: docker.io/kamieniarzk/kube-config-scanner@sha256:ab929cf968a55751e40ebef1cb009e568220882ee065fe986b64044ed4a5967b
+      lastState: {}
+      name: kube-config-scanner
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-08-09T18:20:59Z"
+    hostIP: 192.168.123.202
+    phase: Running
+    podIP: 10.42.1.32
+    podIPs:
+    - ip: 10.42.1.32
+    qosClass: BestEffort
+    startTime: "2023-08-09T18:20:57Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    SPRING_DATA_MONGODB_DATABASE: a3ViZS1jb25maWctc2Nhbm5lci1kYg==
+    SPRING_DATA_MONGODB_URI: bW9uZ29kYitzcnY6Ly9rdWJlLWNvbmZpZy1zY2FubmVyOmVTMkIyanRxVGR6anJRaVZAa3ViZS1jb25maWctc2Nhbm5lci1kYi50ZGR2NXpqLm1vbmdvZGIubmV0L2t1YmUtY29uZmlnLXNjYW5uZXItZGI=
+  kind: Secret
+  metadata:
+    creationTimestamp: "2023-08-09T18:20:16Z"
+    name: mongodb-secret
+    namespace: kube-config-scanner
+    resourceVersion: "602455"
+    uid: 2cb2dad1-ce2b-41ce-a0f5-0594ee33ac9c
+  type: Opaque
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    creationTimestamp: "2023-07-29T09:25:56Z"
+    name: default
+    namespace: kube-config-scanner
+    resourceVersion: "207474"
+    uid: 449af671-4193-485d-9853-fd2aad77ea81
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"ServiceAccount","metadata":{"annotations":{},"name":"kube-config-scanner-serviceaccount","namespace":"kube-config-scanner"}}
+    creationTimestamp: "2023-07-29T14:27:42Z"
+    name: kube-config-scanner-serviceaccount
+    namespace: kube-config-scanner
+    resourceVersion: "215086"
+    uid: c8de0b1c-238a-45a6-ae43-25a5e9835c61
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"kube-config-scanner","namespace":"kube-config-scanner"},"spec":{"ports":[{"port":8080}],"selector":{"app":"kube-config-scanner"},"type":"NodePort"}}
+    creationTimestamp: "2023-07-29T09:30:12Z"
+    name: kube-config-scanner
+    namespace: kube-config-scanner
+    resourceVersion: "207584"
+    uid: d1d310cc-4e1c-4687-b34f-98056aceb8d7
+  spec:
+    clusterIP: 10.43.151.85
+    clusterIPs:
+    - 10.43.151.85
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - nodePort: 31060
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: kube-config-scanner
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "17"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"kube-config-scanner-deployment","namespace":"kube-config-scanner"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"kube-config-scanner"}},"template":{"metadata":{"labels":{"app":"kube-config-scanner"}},"spec":{"containers":[{"env":[{"name":"SPRING_DATA_MONGODB_URI","valueFrom":{"secretKeyRef":{"key":"SPRING_DATA_MONGODB_URI","name":"mongodb-secret"}}},{"name":"SPRING_DATA_MONGODB_DATABASE","valueFrom":{"secretKeyRef":{"key":"SPRING_DATA_MONGODB_DATABASE","name":"mongodb-secret"}}}],"image":"kamieniarzk/kube-config-scanner:latest","name":"kube-config-scanner","ports":[{"containerPort":8080}],"volumeMounts":[{"mountPath":"/tmp/kube-config-scanner","name":"temp-storage"},{"mountPath":"/kube-config-scanner/logs","name":"logs-storage"}]}],"serviceAccountName":"kube-config-scanner-serviceaccount","volumes":[{"emptyDir":{"sizeLimit":"200Mi"},"name":"temp-storage"},{"name":"logs-storage","persistentVolumeClaim":{"claimName":"kube-config-scanner-pvc"}}]}}}}
+    creationTimestamp: "2023-07-29T09:30:12Z"
+    generation: 19
+    name: kube-config-scanner-deployment
+    namespace: kube-config-scanner
+    resourceVersion: "602504"
+    uid: bbeda7ef-c43d-44bc-b301-74b7a4fc16b9
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: kube-config-scanner
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2023-08-09T18:08:33Z"
+        creationTimestamp: null
+        labels:
+          app: kube-config-scanner
+      spec:
+        containers:
+        - env:
+          - name: SPRING_DATA_MONGODB_URI
+            valueFrom:
+              secretKeyRef:
+                key: SPRING_DATA_MONGODB_URI
+                name: mongodb-secret
+          - name: SPRING_DATA_MONGODB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                key: SPRING_DATA_MONGODB_DATABASE
+                name: mongodb-secret
+          image: kamieniarzk/kube-config-scanner:latest
+          imagePullPolicy: Always
+          name: kube-config-scanner
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/kube-config-scanner
+            name: temp-storage
+          - mountPath: /kube-config-scanner/logs
+            name: logs-storage
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-config-scanner-serviceaccount
+        serviceAccountName: kube-config-scanner-serviceaccount
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir:
+            sizeLimit: 200Mi
+          name: temp-storage
+        - name: logs-storage
+          persistentVolumeClaim:
+            claimName: kube-config-scanner-pvc
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-08-09T18:08:40Z"
+      lastUpdateTime: "2023-08-09T18:08:40Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2023-08-08T18:29:30Z"
+      lastUpdateTime: "2023-08-09T18:21:00Z"
+      message: ReplicaSet "kube-config-scanner-deployment-6d6c5b7d76" has successfully
+        progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 19
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "7"
+    creationTimestamp: "2023-08-05T10:31:10Z"
+    generation: 2
+    labels:
+      app: kube-config-scanner
+      pod-template-hash: 7b94fff5f4
+    name: kube-config-scanner-deployment-7b94fff5f4
+    namespace: kube-config-scanner
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: kube-config-scanner-deployment
+      uid: bbeda7ef-c43d-44bc-b301-74b7a4fc16b9
+    resourceVersion: "452066"
+    uid: afca802f-a2a3-477d-b679-84acaef175c0
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: kube-config-scanner
+        pod-template-hash: 7b94fff5f4
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2023-08-05T10:31:10Z"
+        creationTimestamp: null
+        labels:
+          app: kube-config-scanner
+          pod-template-hash: 7b94fff5f4
+      spec:
+        containers:
+        - image: kamieniarzk/kube-config-scanner:latest
+          imagePullPolicy: Always
+          name: kube-config-scanner
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-config-scanner-serviceaccount
+        serviceAccountName: kube-config-scanner-serviceaccount
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "8"
+    creationTimestamp: "2023-08-05T10:35:41Z"
+    generation: 2
+    labels:
+      app: kube-config-scanner
+      pod-template-hash: 6dfdbf9cd4
+    name: kube-config-scanner-deployment-6dfdbf9cd4
+    namespace: kube-config-scanner
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: kube-config-scanner-deployment
+      uid: bbeda7ef-c43d-44bc-b301-74b7a4fc16b9
+    resourceVersion: "452990"
+    uid: 1121cb6d-ac05-4451-9d98-6aa66a33d0b1
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: kube-config-scanner
+        pod-template-hash: 6dfdbf9cd4
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2023-08-05T10:35:41Z"
+        creationTimestamp: null
+        labels:
+          app: kube-config-scanner
+          pod-template-hash: 6dfdbf9cd4
+      spec:
+        containers:
+        - image: kamieniarzk/kube-config-scanner:latest
+          imagePullPolicy: Always
+          name: kube-config-scanner
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-config-scanner-serviceaccount
+        serviceAccountName: kube-config-scanner-serviceaccount
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "9"
+    creationTimestamp: "2023-08-05T11:12:41Z"
+    generation: 2
+    labels:
+      app: kube-config-scanner
+      pod-template-hash: 595d4db6d4
+    name: kube-config-scanner-deployment-595d4db6d4
+    namespace: kube-config-scanner
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: kube-config-scanner-deployment
+      uid: bbeda7ef-c43d-44bc-b301-74b7a4fc16b9
+    resourceVersion: "453074"
+    uid: 39d34aa4-3b3f-4729-b6e4-a1b7eba7b330
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: kube-config-scanner
+        pod-template-hash: 595d4db6d4
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2023-08-05T10:35:41Z"
+        creationTimestamp: null
+        labels:
+          app: kube-config-scanner
+          pod-template-hash: 595d4db6d4
+      spec:
+        containers:
+        - image: kamieniarzk/kube-config-scanner:latest
+          imagePullPolicy: Always
+          name: kube-config-scanner
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/storage
+            name: temp-storage
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-config-scanner-serviceaccount
+        serviceAccountName: kube-config-scanner-serviceaccount
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir:
+            sizeLimit: 200Mi
+          name: temp-storage
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "11"
+    creationTimestamp: "2023-08-08T18:13:09Z"
+    generation: 2
+    labels:
+      app: kube-config-scanner
+      pod-template-hash: bc84dc9d8
+    name: kube-config-scanner-deployment-bc84dc9d8
+    namespace: kube-config-scanner
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: kube-config-scanner-deployment
+      uid: bbeda7ef-c43d-44bc-b301-74b7a4fc16b9
+    resourceVersion: "567669"
+    uid: 5c95531a-7e8d-4d83-b918-162191eb60f5
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: kube-config-scanner
+        pod-template-hash: bc84dc9d8
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2023-08-05T10:35:41Z"
+        creationTimestamp: null
+        labels:
+          app: kube-config-scanner
+          pod-template-hash: bc84dc9d8
+      spec:
+        containers:
+        - image: kamieniarzk/kube-config-scanner:latest
+          imagePullPolicy: Always
+          name: kube-config-scanner
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/kube-config-scanner
+            name: temp-storage
+          - mountPath: /kube-config-scanner/logs
+            name: logs-storage
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-config-scanner-serviceaccount
+        serviceAccountName: kube-config-scanner-serviceaccount
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir:
+            sizeLimit: 200Mi
+          name: temp-storage
+        - name: logs-storage
+          persistentVolumeClaim:
+            claimName: kube-config-scanner-pvc
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "10"
+    creationTimestamp: "2023-08-05T11:14:37Z"
+    generation: 2
+    labels:
+      app: kube-config-scanner
+      pod-template-hash: 7c6dc7d48d
+    name: kube-config-scanner-deployment-7c6dc7d48d
+    namespace: kube-config-scanner
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: kube-config-scanner-deployment
+      uid: bbeda7ef-c43d-44bc-b301-74b7a4fc16b9
+    resourceVersion: "567847"
+    uid: 62788d5f-1052-4e65-a1ad-733d540b8973
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: kube-config-scanner
+        pod-template-hash: 7c6dc7d48d
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2023-08-05T10:35:41Z"
+        creationTimestamp: null
+        labels:
+          app: kube-config-scanner
+          pod-template-hash: 7c6dc7d48d
+      spec:
+        containers:
+        - image: kamieniarzk/kube-config-scanner:latest
+          imagePullPolicy: Always
+          name: kube-config-scanner
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/kube-config-scanner
+            name: temp-storage
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-config-scanner-serviceaccount
+        serviceAccountName: kube-config-scanner-serviceaccount
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir:
+            sizeLimit: 200Mi
+          name: temp-storage
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "12"
+    creationTimestamp: "2023-08-08T18:29:30Z"
+    generation: 3
+    labels:
+      app: kube-config-scanner
+      pod-template-hash: 58b7757794
+    name: kube-config-scanner-deployment-58b7757794
+    namespace: kube-config-scanner
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: kube-config-scanner-deployment
+      uid: bbeda7ef-c43d-44bc-b301-74b7a4fc16b9
+    resourceVersion: "567927"
+    uid: c33fc2cc-4de7-47f4-8b77-95cd81bd0097
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: kube-config-scanner
+        pod-template-hash: 58b7757794
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2023-08-08T18:29:30Z"
+        creationTimestamp: null
+        labels:
+          app: kube-config-scanner
+          pod-template-hash: 58b7757794
+      spec:
+        containers:
+        - image: kamieniarzk/kube-config-scanner:latest
+          imagePullPolicy: Always
+          name: kube-config-scanner
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/kube-config-scanner
+            name: temp-storage
+          - mountPath: /kube-config-scanner/logs
+            name: logs-storage
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-config-scanner-serviceaccount
+        serviceAccountName: kube-config-scanner-serviceaccount
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir:
+            sizeLimit: 200Mi
+          name: temp-storage
+        - name: logs-storage
+          persistentVolumeClaim:
+            claimName: kube-config-scanner-pvc
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "13"
+    creationTimestamp: "2023-08-08T18:35:24Z"
+    generation: 2
+    labels:
+      app: kube-config-scanner
+      pod-template-hash: 5f4458476d
+    name: kube-config-scanner-deployment-5f4458476d
+    namespace: kube-config-scanner
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: kube-config-scanner-deployment
+      uid: bbeda7ef-c43d-44bc-b301-74b7a4fc16b9
+    resourceVersion: "601722"
+    uid: 84b90422-29b9-42e8-a860-608174e00b67
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: kube-config-scanner
+        pod-template-hash: 5f4458476d
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2023-08-08T18:35:24Z"
+        creationTimestamp: null
+        labels:
+          app: kube-config-scanner
+          pod-template-hash: 5f4458476d
+      spec:
+        containers:
+        - image: kamieniarzk/kube-config-scanner:latest
+          imagePullPolicy: Always
+          name: kube-config-scanner
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/kube-config-scanner
+            name: temp-storage
+          - mountPath: /kube-config-scanner/logs
+            name: logs-storage
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-config-scanner-serviceaccount
+        serviceAccountName: kube-config-scanner-serviceaccount
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir:
+            sizeLimit: 200Mi
+          name: temp-storage
+        - name: logs-storage
+          persistentVolumeClaim:
+            claimName: kube-config-scanner-pvc
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "14"
+    creationTimestamp: "2023-08-09T17:57:11Z"
+    generation: 2
+    labels:
+      app: kube-config-scanner
+      pod-template-hash: 6f89f75676
+    name: kube-config-scanner-deployment-6f89f75676
+    namespace: kube-config-scanner
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: kube-config-scanner-deployment
+      uid: bbeda7ef-c43d-44bc-b301-74b7a4fc16b9
+    resourceVersion: "601902"
+    uid: eb6d93f3-fe84-4d71-9ea6-a4387a86e34f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: kube-config-scanner
+        pod-template-hash: 6f89f75676
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2023-08-09T17:57:11Z"
+        creationTimestamp: null
+        labels:
+          app: kube-config-scanner
+          pod-template-hash: 6f89f75676
+      spec:
+        containers:
+        - image: kamieniarzk/kube-config-scanner:latest
+          imagePullPolicy: Always
+          name: kube-config-scanner
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/kube-config-scanner
+            name: temp-storage
+          - mountPath: /kube-config-scanner/logs
+            name: logs-storage
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-config-scanner-serviceaccount
+        serviceAccountName: kube-config-scanner-serviceaccount
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir:
+            sizeLimit: 200Mi
+          name: temp-storage
+        - name: logs-storage
+          persistentVolumeClaim:
+            claimName: kube-config-scanner-pvc
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "15"
+    creationTimestamp: "2023-08-09T18:00:51Z"
+    generation: 2
+    labels:
+      app: kube-config-scanner
+      pod-template-hash: 75c95bc7d5
+    name: kube-config-scanner-deployment-75c95bc7d5
+    namespace: kube-config-scanner
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: kube-config-scanner-deployment
+      uid: bbeda7ef-c43d-44bc-b301-74b7a4fc16b9
+    resourceVersion: "602167"
+    uid: fab33286-ddf4-4835-9234-080bb6d2d56c
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: kube-config-scanner
+        pod-template-hash: 75c95bc7d5
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2023-08-09T18:00:51Z"
+        creationTimestamp: null
+        labels:
+          app: kube-config-scanner
+          pod-template-hash: 75c95bc7d5
+      spec:
+        containers:
+        - image: kamieniarzk/kube-config-scanner:latest
+          imagePullPolicy: Always
+          name: kube-config-scanner
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/kube-config-scanner
+            name: temp-storage
+          - mountPath: /kube-config-scanner/logs
+            name: logs-storage
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-config-scanner-serviceaccount
+        serviceAccountName: kube-config-scanner-serviceaccount
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir:
+            sizeLimit: 200Mi
+          name: temp-storage
+        - name: logs-storage
+          persistentVolumeClaim:
+            claimName: kube-config-scanner-pvc
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "17"
+    creationTimestamp: "2023-08-09T18:20:57Z"
+    generation: 1
+    labels:
+      app: kube-config-scanner
+      pod-template-hash: 6d6c5b7d76
+    name: kube-config-scanner-deployment-6d6c5b7d76
+    namespace: kube-config-scanner
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: kube-config-scanner-deployment
+      uid: bbeda7ef-c43d-44bc-b301-74b7a4fc16b9
+    resourceVersion: "602492"
+    uid: a56a964d-0191-4c68-bcda-3f3d8f709b06
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: kube-config-scanner
+        pod-template-hash: 6d6c5b7d76
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2023-08-09T18:08:33Z"
+        creationTimestamp: null
+        labels:
+          app: kube-config-scanner
+          pod-template-hash: 6d6c5b7d76
+      spec:
+        containers:
+        - env:
+          - name: SPRING_DATA_MONGODB_URI
+            valueFrom:
+              secretKeyRef:
+                key: SPRING_DATA_MONGODB_URI
+                name: mongodb-secret
+          - name: SPRING_DATA_MONGODB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                key: SPRING_DATA_MONGODB_DATABASE
+                name: mongodb-secret
+          image: kamieniarzk/kube-config-scanner:latest
+          imagePullPolicy: Always
+          name: kube-config-scanner
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/kube-config-scanner
+            name: temp-storage
+          - mountPath: /kube-config-scanner/logs
+            name: logs-storage
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-config-scanner-serviceaccount
+        serviceAccountName: kube-config-scanner-serviceaccount
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir:
+            sizeLimit: 200Mi
+          name: temp-storage
+        - name: logs-storage
+          persistentVolumeClaim:
+            claimName: kube-config-scanner-pvc
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "16"
+    creationTimestamp: "2023-08-09T18:08:33Z"
+    generation: 2
+    labels:
+      app: kube-config-scanner
+      pod-template-hash: 57545799b9
+    name: kube-config-scanner-deployment-57545799b9
+    namespace: kube-config-scanner
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: kube-config-scanner-deployment
+      uid: bbeda7ef-c43d-44bc-b301-74b7a4fc16b9
+    resourceVersion: "602503"
+    uid: 6eaaa408-cba9-4fd1-a3af-4574ac6a58d3
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: kube-config-scanner
+        pod-template-hash: 57545799b9
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2023-08-09T18:08:33Z"
+        creationTimestamp: null
+        labels:
+          app: kube-config-scanner
+          pod-template-hash: 57545799b9
+      spec:
+        containers:
+        - image: kamieniarzk/kube-config-scanner:latest
+          imagePullPolicy: Always
+          name: kube-config-scanner
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/kube-config-scanner
+            name: temp-storage
+          - mountPath: /kube-config-scanner/logs
+            name: logs-storage
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-config-scanner-serviceaccount
+        serviceAccountName: kube-config-scanner-serviceaccount
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir:
+            sizeLimit: 200Mi
+          name: temp-storage
+        - name: logs-storage
+          persistentVolumeClaim:
+            claimName: kube-config-scanner-pvc
+  status:
+    observedGeneration: 2
+    replicas: 0
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items:
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    annotations:
+      batch.kubernetes.io/job-tracking: ""
+    creationTimestamp: "2023-08-06T17:09:18Z"
+    generation: 1
+    labels:
+      app: kube-bench
+      batch.kubernetes.io/controller-uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+      batch.kubernetes.io/job-name: kube-bench
+      controller-uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+      job-name: kube-bench
+    name: kube-bench
+    namespace: kube-config-scanner
+    resourceVersion: "496384"
+    uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+  spec:
+    backoffLimit: 6
+    completionMode: NonIndexed
+    completions: 1
+    parallelism: 1
+    selector:
+      matchLabels:
+        batch.kubernetes.io/controller-uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+    suspend: false
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: kube-bench
+          batch.kubernetes.io/controller-uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+          batch.kubernetes.io/job-name: kube-bench
+          controller-uid: ea0dcf29-f007-4bfb-b98c-c8b78bdb4787
+          job-name: kube-bench
+      spec:
+        containers:
+        - command:
+          - kube-bench
+          image: docker.io/aquasec/kube-bench:v0.6.17
+          imagePullPolicy: IfNotPresent
+          name: kube-bench
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/etcd
+            name: var-lib-etcd
+            readOnly: true
+          - mountPath: /var/lib/kubelet
+            name: var-lib-kubelet
+            readOnly: true
+          - mountPath: /var/lib/kube-scheduler
+            name: var-lib-kube-scheduler
+            readOnly: true
+          - mountPath: /var/lib/kube-controller-manager
+            name: var-lib-kube-controller-manager
+            readOnly: true
+          - mountPath: /etc/systemd
+            name: etc-systemd
+            readOnly: true
+          - mountPath: /lib/systemd/
+            name: lib-systemd
+            readOnly: true
+          - mountPath: /srv/kubernetes/
+            name: srv-kubernetes
+            readOnly: true
+          - mountPath: /etc/kubernetes
+            name: etc-kubernetes
+            readOnly: true
+          - mountPath: /usr/local/mount-from-host/bin
+            name: usr-bin
+            readOnly: true
+          - mountPath: /etc/cni/net.d/
+            name: etc-cni-netd
+            readOnly: true
+          - mountPath: /opt/cni/bin/
+            name: opt-cni-bin
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        hostPID: true
+        restartPolicy: Never
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - hostPath:
+            path: /var/lib/etcd
+            type: ""
+          name: var-lib-etcd
+        - hostPath:
+            path: /var/lib/kubelet
+            type: ""
+          name: var-lib-kubelet
+        - hostPath:
+            path: /var/lib/kube-scheduler
+            type: ""
+          name: var-lib-kube-scheduler
+        - hostPath:
+            path: /var/lib/kube-controller-manager
+            type: ""
+          name: var-lib-kube-controller-manager
+        - hostPath:
+            path: /etc/systemd
+            type: ""
+          name: etc-systemd
+        - hostPath:
+            path: /lib/systemd
+            type: ""
+          name: lib-systemd
+        - hostPath:
+            path: /srv/kubernetes
+            type: ""
+          name: srv-kubernetes
+        - hostPath:
+            path: /etc/kubernetes
+            type: ""
+          name: etc-kubernetes
+        - hostPath:
+            path: /usr/bin
+            type: ""
+          name: usr-bin
+        - hostPath:
+            path: /etc/cni/net.d/
+            type: ""
+          name: etc-cni-netd
+        - hostPath:
+            path: /opt/cni/bin/
+            type: ""
+          name: opt-cni-bin
+  status:
+    completionTime: "2023-08-06T17:09:22Z"
+    conditions:
+    - lastProbeTime: "2023-08-06T17:09:22Z"
+      lastTransitionTime: "2023-08-06T17:09:22Z"
+      status: "True"
+      type: Complete
+    ready: 0
+    startTime: "2023-08-06T17:09:18Z"
+    succeeded: 1
+    uncountedTerminatedPods: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items:
+- addressType: IPv4
+  apiVersion: discovery.k8s.io/v1
+  endpoints:
+  - addresses:
+    - 10.42.1.32
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+    nodeName: ubuntu2
+    targetRef:
+      kind: Pod
+      name: kube-config-scanner-deployment-6d6c5b7d76-b77d5
+      namespace: kube-config-scanner
+      uid: 74cc8d81-1235-4287-9b3a-3815f9465b61
+  kind: EndpointSlice
+  metadata:
+    annotations:
+      endpoints.kubernetes.io/last-change-trigger-time: "2023-08-09T18:21:00Z"
+    creationTimestamp: "2023-07-29T09:30:12Z"
+    generateName: kube-config-scanner-
+    generation: 63
+    labels:
+      endpointslice.kubernetes.io/managed-by: endpointslice-controller.k8s.io
+      kubernetes.io/service-name: kube-config-scanner
+    name: kube-config-scanner-b2dwr
+    namespace: kube-config-scanner
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Service
+      name: kube-config-scanner
+      uid: d1d310cc-4e1c-4687-b34f-98056aceb8d7
+    resourceVersion: "602507"
+    uid: f7482b36-c230-4b5b-9bb2-44a271c814cc
+  ports:
+  - name: ""
+    port: 8080
+    protocol: TCP
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items:
+- apiVersion: metrics.k8s.io/v1beta1
+  containers:
+  - name: kube-config-scanner
+    usage:
+      cpu: 558493n
+      memory: 269216Ki
+  kind: PodMetrics
+  metadata:
+    creationTimestamp: "2023-08-19T16:16:53Z"
+    labels:
+      app: kube-config-scanner
+      pod-template-hash: 6d6c5b7d76
+    name: kube-config-scanner-deployment-6d6c5b7d76-b77d5
+    namespace: kube-config-scanner
+  timestamp: "2023-08-19T16:16:41Z"
+  window: 17.626s
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+---
