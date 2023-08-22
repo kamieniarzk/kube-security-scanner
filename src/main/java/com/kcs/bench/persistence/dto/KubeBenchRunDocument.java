@@ -1,4 +1,4 @@
-package com.kcs.shared;
+package com.kcs.bench.persistence.dto;
 
 import java.time.LocalDateTime;
 
@@ -9,16 +9,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@Document("scans")
+@Document("kubeBench")
 @AllArgsConstructor
-class ScanRunDocument {
+class KubeBenchRunDocument {
   private @Id String id;
   private LocalDateTime date;
-  private ScanType type;
   private String podName;
   private Boolean logsStored;
 
-  ScanRun toScanRun() {
-    return new ScanRun(this.id, date, type, podName, logsStored);
+  KubeBenchRun toScanRun() {
+    return new KubeBenchRun(this.id, date, podName, logsStored);
   }
 }

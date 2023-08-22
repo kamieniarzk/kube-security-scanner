@@ -1,4 +1,4 @@
-package com.kcs.shared;
+package com.kcs.bench.persistence.dto;
 
 import java.util.List;
 
@@ -10,41 +10,41 @@ import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
-class MongoScanRepository implements ScanRepository {
+class MongoKubeBenchRepository implements KubeBenchRepository {
 
-  private final ScanDocumentRepository documentRepository;
+  private final KubeBenchRunDocumentRepository documentRepository;
 
   @Override
-  public String save(final ScanRunCreate scanRunCreate) {
-    return documentRepository.save(ScanRunDocumentFactory.createDocument(scanRunCreate)).getId();
+  public String save(final KubeBenchRunCreate kubeBenchRunCreate) {
+    return documentRepository.save(ScanRunDocumentFactory.createDocument(kubeBenchRunCreate)).getId();
   }
 
   @Override
-  public ScanRun get(final String id) {
+  public KubeBenchRun get(final String id) {
     return documentRepository.findById(id)
-        .map(ScanRunDocument::toScanRun)
+        .map(KubeBenchRunDocument::toScanRun)
         .orElseThrow(NoDataFoundException::new);
   }
 
   @Override
-  public List<ScanRun> getAll() {
+  public List<KubeBenchRun> getAll() {
     return documentRepository.findAll().stream()
-        .map(ScanRunDocument::toScanRun)
+        .map(KubeBenchRunDocument::toScanRun)
         .toList();
   }
 
   @Override
-  public ScanRun getMostRecentScanByType(final ScanType type) {
-    return documentRepository.findByTypeSortedByDateAsc(type)
+  public KubeBenchRun getMostRecentRun() {
+    return documentRepository.findSortedByDate()
         .stream().findFirst()
         .orElseThrow(NoDataFoundException::new)
         .toScanRun();
   }
 
   @Override
-  public List<ScanRun> getAllWithoutStoredLogs() {
+  public List<KubeBenchRun> getAllWithoutStoredLogs() {
     return documentRepository.findWhereLogsStoredNullOrFalse().stream()
-        .map(ScanRunDocument::toScanRun)
+        .map(KubeBenchRunDocument::toScanRun)
         .toList();
   }
 

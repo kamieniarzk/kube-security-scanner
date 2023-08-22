@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kcs.bench.KubeBenchService;
 import com.kcs.k8s.YamlService;
-import com.kcs.log.LogService;
+import com.kcs.bench.persistence.log.LogService;
 import com.kcs.score.KubeScoreService;
-import com.kcs.shared.ScanRepository;
-import com.kcs.shared.ScanRun;
+import com.kcs.bench.persistence.dto.KubeBenchRepository;
+import com.kcs.bench.persistence.dto.KubeBenchRun;
 
 import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.ApiException;
@@ -29,17 +29,17 @@ import lombok.extern.slf4j.Slf4j;
 public class ScanController {
   private final CoreV1Api coreApi;
   private final KubeBenchService kubeBenchService;
-  private final ScanRepository scanRepository;
+  private final KubeBenchRepository kubeBenchRepository;
   private final LogService logService;
   private final YamlService yamlService;
   private final KubeScoreService kubeScoreService;
 
   public ScanController(ApiClient apiClient, KubeBenchService kubeBenchService,
-      ScanRepository scanRepository, LogService logService,
+      KubeBenchRepository kubeBenchRepository, LogService logService,
       YamlService yamlService, KubeScoreService kubeScoreService) {
     this.coreApi = new CoreV1Api(apiClient);
     this.kubeBenchService = kubeBenchService;
-    this.scanRepository = scanRepository;
+    this.kubeBenchRepository = kubeBenchRepository;
     this.logService = logService;
     this.yamlService = yamlService;
     this.kubeScoreService = kubeScoreService;
@@ -63,7 +63,7 @@ public class ScanController {
   }
 
   @PostMapping
-  public String runKubeBench() throws IOException {
+  public String runKubeBench() {
     return this.kubeBenchService.run();
   }
 
@@ -72,13 +72,13 @@ public class ScanController {
     return new String(kubeBenchService.getPreviousRunLogs().readAllBytes(), StandardCharsets.UTF_8);
   }
   @GetMapping
-  public List<ScanRun> getAllScans() {
-    return scanRepository.getAll();
+  public List<KubeBenchRun> getAllScans() {
+    return kubeBenchRepository.getAll();
   }
 
   @GetMapping("/{scanId}")
-  public ScanRun getById(@PathVariable String scanId) {
-    return scanRepository.get(scanId);
+  public KubeBenchRun getById(@PathVariable String scanId) {
+    return kubeBenchRepository.get(scanId);
   }
 
   @GetMapping("watch-test")
