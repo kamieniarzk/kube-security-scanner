@@ -12,7 +12,7 @@
   * ~~run kube-score binary on that resource yaml stored on temp PV~~
   * ~~save kube-score output along with other logs (perhaps use distinct location)~~
 * ~~Refactor service and persistence layer - introduce distinct interfaces for each type of scans (hunter, score, bench)~~
-
+* Initialize kube-hunter interface
 ### References
 * [kube-hunter](https://github.com/aquasecurity/kube-hunter)
 * [kube-bench](https://github.com/aquasecurity/kube-bench)
