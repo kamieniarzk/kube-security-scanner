@@ -1,4 +1,4 @@
-package com.kcs.bench.persistence.dto;
+package com.kcs.bench.persistence;
 
 import java.util.List;
 
@@ -9,6 +9,6 @@ interface KubeBenchRunDocumentRepository extends MongoRepository<KubeBenchRunDoc
   @Query(sort = "{ 'date' : -1 }")
   List<KubeBenchRunDocument> findSortedByDate();
 
-  @Query("{ 'logsStored' : { $in: [false, null] } }")
-  List<KubeBenchRunDocument> findWhereLogsStoredNullOrFalse();
+  @Query("{ 'logsStored' : { $in: [false, null] }, 'podName' : {$exists: true} }")
+  List<KubeBenchRunDocument> findWhereLogsStoredNullOrFalseAndPodNameExists();
 }

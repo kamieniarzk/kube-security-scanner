@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("kubeScore")
 record KubeScoreRunDocument(@Id String id, LocalDateTime time, String namespace) {
-  KubeScoreRun toRun() {
-    return new KubeScoreRun(id, time, namespace);
+  KubeScoreRunDto toDto() {
+    return new KubeScoreRunDto(id, time, namespace);
   }
 }

@@ -141,6 +141,17 @@ public class KubernetesApiClientWrapper {
     return performApiCall(() -> podLogs.streamNamespacedPodLog(getCurrentNamespace(), name, null));
   }
 
+  public V1Job createJobWithContainerZeroArgs(String yamlUrl, List<String> args) {
+    try {
+      V1Job job = (V1Job) Yaml.load(getFileFromUrl(yamlUrl));
+      job.getSpec().getTemplate().getSpec().getContainers().get(0).setArgs(args);
+      return performApiCall(() -> batchApi.createNamespacedJob(getCurrentNamespace(), job, null, null, null, null));
+    } catch (IOException ioException) {
+      log.error("Could not obtain job definition from URL: {}", yamlUrl);
+      throw new RuntimeException();
+    }
+  }
+
   @Nullable
   private V1PodList getPods(String namespace) {
     return performApiCall(

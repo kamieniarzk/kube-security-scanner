@@ -6,5 +6,8 @@ environment:
   in-cluster: true
 
 filesystem:
-  log-location: /kube-config-scanner/logs
-  yaml-location: /tmp/kube-config-scanner/yaml
+  locations:
+    yaml: /tmp/kube-config-scanner/yaml
+    score: /tmp/kube-config-scanner/score
+    hunter: /tmp/kube-config-scanner/hunter
+    bench: /tmp/kube-config-scanner/bench

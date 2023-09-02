@@ -1,8 +1,14 @@
 package com.kcs.bench;
 
-import java.io.InputStream;
+import com.kcs.bench.persistence.KubeBenchRunDto;
+
+import java.util.List;
 
 public interface KubeBenchService {
-  String run();
-  InputStream getPreviousRunLogs();
+  /**
+   *
+   * @return DTO of persisted run metadata
+   */
+  KubeBenchRunDto run();
+  List<KubeBenchRunDto> getAll();
 }

@@ -1,7 +1,7 @@
 package com.kcs.web;
 
 import com.kcs.score.KubeScoreService;
-import com.kcs.score.persistence.document.KubeScoreRun;
+import com.kcs.score.persistence.document.KubeScoreRunDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +15,7 @@ class KubeScoreController {
   private final KubeScoreService scoreService;
 
   @GetMapping("/{namespace}")
-  List<KubeScoreRun> getScoresByNamespace(@PathVariable String namespace) {
+  List<KubeScoreRunDto> getScoresByNamespace(@PathVariable String namespace) {
     return scoreService.getByNamespace(namespace);
   }
 

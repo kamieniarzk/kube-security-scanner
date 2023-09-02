@@ -1,4 +1,4 @@
-package com.kcs.bench.persistence.dto;
+package com.kcs.bench.persistence;
 
 import java.time.LocalDateTime;
 
@@ -14,10 +14,10 @@ import lombok.Data;
 class KubeBenchRunDocument {
   private @Id String id;
   private LocalDateTime date;
-  private String podName;
+  private String jobRunId;
   private Boolean logsStored;
 
-  KubeBenchRun toScanRun() {
-    return new KubeBenchRun(this.id, date, podName, logsStored);
+  KubeBenchRunDto toDto() {
+    return new KubeBenchRunDto(this.id, date, jobRunId, logsStored);
   }
 }

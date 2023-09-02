@@ -5,5 +5,8 @@ server:
   port: 8081
 
 filesystem:
-  log-location: logs
-  yaml-location: /tmp/kube-config-scanner/yaml
+  locations:
+    yaml: logs/yaml
+    score: logs/score
+    hunter: logs/hunter
+    bench: logs/bench

@@ -19,6 +19,8 @@ class FilesystemLogRepository implements LogRepository {
   @Override
   public void save(InputStream content, String directory, String fileName) {
     try {
+      var path = Path.of(constructPathString(directory, fileName));
+      path.getParent().toFile().mkdir();
       Files.copy(content, Path.of(constructPathString(directory, fileName)), StandardCopyOption.REPLACE_EXISTING);
     } catch (IOException ioException) {
       log.error("Failed to save content into: {}", constructPathString(directory, fileName));

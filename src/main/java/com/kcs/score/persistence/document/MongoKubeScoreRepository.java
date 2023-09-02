@@ -18,9 +18,9 @@ class MongoKubeScoreRepository implements KubeScoreRepository {
   }
 
   @Override
-  public List<KubeScoreRun> getByNamespace(String namespace) {
+  public List<KubeScoreRunDto> getByNamespace(String namespace) {
     return documentRepository.findByNamespace(namespace).stream()
-        .map(KubeScoreRunDocument::toRun)
+        .map(KubeScoreRunDocument::toDto)
         .toList();
   }
 }

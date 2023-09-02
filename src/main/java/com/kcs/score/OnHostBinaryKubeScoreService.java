@@ -3,7 +3,7 @@ package com.kcs.score;
 import com.kcs.k8s.KubernetesApiClientWrapper;
 import com.kcs.k8s.YamlService;
 import com.kcs.score.persistence.document.KubeScoreRepository;
-import com.kcs.score.persistence.document.KubeScoreRun;
+import com.kcs.score.persistence.document.KubeScoreRunDto;
 import com.kcs.score.persistence.document.KubeScoreRunCreate;
 import com.kcs.shared.LogRepository;
 import com.kcs.util.ProcessRunner;
@@ -29,7 +29,7 @@ class OnHostBinaryKubeScoreService implements KubeScoreService {
 
   OnHostBinaryKubeScoreService(KubernetesApiClientWrapper k8sApi, YamlService yamlService, KubeScoreRepository scoreRepository,
                                LogRepository logRepository,
-                               @Value("${filesystem.score-location:/tmp/kube-config-scanner/score}") String scoreDirectory) {
+                               @Value("${filesystem.locations.score:/tmp/kube-config-scanner/score}") String scoreDirectory) {
     this.k8sApi = k8sApi;
     this.yamlService = yamlService;
     this.scoreRepository = scoreRepository;
@@ -50,7 +50,7 @@ class OnHostBinaryKubeScoreService implements KubeScoreService {
   }
 
   @Override
-  public List<KubeScoreRun> getByNamespace(String namespace) {
+  public List<KubeScoreRunDto> getByNamespace(String namespace) {
     return scoreRepository.getByNamespace(namespace);
   }
 
