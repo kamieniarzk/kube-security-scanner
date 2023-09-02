@@ -12,9 +12,15 @@
   * ~~run kube-score binary on that resource yaml stored on temp PV~~
   * ~~save kube-score output along with other logs (perhaps use distinct location)~~
 * ~~Refactor service and persistence layer - introduce distinct interfaces for each type of scans (hunter, score, bench)~~
-* Initialize kube-hunter interface
-  * one persistence layer for JobRuns (id, date, podName)
-  * separate persistence layers for each kube-bench and kube-hunter (both job based tasks)
+* ~~Initialize kube-hunter interface~~
+  * ~~one persistence layer for JobRuns (id, date, podName)~~
+  * ~~separate persistence layers for each kube-bench and kube-hunter (both job based tasks)~~
+* Init context aware analysis
+  * parse kube-hunter json to object
+  * parse kube-bench to some object structure
+  * parse kube-score to some object structure
+  * aggregate all results into one object structure
+
 ### References
 * [kube-hunter](https://github.com/aquasecurity/kube-hunter)
 * [kube-bench](https://github.com/aquasecurity/kube-bench)
