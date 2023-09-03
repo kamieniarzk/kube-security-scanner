@@ -36,7 +36,9 @@ dependencies {
         'org.spockframework:spock-core:2.3-groovy-4.0',
         'org.spockframework:spock-spring:2.3-groovy-4.0',
         'org.apache.groovy:groovy:4.0.6',
-        'org.junit.jupiter:junit-jupiter-api:5.7.0'
+        'org.junit.jupiter:junit-jupiter-api:5.8.2'
+
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 
 }
 
