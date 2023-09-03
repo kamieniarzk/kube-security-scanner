@@ -3,7 +3,7 @@
 * ~~Check how kube-score can be used~~
 * ~~Embed kube-score binary within app docker image~~
 * ~~Use MongoDB to persist scan related data~~
-* Use ephemeral pod storage (emptyDir) to store YAML manifests for kube-score
+* ~~Use ephemeral pod storage (emptyDir) to store YAML manifests for kube-score~~
 * ~~Use PVC to persist logs from scan runs~~
   * ~~make compatible local-dev configuration~~
 * ~~(nice to have): configure GitHub workflow to build and push docker image~~
@@ -18,7 +18,7 @@
 * Init context aware analysis
   * parse kube-hunter json to object
   * parse kube-bench to some object structure
-  * parse kube-score to some object structure
+  * ~~parse kube-score to some object structure~~
   * aggregate all results into one object structure
 
 ### References
