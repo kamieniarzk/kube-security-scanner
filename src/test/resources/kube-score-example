@@ -1,0 +1,183 @@
+v1/Pod kube-bench-h8x2m in default                                            💥
+    [CRITICAL] Container Image Pull Policy
+        · kube-bench -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Pod Probes
+        · Container is missing a readinessProbe
+            A readinessProbe should be used to indicate when the service is
+            ready to receive traffic. Without it, the Pod is risking to receive
+            traffic before it has booted. It's also used during rollouts, and
+            can prevent downtime if a new version of the application is failing.
+            More information: https://github.com/zegl/kube-score/blob/master/README_PROBES.md
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · kube-bench -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Container Security Context User Group ID
+        · kube-bench -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · kube-bench -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · kube-bench -> Container has no configured security context
+            Set securityContext to run the container in a more secure context.
+    [CRITICAL] Container Resources
+        · kube-bench -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · kube-bench -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · kube-bench -> CPU request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.cpu
+        · kube-bench -> Memory request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.memory
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · kube-bench -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Container Security Context User Group ID
+        · kube-bench -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · kube-bench -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · kube-bench -> Container has no configured security context
+            Set securityContext to run the container in a more secure context.
+    [CRITICAL] Container Resources
+        · kube-bench -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · kube-bench -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · kube-bench -> CPU request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.cpu
+        · kube-bench -> Memory request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.memory
+    [CRITICAL] Container Image Pull Policy
+        · kube-bench -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Pod Probes
+        · Container is missing a readinessProbe
+            A readinessProbe should be used to indicate when the service is
+            ready to receive traffic. Without it, the Pod is risking to receive
+            traffic before it has booted. It's also used during rollouts, and
+            can prevent downtime if a new version of the application is failing.
+            More information: https://github.com/zegl/kube-score/blob/master/README_PROBES.md
+v1/Pod kube-hunter-prlqb in default                                           💥
+    [CRITICAL] Container Resources
+        · kube-hunter -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · kube-hunter -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · kube-hunter -> CPU request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.cpu
+        · kube-hunter -> Memory request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.memory
+    [CRITICAL] Container Image Pull Policy
+        · kube-hunter -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Pod Probes
+        · Container is missing a readinessProbe
+            A readinessProbe should be used to indicate when the service is
+            ready to receive traffic. Without it, the Pod is risking to receive
+            traffic before it has booted. It's also used during rollouts, and
+            can prevent downtime if a new version of the application is failing.
+            More information: https://github.com/zegl/kube-score/blob/master/README_PROBES.md
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · kube-hunter -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Container Security Context User Group ID
+        · kube-hunter -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · kube-hunter -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · kube-hunter -> Container has no configured security context
+            Set securityContext to run the container in a more secure context.
+    [CRITICAL] Container Resources
+        · kube-hunter -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · kube-hunter -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · kube-hunter -> CPU request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.cpu
+        · kube-hunter -> Memory request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.memory
+    [CRITICAL] Pod Probes
+        · Container is missing a readinessProbe
+            A readinessProbe should be used to indicate when the service is
+            ready to receive traffic. Without it, the Pod is risking to receive
+            traffic before it has booted. It's also used during rollouts, and
+            can prevent downtime if a new version of the application is failing.
+            More information: https://github.com/zegl/kube-score/blob/master/README_PROBES.md
+    [CRITICAL] Container Image Pull Policy
+        · kube-hunter -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · kube-hunter -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Container Security Context User Group ID
+        · kube-hunter -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · kube-hunter -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · kube-hunter -> Container has no configured security context
+            Set securityContext to run the container in a more secure context.
+v1/Service kubernetes in default                                              ✅
