@@ -18,9 +18,9 @@ class DefaultJobService implements JobService {
   private final KubernetesApiClientWrapper k8sApi;
 
   @Override
-  public JobRunDto runJobFromUrlDefinition(String url, String podNamePrefix) {
+  public JobRunDto runJobFromUrlDefinitionWithModifiedCommand(String url, String podNamePrefix, String command) {
     deleteExistingJobIfNecessary(podNamePrefix);
-    k8sApi.createJobFromYamlUrl(url);
+    k8sApi.createJobFromYamlUrlWithModifiedCommand(url, command);
     return persistRunData(podNamePrefix);
   }
 

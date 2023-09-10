@@ -34,7 +34,7 @@ class MongoKubeHunterRepository implements KubeHunterRepository {
 
   @Override
   public List<KubeHunterRunDto> getAllWithoutStoredLogs() {
-    return documentRepository.findWhereLogsStoredNullOrFalseAndPodNameExists().stream().map(KubeHunterRunDocument::toDto).toList();
+    return documentRepository.findWhereLogsStoredNullOrFalse().stream().map(KubeHunterRunDocument::toDto).toList();
   }
 
   @Override

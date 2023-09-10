@@ -34,7 +34,7 @@ class MongoKubeBenchRepository implements KubeBenchRepository {
 
   @Override
   public List<KubeBenchRunDto> getAllWithoutStoredLogs() {
-    return documentRepository.findWhereLogsStoredNullOrFalseAndPodNameExists().stream().map(KubeBenchRunDocument::toDto).toList();
+    return documentRepository.findWhereLogsStoredNullOrFalse().stream().map(KubeBenchRunDocument::toDto).toList();
   }
 
   @Override

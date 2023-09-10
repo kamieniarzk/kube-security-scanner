@@ -1,6 +1,6 @@
 package com.kcs.job;
 
 public interface JobService {
-  JobRunDto runJobFromUrlDefinition(String url, String podNamePrefix);
+  JobRunDto runJobFromUrlDefinitionWithModifiedCommand(String url, String podNamePrefix, String command);
   JobRunDto runJobFromUrlDefinitionWithContainerArgs(String url, String namePrefix, String args);
 }

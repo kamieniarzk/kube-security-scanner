@@ -9,6 +9,6 @@ interface KubeBenchRunDocumentRepository extends MongoRepository<KubeBenchRunDoc
   @Query(sort = "{ 'date' : -1 }")
   List<KubeBenchRunDocument> findSortedByDate();
 
-  @Query("{ 'logsStored' : { $in: [false, null] }, 'podName' : {$exists: true} }")
-  List<KubeBenchRunDocument> findWhereLogsStoredNullOrFalseAndPodNameExists();
+  @Query("{ 'logsStored' : { $in: [false, null] } }")
+  List<KubeBenchRunDocument> findWhereLogsStoredNullOrFalse();
 }

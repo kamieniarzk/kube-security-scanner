@@ -2,6 +2,7 @@ package com.kcs.k8s;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -127,9 +128,10 @@ public class KubernetesApiClientWrapper {
   }
 
 
-  public V1Job createJobFromYamlUrl(String yamlUrl) {
+  public V1Job createJobFromYamlUrlWithModifiedCommand(String yamlUrl, String command) {
     try {
       V1Job kubeBenchJob = (V1Job) Yaml.load(getFileFromUrl(yamlUrl));
+      kubeBenchJob.getSpec().getTemplate().getSpec().getContainers().get(0).setCommand(Arrays.stream(command.split(" ")).toList());
       return performApiCall(() -> batchApi.createNamespacedJob(getCurrentNamespace(), kubeBenchJob, null, null, null, null));
     } catch (IOException ioException) {
       log.error("Could not obtain kube-bench job definition from GitHub");

@@ -10,5 +10,5 @@ interface KubeHunterRunDocumentRepository extends MongoRepository<KubeHunterRunD
   List<KubeHunterRunDocument> findSortedByDate();
 
   @Query("{ 'logsStored': { $in: [false, null] } }")
-  List<KubeHunterRunDocument> findWhereLogsStoredNullOrFalseAndPodNameExists();
+  List<KubeHunterRunDocument> findWhereLogsStoredNullOrFalse();
 }

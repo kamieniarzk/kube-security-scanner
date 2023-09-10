@@ -20,7 +20,7 @@ public class InClusterJobKubeBenchService implements KubeBenchService {
 
   @Override
   public KubeBenchRunDto run() {
-    var jobDto = jobService.runJobFromUrlDefinition("https://raw.githubusercontent.com/aquasecurity/kube-bench/main/job.yaml", "kube-bench");
+    var jobDto = jobService.runJobFromUrlDefinitionWithModifiedCommand("https://raw.githubusercontent.com/aquasecurity/kube-bench/main/job.yaml", "kube-bench", "kube-bench --json");
     return kubeBenchRepository.save(new KubeBenchRunCreate(jobDto.id()));
   }
 
