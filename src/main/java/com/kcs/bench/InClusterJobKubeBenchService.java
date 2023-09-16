@@ -15,13 +15,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class InClusterJobKubeBenchService implements KubeBenchService {
 
+  private static final String MASTER_JOB_URL = "https://raw.githubusercontent.com/aquasecurity/kube-bench/main/job-master.yaml";
+  private static final String WORKER_JOB_URL = "https://raw.githubusercontent.com/aquasecurity/kube-bench/main/job.yaml";
+
   private final JobService jobService;
   private final KubeBenchRepository kubeBenchRepository;
 
   @Override
-  public KubeBenchRunDto run() {
-    var jobDto = jobService.runJobFromUrlDefinitionWithModifiedCommand("https://raw.githubusercontent.com/aquasecurity/kube-bench/main/job.yaml", "kube-bench", "kube-bench --json");
-    return kubeBenchRepository.save(new KubeBenchRunCreate(jobDto.id()));
+  public KubeBenchRunDto run(Boolean master) {
+    var jobDefinitionUrl = master ? MASTER_JOB_URL : WORKER_JOB_URL;
+    var targetArg = "master node etcd policies";
+    var jobDto = jobService.runJobFromUrlDefinitionWithModifiedCommand(jobDefinitionUrl, "kube-bench", "kube-bench run --json --targets".concat(" ").concat(targetArg));
+    return kubeBenchRepository.save(new KubeBenchRunCreate(jobDto.id(), master));
   }
 
   @Override

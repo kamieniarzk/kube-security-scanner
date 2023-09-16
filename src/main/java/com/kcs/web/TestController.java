@@ -38,7 +38,7 @@ class TestController {
 
   @PostMapping("/bench")
   KubeBenchRunDto runBench(@RequestBody BenchRunRequest runRequest) {
-    return kubeBenchService.run();
+    return kubeBenchService.run(runRequest.master);
   }
 
   @GetMapping("/bench/runs/{id}/result")
@@ -47,5 +47,5 @@ class TestController {
   }
 
   record HunterRunRequest(String args) {}
-  record BenchRunRequest() {}
+  record BenchRunRequest(Boolean master) {}
 }

@@ -16,8 +16,9 @@ class KubeBenchRunDocument {
   private LocalDateTime date;
   private String jobRunId;
   private Boolean logsStored;
+  private Boolean master;
 
   KubeBenchRunDto toDto() {
-    return new KubeBenchRunDto(this.id, date, jobRunId, logsStored);
+    return new KubeBenchRunDto(this.id, date, jobRunId, logsStored, master);
   }
 }

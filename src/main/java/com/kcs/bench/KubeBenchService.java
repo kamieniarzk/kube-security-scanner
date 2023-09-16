@@ -9,6 +9,6 @@ public interface KubeBenchService {
    *
    * @return DTO of persisted run metadata
    */
-  KubeBenchRunDto run();
+  KubeBenchRunDto run(Boolean master);
   List<KubeBenchRunDto> getAll();
 }
