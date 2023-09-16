@@ -1,4 +1,4 @@
-package com.kcs.bench.scheduling;
+package com.kcs.bench;
 
 import com.kcs.bench.persistence.KubeBenchRepository;
 import com.kcs.bench.persistence.KubeBenchRunDto;
@@ -30,6 +30,10 @@ class KubeBenchLogService {
     this.k8sApi = k8sApi;
     this.logRepository = logRepository;
     this.logsDirectory = logsDirectory;
+  }
+
+  public String getLogs(String podName) {
+    return logRepository.getAsString(logsDirectory, podName);
   }
 
   @Transactional

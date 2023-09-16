@@ -1,15 +1,14 @@
 package com.kcs.web;
 
+import com.kcs.bench.KubeBenchJsonResultDto;
+import com.kcs.bench.KubeBenchResultService;
 import com.kcs.bench.KubeBenchService;
 import com.kcs.bench.persistence.KubeBenchRunDto;
 import com.kcs.hunter.KubeHunterService;
 import com.kcs.hunter.persistence.KubeHunterRunDto;
 import com.kcs.job.JobRunRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +19,7 @@ class TestController {
   private final KubeBenchService kubeBenchService;
   private final KubeHunterService kubeHunterService;
   private final JobRunRepository jobRunRepository;
+  private final KubeBenchResultService kubeBenchResultService;
 
   @GetMapping("/hunter")
   List<KubeHunterRunDto> getAllKubeHunterRuns() {
@@ -39,6 +39,11 @@ class TestController {
   @PostMapping("/bench")
   KubeBenchRunDto runBench(@RequestBody BenchRunRequest runRequest) {
     return kubeBenchService.run();
+  }
+
+  @GetMapping("/bench/runs/{id}/result")
+  KubeBenchJsonResultDto getKubeBenchResult(@PathVariable String id) {
+    return kubeBenchResultService.getResult(id);
   }
 
   record HunterRunRequest(String args) {}

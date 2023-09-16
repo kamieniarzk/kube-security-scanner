@@ -1,4 +1,4 @@
-package com.kcs.bench.scheduling;
+package com.kcs.bench;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
