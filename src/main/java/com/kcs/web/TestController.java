@@ -1,9 +1,10 @@
 package com.kcs.web;
 
-import com.kcs.bench.KubeBenchJsonResultDto;
+import com.kcs.bench.dto.KubeBenchJsonResultDto;
 import com.kcs.bench.KubeBenchResultService;
 import com.kcs.bench.KubeBenchService;
-import com.kcs.bench.persistence.KubeBenchRunDto;
+import com.kcs.bench.dto.KubeBenchRunDto;
+import com.kcs.bench.dto.KubeBenchTarget;
 import com.kcs.hunter.KubeHunterService;
 import com.kcs.hunter.persistence.KubeHunterRunDto;
 import com.kcs.job.JobRunRepository;
@@ -18,7 +19,6 @@ class TestController {
 
   private final KubeBenchService kubeBenchService;
   private final KubeHunterService kubeHunterService;
-  private final JobRunRepository jobRunRepository;
   private final KubeBenchResultService kubeBenchResultService;
 
   @GetMapping("/hunter")
@@ -38,7 +38,7 @@ class TestController {
 
   @PostMapping("/bench")
   KubeBenchRunDto runBench(@RequestBody BenchRunRequest runRequest) {
-    return kubeBenchService.run(runRequest.master);
+    return kubeBenchService.run(runRequest.target);
   }
 
   @GetMapping("/bench/runs/{id}/result")
@@ -47,5 +47,5 @@ class TestController {
   }
 
   record HunterRunRequest(String args) {}
-  record BenchRunRequest(Boolean master) {}
+  record BenchRunRequest(KubeBenchTarget target) {}
 }

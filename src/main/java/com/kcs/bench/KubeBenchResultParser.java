@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import com.kcs.bench.dto.KubeBenchResultDto;
+
 public class KubeBenchResultParser {
 
   private static final String CHECK_LINE_START = "[";

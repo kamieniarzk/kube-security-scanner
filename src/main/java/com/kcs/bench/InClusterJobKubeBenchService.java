@@ -1,8 +1,9 @@
 package com.kcs.bench;
 
+import com.kcs.bench.dto.KubeBenchTarget;
 import com.kcs.bench.persistence.KubeBenchRepository;
 import com.kcs.bench.persistence.KubeBenchRunCreate;
-import com.kcs.bench.persistence.KubeBenchRunDto;
+import com.kcs.bench.dto.KubeBenchRunDto;
 import com.kcs.job.JobService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,11 +23,10 @@ public class InClusterJobKubeBenchService implements KubeBenchService {
   private final KubeBenchRepository kubeBenchRepository;
 
   @Override
-  public KubeBenchRunDto run(Boolean master) {
-    var jobDefinitionUrl = master ? MASTER_JOB_URL : WORKER_JOB_URL;
-    var targetArg = "master node etcd policies";
-    var jobDto = jobService.runJobFromUrlDefinitionWithModifiedCommand(jobDefinitionUrl, "kube-bench", "kube-bench run --json --targets".concat(" ").concat(targetArg));
-    return kubeBenchRepository.save(new KubeBenchRunCreate(jobDto.id(), master));
+  public KubeBenchRunDto run(KubeBenchTarget target) {
+    var jobDto = jobService.runJobFromUrlDefinitionWithModifiedCommand(MASTER_JOB_URL, "kube-bench", "kube-bench run --json --targets".concat(" ").concat(
+        target.name()).toLowerCase());
+    return kubeBenchRepository.save(new KubeBenchRunCreate(jobDto.id(), target));
   }
 
   @Override

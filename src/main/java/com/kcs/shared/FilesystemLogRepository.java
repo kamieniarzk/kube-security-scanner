@@ -20,7 +20,7 @@ class FilesystemLogRepository implements LogRepository {
   public void save(InputStream content, String directory, String fileName) {
     try {
       var path = Path.of(constructPathString(directory, fileName));
-      path.getParent().toFile().mkdir();
+      path.getParent().toFile().mkdirs();
       Files.copy(content, Path.of(constructPathString(directory, fileName)), StandardCopyOption.REPLACE_EXISTING);
     } catch (IOException ioException) {
       log.error("Failed to save content into: {}", constructPathString(directory, fileName));
@@ -32,7 +32,7 @@ class FilesystemLogRepository implements LogRepository {
   public void save(String content, String directory, String fileName) {
     try {
       var path = Path.of(constructPathString(directory, fileName));
-      path.getParent().toFile().mkdir();
+      path.getParent().toFile().mkdirs();
       Files.write(path, content.getBytes());
     } catch (IOException ioException) {
       log.error("Failed to save content into: {}", constructPathString(directory, fileName));

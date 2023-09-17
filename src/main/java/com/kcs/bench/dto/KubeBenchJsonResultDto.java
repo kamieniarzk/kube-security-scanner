@@ -1,4 +1,4 @@
-package com.kcs.bench;
+package com.kcs.bench.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

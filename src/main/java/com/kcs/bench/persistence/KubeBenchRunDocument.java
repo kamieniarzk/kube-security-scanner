@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.kcs.bench.dto.KubeBenchRunDto;
+import com.kcs.bench.dto.KubeBenchTarget;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -16,9 +19,9 @@ class KubeBenchRunDocument {
   private LocalDateTime date;
   private String jobRunId;
   private Boolean logsStored;
-  private Boolean master;
+  private KubeBenchTarget target;
 
   KubeBenchRunDto toDto() {
-    return new KubeBenchRunDto(this.id, date, jobRunId, logsStored, master);
+    return new KubeBenchRunDto(this.id, date, jobRunId, logsStored, target);
   }
 }

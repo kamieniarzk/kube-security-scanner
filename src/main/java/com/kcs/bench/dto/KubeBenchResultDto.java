@@ -1,4 +1,4 @@
-package com.kcs.bench;
+package com.kcs.bench.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +14,7 @@ public class KubeBenchResultDto {
   private List<CheckCategoryDto> categories;
 
   @Data
-  static class CheckCategoryDto {
+  public static class CheckCategoryDto {
     private String identifier;
     private String title;
     private List<CheckGroupDto> groups;
@@ -27,7 +27,7 @@ public class KubeBenchResultDto {
   }
 
   @Data
-  static class CheckGroupDto {
+  public static class CheckGroupDto {
     private String identifier;
     private String title;
     private List<CheckDto> checks;
@@ -40,7 +40,7 @@ public class KubeBenchResultDto {
   }
 
   @Data
-  static class CheckDto {
+  public static class CheckDto {
     private String identifier;
     private String severity;
     private String title;

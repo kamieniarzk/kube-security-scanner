@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import com.kcs.bench.dto.KubeBenchRunDto;
+
 @Repository
 @RequiredArgsConstructor
 class MongoKubeBenchRepository implements KubeBenchRepository {

@@ -1,5 +1,6 @@
 package com.kcs.bench;
 
+import com.kcs.bench.dto.KubeBenchJsonResultDto;
 import com.kcs.bench.persistence.KubeBenchRepository;
 import com.kcs.job.JobRunRepository;
 import lombok.RequiredArgsConstructor;

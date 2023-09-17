@@ -1,7 +1,7 @@
 package com.kcs.bench;
 
 import com.kcs.bench.persistence.KubeBenchRepository;
-import com.kcs.bench.persistence.KubeBenchRunDto;
+import com.kcs.bench.dto.KubeBenchRunDto;
 import com.kcs.job.JobRunRepository;
 import com.kcs.k8s.KubernetesApiClientWrapper;
 import com.kcs.shared.LogRepository;
