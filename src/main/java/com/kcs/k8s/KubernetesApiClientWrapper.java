@@ -134,7 +134,7 @@ public class KubernetesApiClientWrapper {
       kubeBenchJob.getSpec().getTemplate().getSpec().getContainers().get(0).setCommand(Arrays.stream(command.split(" ")).toList());
       return performApiCall(() -> batchApi.createNamespacedJob(getCurrentNamespace(), kubeBenchJob, null, null, null, null));
     } catch (IOException ioException) {
-      log.error("Could not obtain kube-bench job definition from GitHub");
+      log.error("Could not obtain kube-bench job definition from URL: {}", yamlUrl, ioException);
       throw new RuntimeException();
     }
   }
@@ -149,7 +149,7 @@ public class KubernetesApiClientWrapper {
       job.getSpec().getTemplate().getSpec().getContainers().get(0).setArgs(args);
       return performApiCall(() -> batchApi.createNamespacedJob(getCurrentNamespace(), job, null, null, null, null));
     } catch (IOException ioException) {
-      log.error("Could not obtain job definition from URL: {}", yamlUrl);
+      log.error("Could not obtain job definition from URL: {}", yamlUrl, ioException);
       throw new RuntimeException();
     }
   }
