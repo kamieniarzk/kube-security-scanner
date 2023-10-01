@@ -7,6 +7,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import io.kubernetes.client.openapi.models.*;
+import io.kubernetes.client.util.ModelMapper;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
 
@@ -18,17 +20,6 @@ import io.kubernetes.client.openapi.apis.BatchV1Api;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
 import io.kubernetes.client.openapi.apis.NetworkingV1Api;
 import io.kubernetes.client.openapi.apis.RbacAuthorizationV1Api;
-import io.kubernetes.client.openapi.models.V1ClusterRole;
-import io.kubernetes.client.openapi.models.V1Deployment;
-import io.kubernetes.client.openapi.models.V1Job;
-import io.kubernetes.client.openapi.models.V1NetworkPolicy;
-import io.kubernetes.client.openapi.models.V1PersistentVolumeClaim;
-import io.kubernetes.client.openapi.models.V1Pod;
-import io.kubernetes.client.openapi.models.V1PodList;
-import io.kubernetes.client.openapi.models.V1RoleBinding;
-import io.kubernetes.client.openapi.models.V1Service;
-import io.kubernetes.client.openapi.models.V1ServiceAccount;
-import io.kubernetes.client.openapi.models.V1Status;
 import io.kubernetes.client.util.Yaml;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,6 +37,7 @@ public class KubernetesApiClientWrapper {
   private final NetworkingV1Api networkingApi;
 
   public KubernetesApiClientWrapper(ApiClient apiClient) {
+    ModelMapper.addModelMap("batch", "v1", "Job", "jobs", V1Job.class, V1JobList.class);
     this.coreApi = new CoreV1Api(apiClient);
     this.batchApi = new BatchV1Api(apiClient);
     this.podLogs = new PodLogs(apiClient);
