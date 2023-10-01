@@ -19,17 +19,17 @@ spec:
           image: kamieniarzk/kube-config-scanner:latest
           ports:
             - containerPort: 8080
-          env: # create those using kubectl create secret generic mongodb-secret --from-literal=SPRING_DATA_MONGODB_URI=<your_mongo_uri> --from-literal=SPRING_DATA_MONGODB_DATABASE=<your_mongo_database> -n kube-config-scanner
-            - name: SPRING_DATA_MONGODB_URI
+          env: # create those using kubectl create secret generic mongodb-secret --from-literal=MONGO_URI=<your_mongo_uri> --from-literal=MONGO_DATABASE=<your_mongo_database> -n kube-config-scanner
+            - name: MONGO_URI
               valueFrom:
                 secretKeyRef:
                   name: mongodb-secret
-                  key: SPRING_DATA_MONGODB_URI
-            - name: SPRING_DATA_MONGODB_DATABASE
+                  key: MONGO_URI
+            - name: MONGO_DATABASE
               valueFrom:
                 secretKeyRef:
                   name: mongodb-secret
-                  key: SPRING_DATA_MONGODB_DATABASE
+                  key: MONGO_DATABASE
           volumeMounts:
             - name: temp-storage
               mountPath: /tmp/kube-config-scanner
