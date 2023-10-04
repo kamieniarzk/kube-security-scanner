@@ -106,6 +106,11 @@ public class KubernetesApiClientWrapper {
         .findFirst();
   }
 
+  public Optional<V1Node> getAnyNode() {
+    return performApiCall(() -> coreApi.listNode(null, null, null, null, null, null, null, null, null, null)).getItems().stream()
+        .findAny();
+  }
+
   public V1Status deleteJob(V1Job v1Job) throws ApiException {
     return batchApi.deleteNamespacedJob(v1Job.getMetadata().getName(), v1Job.getMetadata().getNamespace(), null, null, null, null, null,
         null);
