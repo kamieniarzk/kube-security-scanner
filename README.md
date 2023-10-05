@@ -15,11 +15,20 @@
 * ~~Initialize kube-hunter interface~~
   * ~~one persistence layer for JobRuns (id, date, podName)~~
   * ~~separate persistence layers for each kube-bench and kube-hunter (both job based tasks)~~
-* Init context aware analysis
-  * parse kube-hunter json to object
-  * parse kube-bench to some object structure
+* ~~Init context aware analysis~~
+  * ~~parse kube-hunter json to object~~
+  * ~~parse kube-bench to some object structure~~
   * ~~parse kube-score to some object structure~~
-  * aggregate all results into one object structure
+* Create helm chart
+  * create templates from objects in `k8s` dir
+  * create Values.yaml
+  * create variable identifying cluster in `Values.yaml`
+* Cluster context
+  * ~~recognize cluster type (for different kube-bench config and possibly other things too)~~
+  * set `clusterId` variable (from value passed by `Values.yaml`, if not present fallback to some value based on runtime, e.g. node name or api server url)
+  * save `clusterId` in all persisted runs
+
+
 
 ### References
 * [kube-hunter](https://github.com/aquasecurity/kube-hunter)
