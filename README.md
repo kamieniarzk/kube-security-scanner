@@ -1,6 +1,6 @@
 <!--- app-name: kube-config-scanner -->
 
-# kube-config-scanner helm chart
+# kube-config-scanner
 
 `kube-config-scanner` is a tool for security scan automation and analysis.
 
