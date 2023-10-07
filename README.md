@@ -53,7 +53,7 @@ helm install my-release \
                --set logStorage.size=512Mi \
                ./kcs
 ```
-> **Tip**: You can use the default [values.yaml](values.yaml)
+> **Tip**: You can use the default [values.yaml](helm/kcs/values.yaml)
 
 ### TODO
 * ~~Make the service-account related to in-cluster app deployment have permissions to execute necessary actions~~
