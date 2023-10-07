@@ -1,0 +1,10 @@
+image:
+  repository: kamieniarzk/kube-config-scanner
+  tag: latest
+
+mongodb:
+  uri: your-mongo-uri
+  database: your-mongo-database
+
+logStorage:
+  size: 1Gi

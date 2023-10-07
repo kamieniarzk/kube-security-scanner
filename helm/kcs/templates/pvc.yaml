@@ -1,0 +1,13 @@
+# templates/pvc.yaml
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "kube-config-scanner.fullname" . }}-pvc
+  namespace: {{ .Release.Namespace }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.logStorage.size }}

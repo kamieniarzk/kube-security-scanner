@@ -42,5 +42,3 @@ spec:
         - name: logs-storage
           persistentVolumeClaim:
             claimName: kube-config-scanner-pvc
-      imagePullSecrets:
-        - name: regcred # https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
