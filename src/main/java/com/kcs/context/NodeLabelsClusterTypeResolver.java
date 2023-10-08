@@ -27,8 +27,13 @@ class NodeLabelsClusterTypeResolver implements ClusterTypeResolver {
 
   @Override
   public ClusterType resolveCurrentClusterType() {
-    var anyNode = this.k8sApi.getAnyNode().orElseThrow(() -> new IllegalStateException("Failed to determine cluster type - could not fetch any node"));
-    var matchedByLabelPrefix = anyNode.getMetadata().getLabels().keySet().stream()
+    var anyNode = this.k8sApi.getAnyNode();
+
+    if (anyNode.isEmpty()) {
+      return fallbackValue();
+    }
+
+    var matchedByLabelPrefix = anyNode.get().getMetadata().getLabels().keySet().stream()
         .map(this::matchesClusterType)
         .filter(Optional::isPresent)
         .map(Optional::get)
@@ -38,14 +43,20 @@ class NodeLabelsClusterTypeResolver implements ClusterTypeResolver {
       return matchedByLabelPrefix.get();
     }
 
-    if (anyNode.getMetadata().getLabels().containsKey(INSTANCE_TYPE_LABEL)) {
-      var instanceTypeLabelValue = anyNode.getMetadata().getLabels().get(INSTANCE_TYPE_LABEL);
+    if (anyNode.get().getMetadata().getLabels().containsKey(INSTANCE_TYPE_LABEL)) {
+      var instanceTypeLabelValue = anyNode.get().getMetadata().getLabels().get(INSTANCE_TYPE_LABEL);
       if (instanceTypeLabelValueMap.containsKey(instanceTypeLabelValue)) {
         return instanceTypeLabelValueMap.get(instanceTypeLabelValue);
       }
     }
 
-    throw new IllegalStateException("Failed to determine cluster type by node labels");
+    log.warn("Failed to determine cluster type by node labels. Falling back to: {}", ClusterType.GENERIC);
+    return ClusterType.GENERIC;
+  }
+
+  private static ClusterType fallbackValue() {
+    log.warn("Failed to determine cluster type by node labels. Falling back to: {}", ClusterType.GENERIC);
+    return ClusterType.GENERIC;
   }
 
   private Optional<ClusterType> matchesClusterType(String label) {

@@ -30,6 +30,8 @@ spec:
                   secretKeyRef:
                     name: mongodb-secret
                     key: MONGO_DATABASE
+              - name: CLUSTER_NAME
+                value: {{ .Values.clusterName | quote }}
             volumeMounts:
               - name: temp-storage
                 mountPath: /tmp/kube-config-scanner

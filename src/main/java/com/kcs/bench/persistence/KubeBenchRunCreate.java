@@ -1,3 +1,5 @@
 package com.kcs.bench.persistence;
 
-public record KubeBenchRunCreate(String jobRunId) {}
+import com.kcs.context.ClusterType;
+
+public record KubeBenchRunCreate(String jobRunId, String clusterName, ClusterType clusterType) {}

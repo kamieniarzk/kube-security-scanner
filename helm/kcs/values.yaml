@@ -8,3 +8,5 @@ mongodb:
 
 logStorage:
   size: 1Gi
+
+clusterName: your-cluster-name
