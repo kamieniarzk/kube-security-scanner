@@ -10,9 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 public class KubeApiUtils {
 
   @Nullable
-  public static <T> T performApiCall(ThrowingSupplier<T> apiCall) {
+  public static <T> T apiCall(ThrowingSupplier<T> apiCall) {
     try {
-      return apiCall.get();
+      return apiCall.getWithException();
     } catch (Exception exception) {
       if (exception instanceof ApiException apiException) {
         log.warn("ApiException caught, status: {}, body: {}", apiException.getCode(), apiException.getResponseBody());

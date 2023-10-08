@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
-import static com.kcs.util.KubeApiUtils.performApiCall;
+import static com.kcs.util.KubeApiUtils.apiCall;
 
 @Slf4j
 @Service
@@ -44,7 +44,7 @@ class DefaultJobService implements JobService {
 
   private void deleteExistingJobIfNecessary(String namePrefix) {
     k8sApi.findJobWithPrefix(namePrefix)
-        .ifPresent(v1Job -> performApiCall(() -> k8sApi.deleteJob(v1Job)));
+        .ifPresent(v1Job -> apiCall(() -> k8sApi.deleteJob(v1Job)));
   }
 
   void sleep(long ms) {
