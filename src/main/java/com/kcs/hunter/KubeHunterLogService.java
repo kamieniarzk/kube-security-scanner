@@ -1,4 +1,4 @@
-package com.kcs.hunter.scheduling;
+package com.kcs.hunter;
 
 import com.kcs.hunter.persistence.KubeHunterRepository;
 import com.kcs.hunter.persistence.KubeHunterRunDto;
@@ -36,6 +36,10 @@ class KubeHunterLogService {
   public void persistLogs() {
     repository.getAllWithoutStoredLogs()
         .forEach(this::persistRunLogs);
+  }
+
+  public String getLogs(String podName) {
+    return logRepository.getAsString(logsDirectory, podName);
   }
 
   private void persistRunLogs(KubeHunterRunDto runDto) {
