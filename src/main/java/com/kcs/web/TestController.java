@@ -47,7 +47,7 @@ class TestController {
     return kubeBenchResultService.getResult(id);
   }
 
-  @GetMapping("/bench/runs/{id}/result")
+  @GetMapping("/hunter/runs/{id}/result")
   KubeHunterResultDto getKubeHunterResult(@PathVariable String id) {
     return kubeHunterResultService.getResult(id);
   }
