@@ -124,6 +124,11 @@ public class KubernetesApiClientWrapper {
         .toList();
   }
 
+  public V1Job createJobFromYamlWithServiceAccount(String jobDefinitionAsYaml, String serviceAccountName) throws IOException {
+    V1Job kubeBenchJob = (V1Job) Yaml.load(jobDefinitionAsYaml);
+    kubeBenchJob.getSpec().getTemplate().getSpec().setServiceAccountName(serviceAccountName);
+    return apiCall(() -> batchApi.createNamespacedJob(getCurrentNamespace(), kubeBenchJob, null, null, null, null));
+  }
 
   public V1Job createJobFromYamlUrlWithModifiedCommand(String yamlUrl, String command) {
     try {

@@ -7,7 +7,9 @@ import io.kubernetes.client.openapi.ApiException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class KubeApiUtils {
+public final class KubeApiUtils {
+
+  private KubeApiUtils() {}
 
   @Nullable
   public static <T> T apiCall(ThrowingSupplier<T> apiCall) {

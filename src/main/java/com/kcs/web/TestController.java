@@ -8,6 +8,7 @@ import com.kcs.hunter.KubeHunterResultService;
 import com.kcs.hunter.KubeHunterService;
 import com.kcs.hunter.persistence.KubeHunterRunDto;
 import com.kcs.hunter.result.KubeHunterResultDto;
+import com.kcs.trivy.TrivyFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,8 @@ class TestController {
   private final KubeHunterService kubeHunterService;
   private final KubeBenchResultService kubeBenchResultService;
   private final KubeHunterResultService kubeHunterResultService;
+  private final TrivyFacade trivyFacade;
+
 
   @GetMapping("/hunter")
   List<KubeHunterRunDto> getAllKubeHunterRuns() {
@@ -50,6 +53,11 @@ class TestController {
   @GetMapping("/hunter/runs/{id}/result")
   KubeHunterResultDto getKubeHunterResult(@PathVariable String id) {
     return kubeHunterResultService.getResult(id);
+  }
+
+  @PostMapping("/trivy/runs")
+  void runTrivyJob() {
+    trivyFacade.runTrivyJob();
   }
 
   record HunterRunRequest(String args) {}

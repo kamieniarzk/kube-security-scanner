@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: trivy-scan-job
+spec:
+  template:
+    metadata:
+      name: trivy-scan
+    spec:
+      containers:
+        - name: trivy
+          image: aquasec/trivy
+          command: ["trivy", "k8s", "--format", "json", "--timeout", "3600s", "--all-namespaces", "-q", "all"]
+      restartPolicy: Never

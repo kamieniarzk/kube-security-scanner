@@ -11,7 +11,8 @@ import java.nio.file.StandardCopyOption;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class MiscUtils {
+public final class MiscUtils {
+  private MiscUtils() {}
 
   /**
    *
@@ -24,6 +25,10 @@ public class MiscUtils {
       log.debug("Failed to read current namespace, assuming default");
       return "kube-config-scanner";
     }
+  }
+
+  public static String constructServiceAccountName(String helmRelease) {
+    return helmRelease.concat("-serviceaccount");
   }
 
   public static File getFileFromUrl(String stringUrl) throws IOException {

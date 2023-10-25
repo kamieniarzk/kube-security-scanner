@@ -32,6 +32,8 @@ spec:
                     key: MONGO_DATABASE
               - name: CLUSTER_NAME
                 value: {{ .Values.clusterName | quote }}
+              - name: HELM_RELEASE_NAME
+                value: {{ include "kube-config-scanner.fullname" . }}
             volumeMounts:
               - name: temp-storage
                 mountPath: /tmp/kube-config-scanner
