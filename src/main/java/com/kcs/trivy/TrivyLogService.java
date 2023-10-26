@@ -1,7 +1,7 @@
-package com.kcs.hunter;
+package com.kcs.trivy;
 
-import com.kcs.hunter.persistence.KubeHunterRepository;
-import com.kcs.hunter.persistence.KubeHunterRunDto;
+import com.kcs.trivy.persistence.TrivyRepository;
+import com.kcs.trivy.persistence.TrivyRunDto;
 import com.kcs.job.JobRunRepository;
 import com.kcs.k8s.KubernetesApiClientWrapper;
 import com.kcs.shared.LogRepository;
@@ -14,18 +14,18 @@ import java.io.IOException;
 
 @Slf4j
 @Service
-class KubeHunterLogService {
+class TrivyLogService {
 
-  private final KubeHunterRepository repository;
+  private final TrivyRepository repository;
   private final JobRunRepository jobRunRepository;
   private final KubernetesApiClientWrapper k8sApi;
   private final LogRepository logRepository;
   private final String logsDirectory;
 
-  KubeHunterLogService(KubeHunterRepository hunterRepository, JobRunRepository jobRunRepository,
-                       KubernetesApiClientWrapper k8sApi, LogRepository logRepository,
-                       @Value("${filesystem.locations.hunter:/tmp/kube-config-scanner/hunter}") String logsDirectory) {
-    this.repository = hunterRepository;
+  TrivyLogService(TrivyRepository trivyRepository, JobRunRepository jobRunRepository,
+                  KubernetesApiClientWrapper k8sApi, LogRepository logRepository,
+                  @Value("${filesystem.locations.trivy:/tmp/kube-config-scanner/trivy}") String logsDirectory) {
+    this.repository = trivyRepository;
     this.jobRunRepository = jobRunRepository;
     this.k8sApi = k8sApi;
     this.logRepository = logRepository;
@@ -42,10 +42,10 @@ class KubeHunterLogService {
     return logRepository.getAsString(logsDirectory, podName);
   }
 
-  private void persistRunLogs(KubeHunterRunDto runDto) {
+  private void persistRunLogs(TrivyRunDto runDto) {
     var jobRunDto = jobRunRepository.get(runDto.jobRunId());
     if (jobRunDto.podName() == null) {
-      log.warn("kube-hunter run {} has null podName. Can not store logs", runDto.id());
+      log.warn("trivy run {} has null podName. Can not store logs", runDto.id());
       return;
     }
     log.info("Persisting missing logs for run: {}", runDto.id());

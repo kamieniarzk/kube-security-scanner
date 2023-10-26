@@ -1,10 +1,13 @@
 package com.kcs.job;
 
+import com.kcs.context.ContextHolder;
 import com.kcs.k8s.KubernetesApiClientWrapper;
+import com.kcs.util.MiscUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import static com.kcs.util.KubeApiUtils.apiCall;
@@ -16,6 +19,7 @@ class DefaultJobService implements JobService {
 
   private final JobRunRepository repository;
   private final KubernetesApiClientWrapper k8sApi;
+  private final ContextHolder contextHolder;
 
   @Override
   public JobRunDto runJobFromUrlDefinitionWithModifiedCommand(String url, String podNamePrefix, String command) {
@@ -29,6 +33,17 @@ class DefaultJobService implements JobService {
     deleteExistingJobIfNecessary(namePrefix);
     k8sApi.createJobWithContainerZeroArgs(url, Arrays.stream(args.split(" ")).toList());
     return persistRunData(namePrefix);
+  }
+
+  @Override
+  public JobRunDto runJobFromUrlDefinitionWithContextServiceAccount(String yaml, String podNamePrefix) {
+    deleteExistingJobIfNecessary(podNamePrefix);
+    try {
+      k8sApi.createJobFromYamlWithServiceAccount(yaml, MiscUtils.constructServiceAccountName(contextHolder.getHelmReleaseName()));
+    } catch (IOException ioException) {
+      throw new RuntimeException(ioException);
+    }
+    return persistRunData(podNamePrefix);
   }
 
   private JobRunDto persistRunData(String namePrefix) {

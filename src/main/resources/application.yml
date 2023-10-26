@@ -9,5 +9,5 @@ filesystem:
   locations:
     yaml: /tmp/kube-config-scanner/yaml
     score: /tmp/kube-config-scanner/score
-    hunter: /tmp/kube-config-scanner/hunter
+    trivy: /tmp/kube-config-scanner/trivy
     bench: /tmp/kube-config-scanner/bench

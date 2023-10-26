@@ -1,4 +1,4 @@
-package com.kcs.hunter;
+package com.kcs.trivy;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 @EnableScheduling
 @RequiredArgsConstructor
-class KubeHunterSchedulingService {
+class TrivySchedulingService {
 
-  private final KubeHunterLogService logService;
+  private final TrivyLogService logService;
 
   @Scheduled(cron = "0 * * * * *")
   void persistLogsForRunsWithoutStoredLogs() {

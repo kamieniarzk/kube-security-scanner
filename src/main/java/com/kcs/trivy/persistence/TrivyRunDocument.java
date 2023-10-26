@@ -1,4 +1,4 @@
-package com.kcs.hunter.persistence;
+package com.kcs.trivy.persistence;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,16 +8,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
 @Data
-@Document("kubeHunter")
+@Document("trivyRun")
 @AllArgsConstructor
-class KubeHunterRunDocument {
+class TrivyRunDocument {
   private @Id String id;
   private LocalDateTime date;
-  private String args;
   private String jobRunId;
   private Boolean logsStored;
 
-  KubeHunterRunDto toDto() {
-    return new KubeHunterRunDto(id, date, args, jobRunId, logsStored);
+  TrivyRunDto toDto() {
+    return new TrivyRunDto(id, date, jobRunId, logsStored);
   }
 }

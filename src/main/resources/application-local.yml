@@ -8,5 +8,5 @@ filesystem:
   locations:
     yaml: logs/yaml
     score: logs/score
-    hunter: logs/hunter
+    trivy: logs/trivy
     bench: logs/bench

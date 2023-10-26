@@ -4,11 +4,8 @@ import com.kcs.bench.KubeBenchJsonResultDto;
 import com.kcs.bench.KubeBenchResultService;
 import com.kcs.bench.KubeBenchService;
 import com.kcs.bench.persistence.KubeBenchRunDto;
-import com.kcs.hunter.KubeHunterResultService;
-import com.kcs.hunter.KubeHunterService;
-import com.kcs.hunter.persistence.KubeHunterRunDto;
-import com.kcs.hunter.result.KubeHunterResultDto;
-import com.kcs.trivy.TrivyFacade;
+import com.kcs.trivy.TrivyService;
+import com.kcs.trivy.persistence.TrivyRunDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,15 +16,13 @@ import java.util.List;
 class TestController {
 
   private final KubeBenchService kubeBenchService;
-  private final KubeHunterService kubeHunterService;
+  private final TrivyService trivyService;
   private final KubeBenchResultService kubeBenchResultService;
-  private final KubeHunterResultService kubeHunterResultService;
-  private final TrivyFacade trivyFacade;
 
 
-  @GetMapping("/hunter")
-  List<KubeHunterRunDto> getAllKubeHunterRuns() {
-    return kubeHunterService.getAll();
+  @GetMapping("/trivy")
+  List<TrivyRunDto> getAllTrivyRuns() {
+    return trivyService.getAll();
   }
 
   @GetMapping("/bench")
@@ -35,9 +30,9 @@ class TestController {
     return kubeBenchService.getAll();
   }
 
-  @PostMapping("/hunter")
-  KubeHunterRunDto runHunter(@RequestBody HunterRunRequest runRequest) {
-    return kubeHunterService.run(runRequest.args);
+  @PostMapping("/trivy")
+  TrivyRunDto runTrivy() {
+    return trivyService.run();
   }
 
   @PostMapping("/bench")
@@ -50,16 +45,5 @@ class TestController {
     return kubeBenchResultService.getResult(id);
   }
 
-  @GetMapping("/hunter/runs/{id}/result")
-  KubeHunterResultDto getKubeHunterResult(@PathVariable String id) {
-    return kubeHunterResultService.getResult(id);
-  }
-
-  @PostMapping("/trivy/runs")
-  void runTrivyJob() {
-    trivyFacade.runTrivyJob();
-  }
-
-  record HunterRunRequest(String args) {}
   record BenchRunRequest() {}
 }
