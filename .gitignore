@@ -8,6 +8,7 @@ build/
 
 logs
 
+helm/kcs/my-values.yaml
 ### STS ###
 .apt_generated
 .classpath
