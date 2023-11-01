@@ -2,6 +2,7 @@ package com.kcs.score.persistence.document;
 
 import java.util.List;
 
+import com.kcs.NoDataFoundException;
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,5 +23,12 @@ class MongoKubeScoreRepository implements KubeScoreRepository {
     return documentRepository.findByNamespace(namespace).stream()
         .map(KubeScoreRunDocument::toDto)
         .toList();
+  }
+
+  @Override
+  public KubeScoreRunDto getById(String id) {
+    return documentRepository.findById(id)
+        .map(KubeScoreRunDocument::toDto)
+        .orElseThrow(NoDataFoundException::new);
   }
 }

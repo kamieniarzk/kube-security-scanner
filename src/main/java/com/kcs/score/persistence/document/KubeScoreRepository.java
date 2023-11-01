@@ -5,4 +5,5 @@ import java.util.List;
 public interface KubeScoreRepository {
   String save(KubeScoreRunCreate runCreate);
   List<KubeScoreRunDto> getByNamespace(String namespace);
+  KubeScoreRunDto getById(String id);
 }

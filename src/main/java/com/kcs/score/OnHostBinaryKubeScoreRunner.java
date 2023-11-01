@@ -4,7 +4,6 @@ import com.kcs.k8s.KubernetesApiClientWrapper;
 import com.kcs.k8s.YamlService;
 import com.kcs.score.persistence.document.KubeScoreRepository;
 import com.kcs.score.persistence.document.KubeScoreRunDto;
-import com.kcs.score.persistence.document.KubeScoreRunCreate;
 import com.kcs.shared.LogRepository;
 import com.kcs.util.ProcessRunner;
 import io.kubernetes.client.common.KubernetesObject;
@@ -19,37 +18,29 @@ import java.util.List;
 
 @Slf4j
 @Service
-class OnHostBinaryKubeScoreService implements KubeScoreService {
+class OnHostBinaryKubeScoreRunner implements KubeScoreRunner {
 
   private final KubernetesApiClientWrapper k8sApi;
   private final YamlService yamlService;
   private final KubeScoreRepository scoreRepository;
-  private final LogRepository logRepository;
-  private final String scoreDirectory;
 
-  OnHostBinaryKubeScoreService(KubernetesApiClientWrapper k8sApi, YamlService yamlService, KubeScoreRepository scoreRepository,
-                               LogRepository logRepository,
-                               @Value("${filesystem.locations.score:/tmp/kube-config-scanner/score}") String scoreDirectory) {
+  OnHostBinaryKubeScoreRunner(KubernetesApiClientWrapper k8sApi, YamlService yamlService, KubeScoreRepository scoreRepository,
+                              LogRepository logRepository,
+                              @Value("${filesystem.locations.score:/tmp/kube-config-scanner/score}") String scoreDirectory) {
     this.k8sApi = k8sApi;
     this.yamlService = yamlService;
     this.scoreRepository = scoreRepository;
-    this.logRepository = logRepository;
-    this.scoreDirectory = scoreDirectory;
   }
 
 
-  @Override
   @Transactional
   public String score(String namespace) {
     var savedYamlsLocation = yamlService.saveAsYamlInTempLocation(getObjectsList(namespace), namespace);
     var args = String.join(" ", savedYamlsLocation);
-    var score = runKubeScoreBinary(args);
-    var scoreId = scoreRepository.save(new KubeScoreRunCreate(namespace));
-    logRepository.save(score, scoreDirectory, scoreId);
-    return scoreId;
+    return runKubeScoreBinary(args);
   }
 
-  @Override
+
   public List<KubeScoreRunDto> getByNamespace(String namespace) {
     return scoreRepository.getByNamespace(namespace);
   }
