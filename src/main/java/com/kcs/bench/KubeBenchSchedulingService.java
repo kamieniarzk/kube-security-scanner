@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 class KubeBenchSchedulingService {
 
-  private final KubeBenchLogService resultService;
+  private final KubeBenchLogPersistence resultService;
 
   @Scheduled(cron = "0 * * * * *")
   void persistLogsForRunsWithoutStoredLogs() {

@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class InClusterJobKubeBenchService implements KubeBenchService {
+class InClusterJobKubeBenchRunner implements KubeBenchRunner {
 
   private final JobService jobService;
   private final KubeBenchRepository kubeBenchRepository;
@@ -26,10 +26,5 @@ public class InClusterJobKubeBenchService implements KubeBenchService {
     var clusterName = contextHolder.getClusterName();
     var jobDto = jobService.runJobFromUrlDefinitionWithModifiedCommand(JobDefinitionLocator.getJobDefinitionUrl(clusterType), "kube-bench", "kube-bench --json");
     return kubeBenchRepository.save(new KubeBenchRunCreate(jobDto.id(), clusterName, clusterType));
-  }
-
-  @Override
-  public List<KubeBenchRunDto> getAll() {
-    return kubeBenchRepository.getAll();
   }
 }

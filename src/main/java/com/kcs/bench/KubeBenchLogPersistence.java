@@ -14,16 +14,12 @@ import java.io.IOException;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-class KubeBenchLogService {
+class KubeBenchLogPersistence {
 
   private final KubeBenchRepository benchRepository;
   private final JobRunRepository jobRunRepository;
   private final KubernetesApiClientWrapper k8sApi;
   private final BenchLogRepository logRepository;
-
-  public String getLogs(String podName) {
-    return logRepository.getAsString(podName);
-  }
 
   @Transactional
   public void persistLogs() {

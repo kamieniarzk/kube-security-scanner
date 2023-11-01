@@ -1,31 +1,22 @@
 package com.kcs.trivy;
 
+import com.kcs.job.JobService;
 import com.kcs.trivy.persistence.TrivyRepository;
 import com.kcs.trivy.persistence.TrivyRunCreate;
 import com.kcs.trivy.persistence.TrivyRunDto;
-import com.kcs.job.JobService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
-
-@Slf4j
-@Service
+@Component
 @RequiredArgsConstructor
-class InClusterJobTrivyService implements TrivyService {
+class InClusterJobTrivyRunner implements TrivyRunner {
 
-  private final TrivyRepository repository;
   private final JobService jobService;
+  private final TrivyRepository repository;
 
   @Override
   public TrivyRunDto run() {
     var jobRunDto = jobService.runJobFromUrlDefinitionWithContextServiceAccount(TrivyJobDefinition.get(), "trivy-scan-job");
     return repository.save(new TrivyRunCreate(jobRunDto.id()));
-  }
-
-  @Override
-  public List<TrivyRunDto> getAll() {
-    return repository.getAll();
   }
 }
