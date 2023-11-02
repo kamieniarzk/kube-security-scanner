@@ -1,0 +1,284 @@
+{
+  "ClusterName": "gke_virtual-anchor-400608_europe-west1-b_cluster-1",
+  "Resources": [
+    {
+      "Namespace": "kcs",
+      "Kind": "Deployment",
+      "Name": "kcs-deployment"
+    },
+    {
+      "Namespace": "kcs",
+      "Kind": "Deployment",
+      "Name": "kcs-deployment",
+      "Results": [
+        {
+          "Target": "Deployment/kcs-deployment",
+          "Class": "config",
+          "Type": "kubernetes",
+          "MisconfSummary": {
+            "Successes": 74,
+            "Failures": 0,
+            "Exceptions": 0
+          }
+        }
+      ]
+    },
+    {
+      "Namespace": "kube-system",
+      "Kind": "Pod",
+      "Name": "kube-proxy-gke-cluster-1-default-pool-98572dea-g8jl",
+      "Results": [
+        {
+          "Target": "Pod/kube-proxy-gke-cluster-1-default-pool-98572dea-g8jl",
+          "Class": "config",
+          "Type": "kubernetes",
+          "MisconfSummary": {
+            "Successes": 72,
+            "Failures": 2,
+            "Exceptions": 0
+          },
+          "Misconfigurations": [
+            {
+              "Type": "Kubernetes Security Check",
+              "ID": "KSV009",
+              "AVDID": "AVD-KSV-0009",
+              "Title": "Access to host network",
+              "Description": "Sharing the host’s network namespace permits processes in the pod to communicate with processes bound to the host’s loopback adapter.",
+              "Message": "Pod 'kube-proxy-gke-cluster-1-default-pool-98572dea-g8jl' should not set 'spec.template.spec.hostNetwork' to true",
+              "Namespace": "builtin.kubernetes.KSV009",
+              "Query": "data.builtin.kubernetes.KSV009.deny",
+              "Resolution": "Do not set 'spec.template.spec.hostNetwork' to true.",
+              "Severity": "HIGH",
+              "PrimaryURL": "https://avd.aquasec.com/misconfig/ksv009",
+              "References": [
+                "https://kubernetes.io/docs/concepts/security/pod-security-standards/#baseline",
+                "https://avd.aquasec.com/misconfig/ksv009"
+              ],
+              "Status": "FAIL",
+              "Layer": {},
+              "CauseMetadata": {
+                "Provider": "Kubernetes",
+                "Service": "general",
+                "StartLine": 191,
+                "EndLine": 262,
+                "Code": {
+                  "Lines": [
+                    {
+                      "Number": 191,
+                      "Content": "    containers:",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": true,
+                      "LastCause": false
+                    },
+                    {
+                      "Number": 192,
+                      "Content": "        - command:",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": false,
+                      "LastCause": false
+                    },
+                    {
+                      "Number": 193,
+                      "Content": "            - /bin/sh",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": false,
+                      "LastCause": false
+                    },
+                    {
+                      "Number": 194,
+                      "Content": "            - -c",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": false,
+                      "LastCause": false
+                    },
+                    {
+                      "Number": 195,
+                      "Content": "            - exec kube-proxy --master=https://10.132.0.4 --kubeconfig=/var/lib/kube-proxy/kubeconfig --cluster-cidr=10.124.0.0/14 --oom-score-adj=-998 --v=2 --feature-gates=InTreePluginAWSUnregister=true,InTreePluginAzureDiskUnregister=true,InTreePluginvSphereUnregister=true,RotateKubeletServerCertificate=true,ExecProbeTimeout=false,CSIMigrationGCE=true --iptables-sync-period=1m --iptables-min-sync-period=10s --ipvs-sync-period=1m --ipvs-min-sync-period=10s --detect-local-mode=NodeCIDR 1\u003e\u003e/var/log/kube-proxy.log 2\u003e\u00261",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": false,
+                      "LastCause": false
+                    },
+                    {
+                      "Number": 196,
+                      "Content": "          image: gke.gcr.io/kube-proxy-amd64:v1.27.3-gke.100",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": false,
+                      "LastCause": false
+                    },
+                    {
+                      "Number": 197,
+                      "Content": "          imagePullPolicy: IfNotPresent",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": false,
+                      "LastCause": false
+                    },
+                    {
+                      "Number": 198,
+                      "Content": "          name: kube-proxy",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": false,
+                      "LastCause": false
+                    },
+                    {
+                      "Number": 199,
+                      "Content": "          resources:",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": false,
+                      "LastCause": true
+                    },
+                    {
+                      "Number": 200,
+                      "Content": "",
+                      "IsCause": false,
+                      "Annotation": "",
+                      "Truncated": true,
+                      "FirstCause": false,
+                      "LastCause": false
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "Type": "Kubernetes Security Check",
+              "ID": "KSV017",
+              "AVDID": "AVD-KSV-0017",
+              "Title": "Privileged",
+              "Description": "Privileged containers share namespaces with the host system and do not offer any security. They should be used exclusively for system containers that require high privileges.",
+              "Message": "Container 'kube-proxy' of Pod 'kube-proxy-gke-cluster-1-default-pool-98572dea-g8jl' should set 'securityContext.privileged' to false",
+              "Namespace": "builtin.kubernetes.KSV017",
+              "Query": "data.builtin.kubernetes.KSV017.deny",
+              "Resolution": "Change 'containers[].securityContext.privileged' to 'false'.",
+              "Severity": "HIGH",
+              "PrimaryURL": "https://avd.aquasec.com/misconfig/ksv017",
+              "References": [
+                "https://kubernetes.io/docs/concepts/security/pod-security-standards/#baseline",
+                "https://avd.aquasec.com/misconfig/ksv017"
+              ],
+              "Status": "FAIL",
+              "Layer": {},
+              "CauseMetadata": {
+                "Provider": "Kubernetes",
+                "Service": "general",
+                "StartLine": 192,
+                "EndLine": 221,
+                "Code": {
+                  "Lines": [
+                    {
+                      "Number": 192,
+                      "Content": "        - command:",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": true,
+                      "LastCause": false
+                    },
+                    {
+                      "Number": 193,
+                      "Content": "            - /bin/sh",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": false,
+                      "LastCause": false
+                    },
+                    {
+                      "Number": 194,
+                      "Content": "            - -c",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": false,
+                      "LastCause": false
+                    },
+                    {
+                      "Number": 195,
+                      "Content": "            - exec kube-proxy --master=https://10.132.0.4 --kubeconfig=/var/lib/kube-proxy/kubeconfig --cluster-cidr=10.124.0.0/14 --oom-score-adj=-998 --v=2 --feature-gates=InTreePluginAWSUnregister=true,InTreePluginAzureDiskUnregister=true,InTreePluginvSphereUnregister=true,RotateKubeletServerCertificate=true,ExecProbeTimeout=false,CSIMigrationGCE=true --iptables-sync-period=1m --iptables-min-sync-period=10s --ipvs-sync-period=1m --ipvs-min-sync-period=10s --detect-local-mode=NodeCIDR 1\u003e\u003e/var/log/kube-proxy.log 2\u003e\u00261",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": false,
+                      "LastCause": false
+                    },
+                    {
+                      "Number": 196,
+                      "Content": "          image: gke.gcr.io/kube-proxy-amd64:v1.27.3-gke.100",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": false,
+                      "LastCause": false
+                    },
+                    {
+                      "Number": 197,
+                      "Content": "          imagePullPolicy: IfNotPresent",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": false,
+                      "LastCause": false
+                    },
+                    {
+                      "Number": 198,
+                      "Content": "          name: kube-proxy",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": false,
+                      "LastCause": false
+                    },
+                    {
+                      "Number": 199,
+                      "Content": "          resources:",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": false,
+                      "LastCause": false
+                    },
+                    {
+                      "Number": 200,
+                      "Content": "            requests:",
+                      "IsCause": true,
+                      "Annotation": "",
+                      "Truncated": false,
+                      "FirstCause": false,
+                      "LastCause": true
+                    },
+                    {
+                      "Number": 201,
+                      "Content": "",
+                      "IsCause": false,
+                      "Annotation": "",
+                      "Truncated": true,
+                      "FirstCause": false,
+                      "LastCause": false
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
