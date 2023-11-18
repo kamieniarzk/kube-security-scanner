@@ -5,18 +5,18 @@ import spock.lang.Specification
 
 class TrivyResultParserTest extends Specification {
 
-  def "should properly parse JSON output of trivy resources scan"() {
+  def "should properly parse full JSON output of trivy resources scan"() {
     given:
     var inputFile = new File("src/test/resources/trivy-example")
     var inputFileString = new String(inputFile.readBytes())
 
     when:
-    var result = TrivyResultParser.parse(inputFileString)
+    var result = TrivyResultParser.parseFullResult(inputFileString)
 
     then:
 
     result.clusterName == 'gke_virtual-anchor-400608_europe-west1-b_cluster-1'
-    result.resources.size() == 3
+    result.resources.size() == 2
 
     with(result.resources.get(2)) {
       namespace == 'kube-system'
@@ -41,6 +41,31 @@ class TrivyResultParserTest extends Specification {
         causeMetadata.provider == 'Kubernetes'
         causeMetadata.startLine == 191
         causeMetadata.endLine == 262
+      }
+    }
+  }
+
+  def "should properly parse summary JSON output of trivy resources scan"() {
+    given:
+    var inputFile = new File("src/test/resources/trivy-example")
+    var inputFileString = new String(inputFile.readBytes())
+
+    when:
+    var result = TrivyResultParser.parseSummaryResult(inputFileString)
+
+    then:
+
+    result.clusterName == 'gke_virtual-anchor-400608_europe-west1-b_cluster-1'
+    result.resources.size() == 2
+
+    with(result.resources.get(0)) {
+      name == 'kcs-deployment'
+      kind == 'Deployment'
+      namespace == 'kcs'
+      with(getResult()) {
+        summary.successes == 74
+        summary.failures == 0
+        summary.exceptions == 0
       }
     }
   }

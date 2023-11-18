@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class TrivyResultDto {
+public class TrivyFullResultDto {
   private String clusterName;
   private List<Resource> resources;
 
