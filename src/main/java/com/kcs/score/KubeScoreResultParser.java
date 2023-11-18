@@ -102,7 +102,7 @@ public class KubeScoreResultParser {
   }
 
   private static KubeScoreResultDto.ObjectResultDto extractObjectPropertiesFromStartLine(String input) {
-    var patternString = "v1\\/([a-zA-Z0-9-_]+)\\s+([a-zA-Z0-9-_]+)\\s+in\\s+([a-zA-Z0-9-_]+)";
+    var patternString = "v1\\/([a-zA-Z0-9-_]+)\\s+([a-zA-Z0-9-_.]+)\\s+in\\s+([a-zA-Z0-9-_]+)";
     var pattern = Pattern.compile(patternString);
     var matcher = pattern.matcher(input);
     if (matcher.find()) {

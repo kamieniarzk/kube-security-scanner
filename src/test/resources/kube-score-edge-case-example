@@ -1,0 +1,1089 @@
+v1/Pod event-exporter-gke-7bf6c99dcb-nkjcq in kube-system                     💥
+    [CRITICAL] Container Security Context User Group ID
+        · event-exporter -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · event-exporter -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · prometheus-to-sd-exporter -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · prometheus-to-sd-exporter -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · event-exporter -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+        · prometheus-to-sd-exporter -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Container Image Pull Policy
+        · event-exporter -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · prometheus-to-sd-exporter -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · event-exporter -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · prometheus-to-sd-exporter -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Container Resources
+        · event-exporter -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · event-exporter -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · prometheus-to-sd-exporter -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · prometheus-to-sd-exporter -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · prometheus-to-sd-exporter -> CPU request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.cpu
+        · prometheus-to-sd-exporter -> Memory request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.memory
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · event-exporter -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · prometheus-to-sd-exporter -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Resources
+        · event-exporter -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · event-exporter -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · prometheus-to-sd-exporter -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · prometheus-to-sd-exporter -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · prometheus-to-sd-exporter -> CPU request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.cpu
+        · prometheus-to-sd-exporter -> Memory request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.memory
+    [CRITICAL] Container Security Context User Group ID
+        · event-exporter -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · event-exporter -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · prometheus-to-sd-exporter -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · prometheus-to-sd-exporter -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Image Pull Policy
+        · event-exporter -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · prometheus-to-sd-exporter -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · event-exporter -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+        · prometheus-to-sd-exporter -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+v1/Pod fluentbit-gke-5dvs2 in kube-system                                     💥
+    [CRITICAL] Container Security Context User Group ID
+        · fluentbit-gke-init -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · fluentbit-gke-init -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · fluentbit -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · fluentbit -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · fluentbit-gke -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · fluentbit-gke -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Image Pull Policy
+        · fluentbit-gke-init -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · fluentbit -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · fluentbit-gke -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · fluentbit-gke-init -> Container has no configured security context
+            Set securityContext to run the container in a more secure context.
+        · fluentbit -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+        · fluentbit-gke -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · fluentbit-gke-init -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · fluentbit -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · fluentbit-gke -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Resources
+        · fluentbit-gke-init -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · fluentbit-gke-init -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · fluentbit-gke-init -> CPU request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.cpu
+        · fluentbit-gke-init -> Memory request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.memory
+        · fluentbit -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · fluentbit-gke -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · fluentbit-gke-init -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · fluentbit -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · fluentbit-gke -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Container Resources
+        · fluentbit-gke-init -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · fluentbit-gke-init -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · fluentbit-gke-init -> CPU request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.cpu
+        · fluentbit-gke-init -> Memory request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.memory
+        · fluentbit -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · fluentbit-gke -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+    [CRITICAL] Container Security Context User Group ID
+        · fluentbit-gke-init -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · fluentbit-gke-init -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · fluentbit -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · fluentbit -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · fluentbit-gke -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · fluentbit-gke -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · fluentbit-gke-init -> Container has no configured security context
+            Set securityContext to run the container in a more secure context.
+        · fluentbit -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+        · fluentbit-gke -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Container Image Pull Policy
+        · fluentbit-gke-init -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · fluentbit -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · fluentbit-gke -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+v1/Pod gke-metrics-agent-fktjw in kube-system                                 💥
+    [CRITICAL] Container Resources
+        · gke-metrics-agent -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · core-metrics-exporter -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+    [CRITICAL] Container Security Context User Group ID
+        · gke-metrics-agent -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · gke-metrics-agent -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · core-metrics-exporter -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · core-metrics-exporter -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Image Pull Policy
+        · gke-metrics-agent -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · core-metrics-exporter -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · gke-metrics-agent -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+        · core-metrics-exporter -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · gke-metrics-agent -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · core-metrics-exporter -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Container Image Pull Policy
+        · gke-metrics-agent -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · core-metrics-exporter -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · gke-metrics-agent -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+        · core-metrics-exporter -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · gke-metrics-agent -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · core-metrics-exporter -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Container Resources
+        · gke-metrics-agent -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · core-metrics-exporter -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+    [CRITICAL] Container Security Context User Group ID
+        · gke-metrics-agent -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · gke-metrics-agent -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · core-metrics-exporter -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · core-metrics-exporter -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+v1/Pod konnectivity-agent-77bfc7fd46-p7jxv in kube-system                     💥
+    [CRITICAL] Container Resources
+        · konnectivity-agent -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+    [CRITICAL] Container Security Context User Group ID
+        · konnectivity-agent -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · konnectivity-agent -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Image Pull Policy
+        · konnectivity-agent -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · konnectivity-agent -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · konnectivity-agent -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Resources
+        · konnectivity-agent -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+    [CRITICAL] Container Security Context User Group ID
+        · konnectivity-agent -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · konnectivity-agent -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Image Pull Policy
+        · konnectivity-agent -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · konnectivity-agent -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · konnectivity-agent -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+v1/Pod konnectivity-agent-autoscaler-5d9dbcc6d8-rpprp in kube-system          💥
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · autoscaler -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Resources
+        · autoscaler -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · autoscaler -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+    [CRITICAL] Container Security Context User Group ID
+        · autoscaler -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · autoscaler -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Image Pull Policy
+        · autoscaler -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · autoscaler -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Container Resources
+        · autoscaler -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · autoscaler -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+    [CRITICAL] Container Security Context User Group ID
+        · autoscaler -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · autoscaler -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · autoscaler -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Container Image Pull Policy
+        · autoscaler -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · autoscaler -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+v1/Pod kube-dns-5bfd847c64-g962q in kube-system                               💥
+    [CRITICAL] Container Security Context User Group ID
+        · kubedns -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · kubedns -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · dnsmasq -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · dnsmasq -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · sidecar -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · sidecar -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · prometheus-to-sd -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · prometheus-to-sd -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Image Pull Policy
+        · kubedns -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · dnsmasq -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · sidecar -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · prometheus-to-sd -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · dnsmasq -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · kubedns -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · dnsmasq -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · sidecar -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · prometheus-to-sd -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Resources
+        · kubedns -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · dnsmasq -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · dnsmasq -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · sidecar -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · sidecar -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · prometheus-to-sd -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · prometheus-to-sd -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · prometheus-to-sd -> CPU request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.cpu
+        · prometheus-to-sd -> Memory request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.memory
+    [CRITICAL] Container Resources
+        · kubedns -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · dnsmasq -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · dnsmasq -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · sidecar -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · sidecar -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · prometheus-to-sd -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · prometheus-to-sd -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · prometheus-to-sd -> CPU request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.cpu
+        · prometheus-to-sd -> Memory request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.memory
+    [CRITICAL] Container Security Context User Group ID
+        · kubedns -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · kubedns -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · dnsmasq -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · dnsmasq -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · sidecar -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · sidecar -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · prometheus-to-sd -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · prometheus-to-sd -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Image Pull Policy
+        · kubedns -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · dnsmasq -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · sidecar -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · prometheus-to-sd -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · dnsmasq -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · kubedns -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · dnsmasq -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · sidecar -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · prometheus-to-sd -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+v1/Pod kube-dns-autoscaler-84b8db4dc7-gtwvp in kube-system                    💥
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · autoscaler -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Resources
+        · autoscaler -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · autoscaler -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+    [CRITICAL] Container Security Context User Group ID
+        · autoscaler -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · autoscaler -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Image Pull Policy
+        · autoscaler -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · autoscaler -> Container has no configured security context
+            Set securityContext to run the container in a more secure context.
+    [CRITICAL] Container Security Context User Group ID
+        · autoscaler -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · autoscaler -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · autoscaler -> Container has no configured security context
+            Set securityContext to run the container in a more secure context.
+    [CRITICAL] Container Image Pull Policy
+        · autoscaler -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · autoscaler -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Container Resources
+        · autoscaler -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · autoscaler -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+v1/Pod kube-proxy-gke-cluster-1-default-pool-98572dea-g8jl in kube-system     💥
+    [CRITICAL] Container Security Context User Group ID
+        · kube-proxy -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · kube-proxy -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Image Pull Policy
+        · kube-proxy -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · kube-proxy -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · kube-proxy -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Container Security Context Privileged
+        · kube-proxy -> The container is privileged
+            Set securityContext.privileged to false. Privileged containers can
+            access all devices on the host, and grants almost the same access as
+            non-containerized processes on the host.
+    [CRITICAL] Container Resources
+        · kube-proxy -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · kube-proxy -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · kube-proxy -> Memory request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.memory
+    [CRITICAL] Container Security Context User Group ID
+        · kube-proxy -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · kube-proxy -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · kube-proxy -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Container Image Pull Policy
+        · kube-proxy -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · kube-proxy -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Container Security Context Privileged
+        · kube-proxy -> The container is privileged
+            Set securityContext.privileged to false. Privileged containers can
+            access all devices on the host, and grants almost the same access as
+            non-containerized processes on the host.
+    [CRITICAL] Container Resources
+        · kube-proxy -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · kube-proxy -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+        · kube-proxy -> Memory request is not set
+            Resource requests are recommended to make sure that the application
+            can start and run without crashing. Set resources.requests.memory
+v1/Pod l7-default-backend-d86c96845-v9r65 in kube-system                      💥
+    [CRITICAL] Container Image Pull Policy
+        · default-http-backend -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Pod Probes
+        · Container is missing a readinessProbe
+            A readinessProbe should be used to indicate when the service is
+            ready to receive traffic. Without it, the Pod is risking to receive
+            traffic before it has booted. It's also used during rollouts, and
+            can prevent downtime if a new version of the application is failing.
+            More information: https://github.com/zegl/kube-score/blob/master/README_PROBES.md
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · default-http-backend -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · default-http-backend -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Resources
+        · default-http-backend -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · default-http-backend -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+    [CRITICAL] Container Security Context User Group ID
+        · default-http-backend -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · default-http-backend -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Image Pull Policy
+        · default-http-backend -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Pod Probes
+        · Container is missing a readinessProbe
+            A readinessProbe should be used to indicate when the service is
+            ready to receive traffic. Without it, the Pod is risking to receive
+            traffic before it has booted. It's also used during rollouts, and
+            can prevent downtime if a new version of the application is failing.
+            More information: https://github.com/zegl/kube-score/blob/master/README_PROBES.md
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · default-http-backend -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · default-http-backend -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Resources
+        · default-http-backend -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · default-http-backend -> Memory limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.memory
+    [CRITICAL] Container Security Context User Group ID
+        · default-http-backend -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · default-http-backend -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+v1/Pod metrics-server-v0.5.2-6bf74b5d5f-ggr8b in kube-system                  💥
+    [CRITICAL] Container Resources
+        · metrics-server-nanny -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+    [CRITICAL] Container Security Context User Group ID
+        · metrics-server -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · metrics-server -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · metrics-server-nanny -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · metrics-server-nanny -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Image Pull Policy
+        · metrics-server -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · metrics-server-nanny -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · metrics-server -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · metrics-server-nanny -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · metrics-server -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · metrics-server-nanny -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Container Resources
+        · metrics-server-nanny -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+    [CRITICAL] Container Security Context User Group ID
+        · metrics-server -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · metrics-server -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · metrics-server-nanny -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · metrics-server-nanny -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Image Pull Policy
+        · metrics-server -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · metrics-server-nanny -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+v1/Pod pdcsi-node-4vff9 in kube-system                                        💥
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · csi-driver-registrar -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · gce-pd-driver -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Resources
+        · csi-driver-registrar -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · gce-pd-driver -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+    [CRITICAL] Container Security Context Privileged
+        · gce-pd-driver -> The container is privileged
+            Set securityContext.privileged to false. Privileged containers can
+            access all devices on the host, and grants almost the same access as
+            non-containerized processes on the host.
+    [CRITICAL] Container Security Context User Group ID
+        · csi-driver-registrar -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · csi-driver-registrar -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · gce-pd-driver -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · gce-pd-driver -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Image Pull Policy
+        · csi-driver-registrar -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · gce-pd-driver -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · csi-driver-registrar -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+        · gce-pd-driver -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Container Security Context User Group ID
+        · csi-driver-registrar -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · csi-driver-registrar -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+        · gce-pd-driver -> The container is running with a low user ID
+            A userid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsUser to a value > 10000
+        · gce-pd-driver -> The container running with a low group ID
+            A groupid above 10 000 is recommended to avoid conflicts with the
+            host. Set securityContext.runAsGroup to a value > 10000
+    [CRITICAL] Container Image Pull Policy
+        · csi-driver-registrar -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+        · gce-pd-driver -> ImagePullPolicy is not set to Always
+            It's recommended to always set the ImagePullPolicy to Always, to
+            make sure that the imagePullSecrets are always correct, and to
+            always get the image you want.
+    [CRITICAL] Container Security Context ReadOnlyRootFilesystem
+        · csi-driver-registrar -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+        · gce-pd-driver -> The pod has a container with a writable root filesystem
+            Set securityContext.readOnlyRootFilesystem to true
+    [CRITICAL] Container Ephemeral Storage Request and Limit
+        · csi-driver-registrar -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+        · gce-pd-driver -> Ephemeral Storage limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.ephemeral-storage
+    [CRITICAL] Pod NetworkPolicy
+        · The pod does not have a matching NetworkPolicy
+            Create a NetworkPolicy that targets this pod to control who/what
+            can communicate with this pod. Note, this feature needs to be
+            supported by the CNI implementation used in the Kubernetes cluster
+            to have an effect.
+    [CRITICAL] Container Resources
+        · csi-driver-registrar -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+        · gce-pd-driver -> CPU limit is not set
+            Resource limits are recommended to avoid resource DDOS. Set
+            resources.limits.cpu
+    [CRITICAL] Container Security Context Privileged
+        · gce-pd-driver -> The container is privileged
+            Set securityContext.privileged to false. Privileged containers can
+            access all devices on the host, and grants almost the same access as
+            non-containerized processes on the host.
+v1/Service default-http-backend in kube-system                                🤔
+    [WARNING] Service Type
+        · The service is of type NodePort
+            NodePort services should be avoided as they are insecure, and can
+            not be used together with NetworkPolicies. LoadBalancers or use of
+            an Ingress is recommended over NodePorts.
+v1/Service kube-dns in kube-system                                            ✅
+v1/Service metrics-server in kube-system                                      ✅

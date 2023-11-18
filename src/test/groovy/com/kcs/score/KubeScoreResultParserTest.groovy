@@ -71,4 +71,17 @@ class KubeScoreResultParserTest extends Specification {
       }
     }
   }
+
+  def "should properly parse edge case example"() {
+    given:
+    var inputFile = new File("src/test/resources/kube-score-edge-case-example")
+    var inputFileString = new String(inputFile.readBytes())
+
+    when:
+    var result = KubeScoreResultParser.parse(inputFileString)
+
+    then:
+    noExceptionThrown()
+    result != null
+  }
 }
