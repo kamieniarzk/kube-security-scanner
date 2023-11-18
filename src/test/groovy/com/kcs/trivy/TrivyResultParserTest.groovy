@@ -16,7 +16,7 @@ class TrivyResultParserTest extends Specification {
     then:
 
     result.clusterName == 'gke_virtual-anchor-400608_europe-west1-b_cluster-1'
-    result.resources.size() == 2
+    result.resources.size() == 3
 
     with(result.resources.get(2)) {
       namespace == 'kube-system'
