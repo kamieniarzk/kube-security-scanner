@@ -9,6 +9,9 @@ spec:
     spec:
       containers:
         - name: trivy
-          image: aquasec/trivy
-          command: ["trivy", "k8s", "--format", "json", "--timeout", "3600s", "--all-namespaces", "-q", "--scanners", "\"config,secret,rbac\"", "--severity", "\"MEDIUM,HIGH,CRITICAL\"", "all"]
+          image: aquasec/trivy:0.43.1
+          command: [ "sh", "-c" ]
+          args:
+            - >
+              trivy k8s --format json --timeout 3600s --all-namespaces -q --scanners "config,secret" --severity "HIGH,CRITICAL" all
       restartPolicy: Never
