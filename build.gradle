@@ -24,8 +24,8 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web',
-        'io.kubernetes:client-java:18.0.1',
-        'io.kubernetes:client-java-api-fluent:18.0.1',
+        'io.kubernetes:client-java:19.0.0',
+        'io.kubernetes:client-java-api-fluent:19.0.0',
         'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0',
         'org.springframework.boot:spring-boot-starter-data-mongodb'
 

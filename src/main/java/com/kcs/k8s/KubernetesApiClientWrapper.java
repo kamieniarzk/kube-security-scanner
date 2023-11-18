@@ -47,35 +47,35 @@ public class KubernetesApiClientWrapper {
   }
 
   public List<V1NetworkPolicy> getNetworkPoliciesByNamespace(String namespace) {
-    return apiCall(() -> networkingApi.listNamespacedNetworkPolicy(namespace, null, null, null, null, null, null, null, null, null, null)).getItems();
+    return apiCall(() -> networkingApi.listNamespacedNetworkPolicy(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
   }
 
   public List<V1PersistentVolumeClaim> getPersistentVolumeClaimListByNamespace(String namespace) {
-    return apiCall(() -> coreApi.listNamespacedPersistentVolumeClaim(namespace, null, null, null, null, null, null, null, null, null, null)).getItems();
+    return apiCall(() -> coreApi.listNamespacedPersistentVolumeClaim(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
   }
 
   public List<V1Job> getJobsByNamespace(String namespace) {
-    return apiCall(() -> batchApi.listNamespacedJob(namespace, null, null, null, null, null, null, null, null, null, null)).getItems();
+    return apiCall(() -> batchApi.listNamespacedJob(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
   }
 
   public List<V1ClusterRole> getClusterRoles() {
-    return apiCall(() -> rbacApi.listClusterRole(null, null, null, null, null, null, null, null, null, null)).getItems();
+    return apiCall(() -> rbacApi.listClusterRole(null, null, null, null, null, null, null, null, null, null, null)).getItems();
   }
 
   public List<V1RoleBinding> getRoleBindingsByNamespace(String namespace) {
-    return apiCall(() -> rbacApi.listNamespacedRoleBinding(namespace, null, null, null, null, null, null, null, null, null, null)).getItems();
+    return apiCall(() -> rbacApi.listNamespacedRoleBinding(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
   }
 
   public List<V1ServiceAccount> getServiceAccountsByNamespace(String namespace) {
-    return apiCall(() -> coreApi.listNamespacedServiceAccount(namespace, null, null, null, null, null, null, null, null, null, null)).getItems();
+    return apiCall(() -> coreApi.listNamespacedServiceAccount(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
   }
 
   public List<V1Service> getServicesByNamespace(String namespace) {
-    return apiCall(() -> coreApi.listNamespacedService(namespace, null, null, null, null, null, null, null,null, null, null)).getItems();
+    return apiCall(() -> coreApi.listNamespacedService(namespace, null, null, null, null, null, null, null,null, null, null, null)).getItems();
   }
 
   public List<V1Deployment> getDeploymentsByNamespace(String namespace) {
-    return apiCall(() -> appsApi.listNamespacedDeployment(namespace, null, null, null, null, null, null, null, null, null, null)).getItems();
+    return apiCall(() -> appsApi.listNamespacedDeployment(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
   }
 
   public List<V1Pod> getPodsByNamespace(String namespace) {
@@ -89,25 +89,25 @@ public class KubernetesApiClientWrapper {
   }
 
   public Optional<V1Deployment> findDeployment(String name, String namespace) {
-    return apiCall(() -> appsApi.listNamespacedDeployment(namespace, null, null, null, null, null, null, null, null, null, null)).getItems().stream()
+    return apiCall(() -> appsApi.listNamespacedDeployment(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems().stream()
         .filter(deployment -> name.equals(deployment.getMetadata().getName()))
         .findFirst();
   }
 
   public Optional<V1Job> findJob(String name, String namespace) {
-    return apiCall(() -> batchApi.listNamespacedJob(namespace, null, null, null, null, null, null, null, null, null, null)).getItems().stream()
+    return apiCall(() -> batchApi.listNamespacedJob(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems().stream()
         .filter(job -> job.getMetadata().getName().equals(name))
         .findFirst();
   }
 
   public Optional<V1Job> findJobWithPrefix(String jobNamePrefix) {
-    return apiCall(() -> batchApi.listNamespacedJob(getCurrentNamespace(), null, null, null, null, null, null, null, null, null, null)).getItems().stream()
+    return apiCall(() -> batchApi.listNamespacedJob(getCurrentNamespace(), null, null, null, null, null, null, null, null, null, null, null)).getItems().stream()
         .filter(job -> job.getMetadata().getName().startsWith(jobNamePrefix))
         .findFirst();
   }
 
   public Optional<V1Node> getAnyNode() {
-    return apiCall(() -> coreApi.listNode(null, null, null, null, null, null, null, null, null, null)).getItems().stream()
+    return apiCall(() -> coreApi.listNode(null, null, null, null, null, null, null, null, null, null, null)).getItems().stream()
         .findAny();
   }
 
@@ -159,12 +159,12 @@ public class KubernetesApiClientWrapper {
   @Nullable
   private V1PodList getPods(String namespace) {
     return apiCall(
-        () -> coreApi.listNamespacedPod(namespace, null, null, null, null, null, null, null, null, null, null));
+        () -> coreApi.listNamespacedPod(namespace, null, null, null, null, null, null, null, null, null, null, null));
   }
 
   @Nullable
   private V1PodList getCurrentNamespacePods() {
     return apiCall(
-        () -> coreApi.listNamespacedPod(getCurrentNamespace(), null, null, null, null, null, null, null, null, null, null));
+        () -> coreApi.listNamespacedPod(getCurrentNamespace(), null, null, null, null, null, null, null, null, null, null, null));
   }
 }
