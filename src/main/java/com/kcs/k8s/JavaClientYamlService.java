@@ -1,23 +1,25 @@
 package com.kcs.k8s;
 
+import io.kubernetes.client.common.KubernetesObject;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Service;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Service;
-
-import io.kubernetes.client.common.KubernetesObject;
-import lombok.extern.slf4j.Slf4j;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 @SuppressWarnings("ResultOfMethodCallIgnored")
 class JavaClientYamlService implements YamlService {
+
+  private static String OBJECT_SEPARATOR = "---\n";
 
   private final String tempYamlLocation;
 
@@ -26,22 +28,27 @@ class JavaClientYamlService implements YamlService {
   }
 
   @Override
-  public List<String> saveAsYamlInTempLocation(List<KubernetesObject> objects, String namespace) {
+  public String saveAsYamlInTempLocation(List<KubernetesObject> objects, String namespace) {
     var yamlPath = Paths.get(tempYamlLocation, namespace);
     prepareDirectory(yamlPath);
-    return objects.stream().map(object -> this.saveObjectYaml(object, yamlPath)).toList();
+    var allObjectsYaml = objects.stream()
+        .map(this::convertObjectToYamlString)
+        .collect(Collectors.joining(OBJECT_SEPARATOR));
+    return saveIntoFile(allObjectsYaml, namespace, yamlPath);
   }
 
-  private String saveObjectYaml(final KubernetesObject object, Path path) {
-    var objectName = object.getMetadata().getName();
-    var fileName = objectName + ".yaml";
-    var objectYaml = YamlConverter.convert(object);
+
+  private String convertObjectToYamlString(KubernetesObject object) {
+    return YamlConverter.convert(object);
+  }
+
+  private String saveIntoFile(String yaml, String namespace, Path path) {
     try {
-      var savedFilePath = Paths.get(path.toString(), fileName);
-      Files.writeString(savedFilePath, objectYaml);
+      var savedFilePath = Paths.get(path.toString(), namespace.concat(".yaml"));
+      Files.writeString(savedFilePath, yaml);
       return savedFilePath.toString();
     } catch (IOException ioException) {
-      log.error("Failed to save object {} as yaml", objectName, ioException);
+      log.error("Failed to save {} namespace objects as yaml", namespace, ioException);
       throw new RuntimeException();
     }
   }

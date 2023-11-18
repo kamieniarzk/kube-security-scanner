@@ -4,11 +4,10 @@ import com.kcs.k8s.KubernetesApiClientWrapper;
 import com.kcs.k8s.YamlService;
 import com.kcs.score.persistence.document.KubeScoreRepository;
 import com.kcs.score.persistence.document.KubeScoreRunDto;
-import com.kcs.shared.LogRepository;
 import com.kcs.util.ProcessRunner;
 import io.kubernetes.client.common.KubernetesObject;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,26 +17,18 @@ import java.util.List;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 class OnHostBinaryKubeScoreRunner implements KubeScoreRunner {
 
+  private static final String KUBE_SCORE_RUN_COMMAND_PATTERN = "kube-score score %s";
   private final KubernetesApiClientWrapper k8sApi;
   private final YamlService yamlService;
   private final KubeScoreRepository scoreRepository;
 
-  OnHostBinaryKubeScoreRunner(KubernetesApiClientWrapper k8sApi, YamlService yamlService, KubeScoreRepository scoreRepository,
-                              LogRepository logRepository,
-                              @Value("${filesystem.locations.score:/tmp/kube-config-scanner/score}") String scoreDirectory) {
-    this.k8sApi = k8sApi;
-    this.yamlService = yamlService;
-    this.scoreRepository = scoreRepository;
-  }
-
-
   @Transactional
   public String score(String namespace) {
     var savedYamlsLocation = yamlService.saveAsYamlInTempLocation(getObjectsList(namespace), namespace);
-    var args = String.join(" ", savedYamlsLocation);
-    return runKubeScoreBinary(args);
+    return runKubeScoreBinary(KUBE_SCORE_RUN_COMMAND_PATTERN.formatted(savedYamlsLocation));
   }
 
 
@@ -45,9 +36,9 @@ class OnHostBinaryKubeScoreRunner implements KubeScoreRunner {
     return scoreRepository.getByNamespace(namespace);
   }
 
-  private static String runKubeScoreBinary(final String args) {
+  private static String runKubeScoreBinary(final String command) {
     try {
-      var runResult = ProcessRunner.run("kube-score score " + args);
+      var runResult = ProcessRunner.run(command);
       if (runResult.stdErr() != null && !runResult.stdErr().isBlank()) {
         throw new RuntimeException();
       }
