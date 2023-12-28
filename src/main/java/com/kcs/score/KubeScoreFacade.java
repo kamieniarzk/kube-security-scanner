@@ -1,11 +1,9 @@
 package com.kcs.score;
 
 import com.kcs.score.persistence.document.KubeScoreRepository;
-import com.kcs.score.persistence.document.KubeScoreRunCreate;
 import com.kcs.score.persistence.document.KubeScoreRunDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,17 +11,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class KubeScoreFacade {
 
-  private final KubeScoreRunner runner;
+  private final KubeScorer scorer;
   private final KubeScoreRepository scoreRepository;
   private final ScoreLogRepository logRepository;
 
+  public String score(KubeScoreRunRequest runRequest) {
+    if (runRequest.namespaced() != null && runRequest.namespaced() && runRequest.namespace() != null) {
+      throw new IllegalArgumentException();
+    }
 
-  @Transactional
-  public String score(String namespace) {
-    var score = runner.score(namespace);
-    var scoreId = scoreRepository.save(new KubeScoreRunCreate(namespace));
-    logRepository.save(score, scoreId);
-    return scoreId;
+    if (runRequest.namespaced() != null && !runRequest.namespaced()) {
+      return scorer.scoreAll();
+    }
+
+    return scorer.score(runRequest.namespace());
   }
 
   public List<KubeScoreRunDto> getRunsByNamespace(String namespace) {

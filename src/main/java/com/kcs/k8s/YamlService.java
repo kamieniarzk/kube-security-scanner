@@ -6,4 +6,5 @@ import io.kubernetes.client.common.KubernetesObject;
 
 public interface YamlService {
   String saveAsYamlInTempLocation(List<KubernetesObject> objects, String namespace);
+  String saveAsYamlInTempLocation(List<KubernetesObject> objects);
 }

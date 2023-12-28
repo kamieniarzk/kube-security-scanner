@@ -1,29 +1,32 @@
 package com.kcs.k8s;
 
 import io.kubernetes.client.common.KubernetesObject;
-import io.kubernetes.client.openapi.models.V1Deployment;
-import io.kubernetes.client.openapi.models.V1Ingress;
-import io.kubernetes.client.openapi.models.V1Job;
-import io.kubernetes.client.openapi.models.V1NetworkPolicy;
-import io.kubernetes.client.openapi.models.V1PersistentVolumeClaim;
-import io.kubernetes.client.openapi.models.V1Pod;
-import io.kubernetes.client.openapi.models.V1RoleBinding;
-import io.kubernetes.client.openapi.models.V1Service;
-import io.kubernetes.client.openapi.models.V1ServiceAccount;
+import io.kubernetes.client.openapi.models.*;
 import io.kubernetes.client.util.Yaml;
 
 class YamlConverter {
   public static String convert(KubernetesObject object) {
-    if (object instanceof V1Pod pod) return handle(pod);
-    if (object instanceof V1Deployment deployment) return handle(deployment);
-    if (object instanceof V1Service service) return handle(service);
-    if (object instanceof V1Ingress ingress) return handle(ingress);
-    if (object instanceof V1ServiceAccount serviceAccount) return handle(serviceAccount);
-    if (object instanceof V1Job job) return handle(job);
-    if (object instanceof V1NetworkPolicy networkPolicy) return handle(networkPolicy);
-    if (object instanceof V1PersistentVolumeClaim pvc) return handle(pvc);
-    if (object instanceof V1RoleBinding roleBinding) return handle(roleBinding);
-    return Yaml.dump(object);
+    return switch (object) {
+      case V1Pod pod -> handle(pod);
+      case V1Deployment deployment -> handle(deployment);
+      case V1Service service -> handle(service);
+      case V1Ingress ingress -> handle(ingress);
+      case V1ServiceAccount serviceAccount -> handle(serviceAccount);
+      case V1Job job -> handle(job);
+      case V1NetworkPolicy networkPolicy -> handle(networkPolicy);
+      case V1PersistentVolumeClaim pvc -> handle(pvc);
+      case V1RoleBinding roleBinding -> handle(roleBinding);
+      case V1ReplicaSet replicaSet -> handle(replicaSet);
+      case V1ReplicationController replicationController -> handle(replicationController);
+      case V1StatefulSet statefulSet -> handle(statefulSet);
+      case V1DaemonSet daemonSet -> handle(daemonSet);
+      case V1CronJob cronJob -> handle(cronJob);
+      case V1ConfigMap configMap -> handle(configMap);
+      case V1Role role -> handle(role);
+      case V1ResourceQuota resourceQuota -> handle(resourceQuota);
+      case V1LimitRange limitRange -> handle(limitRange);
+      default -> Yaml.dump(object);
+    };
   }
 
   private static String handle(final V1RoleBinding object) {
@@ -85,6 +88,75 @@ class YamlConverter {
     return Yaml.dump(deployment);
   }
 
+  private static String handle(V1ReplicaSet replicaSet) {
+    nullManagedFields(replicaSet);
+    replicaSet.setKind("ReplicaSet");
+    replicaSet.setApiVersion("v1");
+    replicaSet.setStatus(null);
+    return Yaml.dump(replicaSet);
+  }
+
+  private static String handle(V1ReplicationController replicationController) {
+    nullManagedFields(replicationController);
+    replicationController.setKind("ReplicationController");
+    replicationController.setApiVersion("v1");
+    replicationController.setStatus(null);
+    return Yaml.dump(replicationController);
+  }
+
+  private static String handle(V1StatefulSet statefulSet) {
+    nullManagedFields(statefulSet);
+    statefulSet.setKind("StatefulSet");
+    statefulSet.setApiVersion("v1");
+    statefulSet.setStatus(null);
+    return Yaml.dump(statefulSet);
+  }
+
+  private static String handle(V1DaemonSet daemonSet) {
+    nullManagedFields(daemonSet);
+    daemonSet.setKind("DaemonSet");
+    daemonSet.setApiVersion("v1");
+    daemonSet.setStatus(null);
+    return Yaml.dump(daemonSet);
+  }
+
+  private static String handle(V1CronJob cronJob) {
+    nullManagedFields(cronJob);
+    cronJob.setKind("CronJob");
+    cronJob.setApiVersion("v1");
+    cronJob.setStatus(null);
+    return Yaml.dump(cronJob);
+  }
+
+  private static String handle(V1ConfigMap configMap) {
+    nullManagedFields(configMap);
+    configMap.setKind("ConfigMap");
+    configMap.setApiVersion("v1");
+    return Yaml.dump(configMap);
+  }
+
+  private static String handle(V1Role role) {
+    nullManagedFields(role);
+    role.setKind("Role");
+    role.setApiVersion("v1");
+    return Yaml.dump(role);
+  }
+
+  private static String handle(V1ResourceQuota resourceQuota) {
+    nullManagedFields(resourceQuota);
+    resourceQuota.setKind("ResourceQuota");
+    resourceQuota.setApiVersion("v1");
+    resourceQuota.setStatus(null);
+    return Yaml.dump(resourceQuota);
+  }
+
+  private static String handle(V1LimitRange limitRange) {
+    nullManagedFields(limitRange);
+    limitRange.setKind("DaemonSet");
+    limitRange.setApiVersion("v1");
+    return Yaml.dump(limitRange);
+  }
+
   private static String handle(V1Pod pod) {
     nullManagedFields(pod);
     pod.setKind("Pod");
@@ -98,6 +170,7 @@ class YamlConverter {
       object.getMetadata().setManagedFields(null);
       object.getMetadata().setUid(null);
       object.getMetadata().setAnnotations(null);
+      object.getMetadata().setCreationTimestamp(null);
     }
   }
 }

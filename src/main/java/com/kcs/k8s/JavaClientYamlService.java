@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 class JavaClientYamlService implements YamlService {
 
   private static String OBJECT_SEPARATOR = "---\n";
+  private static String NAMESPACE_WIDE_LOCATION = "ALL";
 
   private final String tempYamlLocation;
 
@@ -35,6 +36,11 @@ class JavaClientYamlService implements YamlService {
         .map(this::convertObjectToYamlString)
         .collect(Collectors.joining(OBJECT_SEPARATOR));
     return saveIntoFile(allObjectsYaml, namespace, yamlPath);
+  }
+
+  @Override
+  public String saveAsYamlInTempLocation(List<KubernetesObject> objects) {
+    return saveAsYamlInTempLocation(objects, NAMESPACE_WIDE_LOCATION);
   }
 
 

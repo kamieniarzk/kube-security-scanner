@@ -2,6 +2,7 @@ package com.kcs.web;
 
 import com.kcs.score.KubeScoreFacade;
 import com.kcs.score.KubeScoreResultDto;
+import com.kcs.score.KubeScoreRunRequest;
 import com.kcs.score.persistence.document.KubeScoreRunDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -13,22 +14,20 @@ import java.util.List;
 @RequiredArgsConstructor
 class KubeScoreController {
 
-  private final KubeScoreFacade scoreFacade;
+  private final KubeScoreFacade facade;
 
   @GetMapping("/runs/{namespace}")
   List<KubeScoreRunDto> getScoresByNamespace(@PathVariable String namespace) {
-    return scoreFacade.getRunsByNamespace(namespace);
+    return facade.getRunsByNamespace(namespace);
   }
 
   @PostMapping("/runs")
-  String runAndPersistScore(@RequestBody CreateRun createRun) {
-    return scoreFacade.score(createRun.namespace);
+  String runAndPersistScore(@RequestBody KubeScoreRunRequest runRequest) {
+    return facade.score(runRequest);
   }
 
   @GetMapping("/runs/{id}/result")
   KubeScoreResultDto getRunResult(@PathVariable String id) {
-    return scoreFacade.getResult(id);
+    return facade.getResult(id);
   }
-
-  record CreateRun(String namespace) { }
 }

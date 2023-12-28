@@ -6,8 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("kubeScore")
-record KubeScoreRunDocument(@Id String id, LocalDateTime time, String namespace) {
+record KubeScoreRunDocument(@Id String id, LocalDateTime time, Boolean namespaced, String namespace) {
   KubeScoreRunDto toDto() {
-    return new KubeScoreRunDto(id, time, namespace);
+    return new KubeScoreRunDto(id, time, namespaced, namespace);
   }
 }

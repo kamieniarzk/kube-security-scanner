@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -28,6 +29,21 @@ class OnHostBinaryKubeScoreRunner implements KubeScoreRunner {
   @Transactional
   public String score(String namespace) {
     var savedYamlsLocation = yamlService.saveAsYamlInTempLocation(getObjectsList(namespace), namespace);
+    return runKubeScoreBinary(KUBE_SCORE_RUN_COMMAND_PATTERN.formatted(savedYamlsLocation));
+  }
+
+  @Transactional
+  public String scoreAllNamespaces() {
+    var allNamespaces = k8sApi.getAllClusterNamespaces().stream()
+        .map(namespace -> namespace.getMetadata().getName())
+        .toList();
+
+    var allResources = allNamespaces.stream()
+        .map(this::getObjectsList)
+        .flatMap(Collection::stream)
+        .toList();
+
+    var savedYamlsLocation = yamlService.saveAsYamlInTempLocation(allResources);
     return runKubeScoreBinary(KUBE_SCORE_RUN_COMMAND_PATTERN.formatted(savedYamlsLocation));
   }
 

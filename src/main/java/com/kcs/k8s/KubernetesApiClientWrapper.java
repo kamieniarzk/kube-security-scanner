@@ -122,6 +122,10 @@ public class KubernetesApiClientWrapper {
     return apiCall(() -> coreApi.listNamespacedLimitRange(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
   }
 
+  public List<V1Namespace> getAllClusterNamespaces() {
+    return apiCall(() -> coreApi.listNamespace(null, null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
   public Optional<V1Pod> findPod(String name, String namespace) {
     return getPods(namespace).getItems().stream()
         .filter(pod -> name.equals(pod.getMetadata().getName()))
