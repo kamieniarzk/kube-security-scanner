@@ -50,23 +50,25 @@ class OnHostBinaryKubeScoreRunner implements KubeScoreRunner {
 
   private List<KubernetesObject> getObjectsList(final String namespace) {
     var objects = new ArrayList<KubernetesObject>();
-    var pods = k8sApi.getPodsByNamespace(namespace);
-    var deployments = k8sApi.getDeploymentsByNamespace(namespace);
-    var services = k8sApi.getServicesByNamespace(namespace);
-    var serviceAccounts = k8sApi.getServiceAccountsByNamespace(namespace);
-    var jobs = k8sApi.getJobsByNamespace(namespace);
-    var pvcs = k8sApi.getPersistentVolumeClaimListByNamespace(namespace);
-    var roleBindings = k8sApi.getRoleBindingsByNamespace(namespace);
-    var networkPolicies = k8sApi.getNetworkPoliciesByNamespace(namespace);
-    objects.addAll(pods);
-    objects.addAll(deployments);
-    objects.addAll(services);
-    objects.addAll(serviceAccounts);
-    objects.addAll(jobs);
-    objects.addAll(pvcs);
-    objects.addAll(pods);
-    objects.addAll(roleBindings);
-    objects.addAll(networkPolicies);
+    objects.addAll(k8sApi.getPodsByNamespace(namespace));
+    objects.addAll(k8sApi.getDeploymentsByNamespace(namespace));
+    objects.addAll(k8sApi.getReplicaSetsByNamespace(namespace));
+    objects.addAll(k8sApi.getReplicationControllersByNamespace(namespace));
+    objects.addAll(k8sApi.getStatefulSetsByNamespace(namespace));
+    objects.addAll(k8sApi.getDaemonSetsByNamespace(namespace));
+    objects.addAll(k8sApi.getCronJobsByNamespace(namespace));
+    objects.addAll(k8sApi.getServicesByNamespace(namespace));
+    objects.addAll(k8sApi.getServiceAccountsByNamespace(namespace));
+    objects.addAll(k8sApi.getJobsByNamespace(namespace));
+    objects.addAll(k8sApi.getConfigMapsByNamespace(namespace));
+    objects.addAll(k8sApi.getRolesByNamespace(namespace));
+    objects.addAll(k8sApi.getIngressesByNamespace(namespace));
+    objects.addAll(k8sApi.getResourceQuotasByNamespace(namespace));
+    objects.addAll(k8sApi.getLimitRangesByNamespace(namespace));
+    objects.addAll(k8sApi.getPersistentVolumeClaimListByNamespace(namespace));
+    objects.addAll(k8sApi.getPodsByNamespace(namespace));
+    objects.addAll(k8sApi.getRoleBindingsByNamespace(namespace));
+    objects.addAll(k8sApi.getNetworkPoliciesByNamespace(namespace));
     return objects;
   }
 }

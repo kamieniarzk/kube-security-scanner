@@ -82,6 +82,46 @@ public class KubernetesApiClientWrapper {
     return getPods(namespace).getItems();
   }
 
+  public List<V1ReplicaSet> getReplicaSetsByNamespace(String namespace) {
+    return apiCall(() -> appsApi.listNamespacedReplicaSet(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
+  public List<V1ReplicationController> getReplicationControllersByNamespace(String namespace) {
+    return apiCall(() -> coreApi.listNamespacedReplicationController(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
+  public List<V1StatefulSet> getStatefulSetsByNamespace(String namespace) {
+    return apiCall(() -> appsApi.listNamespacedStatefulSet(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
+  public List<V1DaemonSet> getDaemonSetsByNamespace(String namespace) {
+    return apiCall(() -> appsApi.listNamespacedDaemonSet(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
+  public List<V1CronJob> getCronJobsByNamespace(String namespace) {
+    return apiCall(() -> batchApi.listNamespacedCronJob(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
+  public List<V1ConfigMap> getConfigMapsByNamespace(String namespace) {
+    return apiCall(() -> coreApi.listNamespacedConfigMap(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
+  public List<V1Role> getRolesByNamespace(String namespace) {
+    return apiCall(() -> rbacApi.listNamespacedRole(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
+  public List<V1Ingress> getIngressesByNamespace(String namespace) {
+    return apiCall(() -> networkingApi.listNamespacedIngress(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
+  public List<V1ResourceQuota> getResourceQuotasByNamespace(String namespace) {
+    return apiCall(() -> coreApi.listNamespacedResourceQuota(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
+  public List<V1LimitRange> getLimitRangesByNamespace(String namespace) {
+    return apiCall(() -> coreApi.listNamespacedLimitRange(namespace, null, null, null, null, null, null, null, null, null, null, null)).getItems();
+  }
+
   public Optional<V1Pod> findPod(String name, String namespace) {
     return getPods(namespace).getItems().stream()
         .filter(pod -> name.equals(pod.getMetadata().getName()))
