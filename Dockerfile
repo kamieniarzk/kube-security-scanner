@@ -1,4 +1,4 @@
-FROM openjdk:21
+FROM openjdk:17
 
 LABEL maintainer="kamieniarzk@gmail.com" version="1.0"
 

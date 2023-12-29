@@ -9,7 +9,11 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '21'
+    sourceCompatibility = '17'
+}
+
+tasks.withType(JavaCompile).each {
+  it.options.compilerArgs.add('--enable-preview')
 }
 
 configurations {
