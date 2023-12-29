@@ -76,18 +76,37 @@ helm install my-release \
   * ~~parse kube-hunter json to object~~
   * ~~parse kube-bench to some object structure~~
   * ~~parse kube-score to some object structure~~
-* Create helm chart
-  * create templates from objects in `k8s` dir
-  * create Values.yaml
-  * create variable identifying cluster in `Values.yaml`
-* Cluster context
+* ~~Create helm chart~~
+  * ~~create templates from objects in `k8s` dir~~
+  * ~~create Values.yaml~~
+  * ~~create variable identifying cluster in `Values.yaml`~~
+* ~~Cluster context~~
   * ~~recognize cluster type (for different kube-bench config and possibly other things too)~~
-  * set `clusterId` variable (from value passed by `Values.yaml`, if not present fallback to some value based on runtime, e.g. node name or api server url)
+  * ~~set `clusterId` variable (from value passed by `Values.yaml`, if not present fallback to some value based on runtime, e.g. node name or api server url)~~
   * save `clusterId` in all persisted runs
-
+* ~~Involve trivy scans~~
+  * ~~make kube-score run through same set of resources as trivy -all scan~~
+  * ~~persist trivy runs~~
+  * ~~parse trivy results~~
+* Implement scheduling
+  * generic mechanism for CRON-based scheduling
+  * persist cron definitions (along with run spec)
+* Aggregate results
+  * aggregate kube-score results by namespace
+  * create a generic structure
+* (Optional) introduce database per cluster option
+  * local (in-cluster) MongoDB instance
+  * cluster context perhaps obsolete then?
+* Query API
+  * simple query API for scan results (by date, type, id, etc.)
+* Result API
+  * unified workload scan result structure and mapping from trivy and kube-score models
+  * unified compliance scan structure and mapping from kube-bench (CIS) and trivy (NSA and PSS)
+  * JSON and CSV/XLSX response format for summary endpoints
 
 
 ### References
 * [kube-hunter](https://github.com/aquasecurity/kube-hunter)
 * [kube-bench](https://github.com/aquasecurity/kube-bench)
 * [kube-score](https://github.com/zegl/kube-score)
+* [trivy](https://github.com/aquasecurity/trivy)
