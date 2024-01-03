@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 class OnHostBinaryKubeScoreRunner implements KubeScoreRunner {
 
-  private static final String KUBE_SCORE_RUN_COMMAND_PATTERN = "kube-score score %s";
+  private static final String KUBE_SCORE_RUN_COMMAND_PATTERN = "kube-score score %s -o json";
   private final KubernetesApiClientWrapper k8sApi;
   private final YamlService yamlService;
   private final KubeScoreRepository scoreRepository;

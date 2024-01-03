@@ -1,7 +1,7 @@
 package com.kcs.web;
 
 import com.kcs.score.KubeScoreFacade;
-import com.kcs.score.KubeScoreResultDto;
+import com.kcs.score.KubeScoreJsonResultDto;
 import com.kcs.score.KubeScoreRunRequest;
 import com.kcs.score.persistence.document.KubeScoreRunDto;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ class KubeScoreController {
   }
 
   @GetMapping("/runs/{id}/result")
-  KubeScoreResultDto getRunResult(@PathVariable String id) {
+  List<KubeScoreJsonResultDto> getRunResult(@PathVariable String id) {
     return facade.getResult(id);
   }
 }

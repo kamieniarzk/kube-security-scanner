@@ -31,8 +31,8 @@ public class KubeScoreFacade {
     return scoreRepository.getByNamespace(namespace);
   }
 
-  public KubeScoreResultDto getResult(String runId) {
+  public List<KubeScoreJsonResultDto> getResult(String runId) {
     var logs = logRepository.getAsString(runId);
-    return KubeScoreResultParser.parse(logs);
+    return KubeScoreJsonResourceParser.parseFullResult(logs);
   }
 }
