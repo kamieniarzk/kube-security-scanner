@@ -35,7 +35,7 @@ class TrivyLogService {
     }
     log.info("Persisting missing logs for run: {}", runDto.id());
     try (var logStream = k8sApi.streamPodLogs(jobRunDto.podName())) {
-      logRepository.save(logStream, jobRunDto.podName());
+      logRepository.save(logStream, runDto.id());
     } catch (IOException ioException) {
       log.error("Failed to persist run logs for run: {}", runDto.id(), ioException);
     }

@@ -13,6 +13,8 @@ public class TrivyFacade {
 
   private final TrivyRunner runner;
   private final TrivyRepository repository;
+  private final TrivyLogRepository logRepository;
+
 
   public TrivyRunDto run() {
     return runner.run();
@@ -20,5 +22,10 @@ public class TrivyFacade {
 
   public List<TrivyRunDto> getAll() {
     return repository.getAll();
+  }
+
+  public TrivyFullResultDto getResult(String runId) {
+    var logs = logRepository.getAsString(runId);
+    return TrivyResultParser.parseFullResult(logs);
   }
 }

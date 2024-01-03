@@ -24,11 +24,21 @@ public final class TrivyResultParser {
 
   public static TrivyFullResultDto parseFullResult(String input) {
     try {
-      return objectMapper.readValue(input, TrivyFullResultDto.class);
+      return objectMapper.readValue(sanitizeInput(input), TrivyFullResultDto.class);
     } catch (JsonProcessingException exception) {
       log.error("Failed to parse trivy JSON result", exception);
       throw new RuntimeException(exception);
     }
+  }
+
+  private static String sanitizeInput(String rawInput) {
+    var lines = rawInput.split("\n");
+    for (String line : lines) {
+      if (line.trim().startsWith("{")) {
+        return line + rawInput.substring(rawInput.indexOf(line) + line.length());
+      }
+    }
+    return rawInput;
   }
 
   public static TrivySummaryResultDto parseSummaryResult(String input) {
