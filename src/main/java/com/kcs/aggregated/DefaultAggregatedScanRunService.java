@@ -7,6 +7,8 @@ import com.kcs.trivy.TrivyFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 class DefaultAggregatedScanRunService implements AggregatedScanRunService {
@@ -25,5 +27,10 @@ class DefaultAggregatedScanRunService implements AggregatedScanRunService {
   @Override
   public AggregatedScanRunDto getAggregatedScanRun(String id) {
     return repository.get(id);
+  }
+
+  @Override
+  public List<AggregatedScanRunDto> getAllScanRuns() {
+    return repository.getAll();
   }
 }

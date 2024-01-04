@@ -22,7 +22,7 @@ class TrivyResultMapper implements ResultMapper<TrivyFullResultDto> {
         .toList();
 
     var resourcesGrouped = resources.stream()
-        .collect(Collectors.groupingBy(K8sResource::namespace));
+        .collect(Collectors.groupingBy(K8sResource::getNamespace));
 
     return new AggregatedScanResult(resourcesGrouped);
   }

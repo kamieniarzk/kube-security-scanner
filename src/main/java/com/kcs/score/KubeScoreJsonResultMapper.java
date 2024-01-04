@@ -20,17 +20,21 @@ class KubeScoreJsonResultMapper implements ResultMapper<List<KubeScoreJsonResult
         .toList();
 
     var resourcesMap = resources.stream()
-        .collect(Collectors.groupingBy(K8sResource::namespace));
+        .collect(Collectors.groupingBy(K8sResource::getNamespace));
 
     return new AggregatedScanResult(resourcesMap);
   }
 
   private static K8sResource map(KubeScoreJsonResultDto scoreResult) {
-    var kind = scoreResult.getTypeMeta().getKind();
     var namespace = scoreResult.getObjectMeta().getNamespace();
-    var name = scoreResult.getObjectMeta().getName();
+    var kind = ownerReferencesEmpty(scoreResult) ? scoreResult.getTypeMeta().getKind() : scoreResult.getObjectMeta().getOwnerReferences().get(0).getKind();
+    var name = ownerReferencesEmpty(scoreResult) ? scoreResult.getObjectMeta().getName() : scoreResult.getObjectMeta().getOwnerReferences().get(0).getName();
     var vulnerabilities = mapChecksToVulnerabilities(scoreResult.getChecks());
     return new K8sResource(kind, namespace, name, vulnerabilities);
+  }
+
+  private static boolean ownerReferencesEmpty(KubeScoreJsonResultDto scoreResult) {
+    return scoreResult.getObjectMeta().getOwnerReferences() == null || scoreResult.getObjectMeta().getOwnerReferences().isEmpty();
   }
 
   private static List<Vulnerability> mapChecksToVulnerabilities(List<KubeScoreJsonResultDto.Check> checks) {

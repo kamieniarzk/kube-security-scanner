@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/workloads")
 @RequiredArgsConstructor
@@ -21,6 +23,11 @@ class WorkloadScanController {
   @PostMapping(path = "/scans", produces = MediaType.APPLICATION_JSON_VALUE)
   AggregatedScanRunDto runAggregatedScan() {
     return scanRunService.runAggregatedScan();
+  }
+
+  @GetMapping(path = "/scans", produces = MediaType.APPLICATION_JSON_VALUE)
+  List<AggregatedScanRunDto> getAllAggregatedScanRuns() {
+    return scanRunService.getAllScanRuns();
   }
 
   @GetMapping(path = "/scans/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

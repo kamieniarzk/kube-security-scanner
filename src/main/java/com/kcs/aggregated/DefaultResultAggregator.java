@@ -8,8 +8,7 @@ import com.kcs.trivy.TrivyFullResultDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -54,12 +53,41 @@ class DefaultResultAggregator implements ResultAggregator {
     map2.entrySet().
         forEach(entry -> enrichMap1WithNamespacesFromMap2(entry, map1Enriched));
 
-    return new AggregatedScanResult(map1Enriched);
+    var aggregatedByNamespace = new AggregatedScanResult(map1Enriched);
+    return aggregateByResource(aggregatedByNamespace);
   }
 
   private static void enrichMap1WithNamespacesFromMap2(Map.Entry<String, List<K8sResource>> entry, Map<String, List<K8sResource>> map1) {
     if (!map1.containsKey(entry.getKey())) {
       map1.put(entry.getKey(), entry.getValue());
     }
+  }
+
+  private static AggregatedScanResult aggregateByResource(AggregatedScanResult result) {
+    var resourcesMap =  result.namespaceResourceMap().entrySet().stream().map(entry -> {
+      entry.setValue(findDuplicatesInEachList(entry.getValue()));
+      return entry;
+    }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    return new AggregatedScanResult(resourcesMap);
+  }
+
+  private static List<K8sResource> findDuplicatesInEachList(List<K8sResource> listOfResources) {
+    var setOfResources = new HashSet<K8sResource>();
+    for (K8sResource resource : listOfResources) {
+      if (!setOfResources.add(resource)) { // duplicate found
+        var vulnerabilitiesOfAllDuplicates = findAllDuplicates(resource, listOfResources).stream()
+            .map(K8sResource::getVulnerabilities)
+            .flatMap(Collection::stream)
+            .toList();
+        setOfResources.stream().filter(res -> res.equals(resource)).findAny().orElseThrow().setVulnerabilities(vulnerabilitiesOfAllDuplicates);
+      }
+    }
+    return setOfResources.stream().toList();
+  }
+
+  private static List<K8sResource> findAllDuplicates(K8sResource object, List<K8sResource> list) {
+    return list.stream()
+        .filter(resource -> resource.equals(object))
+        .toList();
   }
 }

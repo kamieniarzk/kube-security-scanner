@@ -60,8 +60,9 @@ class DefaultJobService implements JobService {
   private void deleteExistingJobIfNecessary(String namePrefix) {
     k8sApi.findJobWithPrefix(namePrefix)
         .ifPresent(v1Job -> {
+          log.info("Deleting job {} and waiting 3 seconds", v1Job.getMetadata().getName());
           apiCall(() -> k8sApi.deleteJob(v1Job));
-          sleep(1000);
+          sleep(3000);
         });
   }
 

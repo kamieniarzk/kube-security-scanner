@@ -5,6 +5,8 @@ import com.kcs.aggregated.AggregatedScanRunDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 class MongoAggregatedRunRepository implements AggregatedRunRepository {
@@ -22,5 +24,12 @@ class MongoAggregatedRunRepository implements AggregatedRunRepository {
     return documentRepository.findById(id)
         .map(Document::toDto)
         .orElseThrow(NoDataFoundException::new);
+  }
+
+  @Override
+  public List<AggregatedScanRunDto> getAll() {
+    return documentRepository.findAll().stream()
+        .map(Document::toDto)
+        .toList();
   }
 }

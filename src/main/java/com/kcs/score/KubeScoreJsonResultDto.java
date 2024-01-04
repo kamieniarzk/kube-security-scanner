@@ -24,6 +24,13 @@ public class KubeScoreJsonResultDto {
   static class ResourceMetadata {
     private String name;
     private String namespace;
+    private List<OwnerReference> ownerReferences;
+  }
+
+  @Data
+  static class OwnerReference {
+    private String kind;
+    private String name;
   }
 
   @Data
