@@ -17,3 +17,21 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Example for lookup function
+*/}}
+{{- define "gen.secret" -}}
+{{- $secret := lookup "v1" "Secret" .Release.Namespace "mongo-secret" -}}
+{{- if $secret -}}
+{{/*
+   Reusing existing secret data
+*/}}
+mongo_password: {{ $secret.data.mongo_password }}
+{{- else -}}
+{{/*
+    Generate new data
+*/}}
+mongo_password: {{ randAlphaNum 10 | b64enc }}
+{{- end -}}
+{{- end -}}

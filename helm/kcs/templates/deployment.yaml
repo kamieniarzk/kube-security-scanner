@@ -20,20 +20,22 @@ spec:
             ports:
               - containerPort: 8080
             env:
+              - name: MONGODB_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: mongo-secret
+                    key: mongo_password
               - name: MONGO_URI
-                valueFrom:
-                  secretKeyRef:
-                    name: mongodb-secret
-                    key: MONGO_URI
+                value: mongodb://root:$(MONGODB_PASSWORD)@{{ .Release.Name }}-mongodb-service/kcs
               - name: MONGO_DATABASE
-                valueFrom:
-                  secretKeyRef:
-                    name: mongodb-secret
-                    key: MONGO_DATABASE
+                value: kcs
               - name: CLUSTER_NAME
                 value: {{ .Values.clusterName | quote }}
               - name: HELM_RELEASE_NAME
                 value: {{ include "kube-config-scanner.fullname" . }}
+            envFrom:
+              - secretRef:
+                  name: mongo-secret
             volumeMounts:
               - name: temp-storage
                 mountPath: /tmp/kube-config-scanner

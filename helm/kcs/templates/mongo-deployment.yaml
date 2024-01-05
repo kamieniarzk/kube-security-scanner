@@ -1,0 +1,38 @@
+# templates/mongodb-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-mongodb-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-mongodb
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-mongodb
+    spec:
+      volumes:
+          - name: mongodb-storage
+            persistentVolumeClaim:
+              claimName: {{ .Release.Name }}-mongodb-pvc
+      containers:
+          - name: mongodb
+            image: mongo:latest
+            ports:
+              - containerPort: 27017
+            volumeMounts:
+              - name: mongodb-storage
+                mountPath: /data/db
+            env:
+              - name: MONGO_INITDB_ROOT_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: mongo-secret
+                    key: mongo_password
+              - name: MONGO_INITDB_DATABASE
+                value: "kcs"
+              - name: MONGO_INITDB_ROOT_USERNAME
+                value: "root"
