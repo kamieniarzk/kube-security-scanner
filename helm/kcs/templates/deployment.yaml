@@ -25,10 +25,10 @@ spec:
                   secretKeyRef:
                     name: mongo-secret
                     key: mongo_password
-              - name: MONGO_URI
-                value: mongodb://root:$(MONGODB_PASSWORD)@{{ .Release.Name }}-mongodb-service/kcs
               - name: MONGO_DATABASE
                 value: kcs
+              - name: MONGO_URI
+                value: mongodb://root:$(MONGODB_PASSWORD)@{{ .Release.Name }}-mongodb-service/$(MONGO_DATABASE)
               - name: CLUSTER_NAME
                 value: {{ .Values.clusterName | quote }}
               - name: HELM_RELEASE_NAME

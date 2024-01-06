@@ -1,5 +1,3 @@
-# templates/mongodb-deployment.yaml
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,6 +13,9 @@ spec:
         app: {{ .Release.Name }}-mongodb
     spec:
       volumes:
+          - name: mongo-init-db
+            configMap:
+              name: {{ .Release.Name }}-mongo-init-script
           - name: mongodb-storage
             persistentVolumeClaim:
               claimName: {{ .Release.Name }}-mongodb-pvc
@@ -26,6 +27,8 @@ spec:
             volumeMounts:
               - name: mongodb-storage
                 mountPath: /data/db
+              - name: mongo-init-db
+                mountPath: /docker-entrypoint-initdb.d
             env:
               - name: MONGO_INITDB_ROOT_PASSWORD
                 valueFrom:

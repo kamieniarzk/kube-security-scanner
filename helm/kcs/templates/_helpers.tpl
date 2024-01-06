@@ -32,6 +32,6 @@ mongo_password: {{ $secret.data.mongo_password }}
 {{/*
     Generate new password
 */}}
-password: {{ randAlphaNum 10 | b64enc }}
+mongo_password: {{ randAlphaNum 10 | b64enc }}
 {{- end -}}
 {{- end -}}
