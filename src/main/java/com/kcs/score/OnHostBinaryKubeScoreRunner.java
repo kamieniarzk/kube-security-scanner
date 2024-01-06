@@ -9,7 +9,6 @@ import io.kubernetes.client.common.KubernetesObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,13 +25,11 @@ class OnHostBinaryKubeScoreRunner implements KubeScoreRunner {
   private final YamlService yamlService;
   private final KubeScoreRepository scoreRepository;
 
-  @Transactional
   public String score(String namespace) {
     var savedYamlsLocation = yamlService.saveAsYamlInTempLocation(getObjectsList(namespace), namespace);
     return runKubeScoreBinary(KUBE_SCORE_RUN_COMMAND_PATTERN.formatted(savedYamlsLocation));
   }
 
-  @Transactional
   public String scoreAllNamespaces() {
     var allNamespaces = k8sApi.getAllClusterNamespaces().stream()
         .map(namespace -> namespace.getMetadata().getName())

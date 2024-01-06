@@ -1,11 +1,10 @@
 package com.kcs.score.persistence.document;
 
-import java.util.List;
-
 import com.kcs.NoDataFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
