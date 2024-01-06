@@ -7,7 +7,6 @@ import com.kcs.trivy.persistence.TrivyRunDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
@@ -21,7 +20,6 @@ class TrivyLogService {
   private final KubernetesApiClientWrapper k8sApi;
   private final TrivyLogRepository logRepository;
 
-  @Transactional
   public void persistLogs() {
     repository.getAllWithoutStoredLogs()
         .forEach(this::persistRunLogs);

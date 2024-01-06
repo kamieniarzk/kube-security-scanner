@@ -1,5 +1,16 @@
 package com.kcs.k8s;
 
+import io.kubernetes.client.PodLogs;
+import io.kubernetes.client.openapi.ApiClient;
+import io.kubernetes.client.openapi.ApiException;
+import io.kubernetes.client.openapi.apis.*;
+import io.kubernetes.client.openapi.models.*;
+import io.kubernetes.client.util.ModelMapper;
+import io.kubernetes.client.util.Yaml;
+import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.Nullable;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -7,24 +18,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import io.kubernetes.client.openapi.models.*;
-import io.kubernetes.client.util.ModelMapper;
-import org.jetbrains.annotations.Nullable;
-import org.springframework.stereotype.Component;
-
-import io.kubernetes.client.PodLogs;
-import io.kubernetes.client.openapi.ApiClient;
-import io.kubernetes.client.openapi.ApiException;
-import io.kubernetes.client.openapi.apis.AppsV1Api;
-import io.kubernetes.client.openapi.apis.BatchV1Api;
-import io.kubernetes.client.openapi.apis.CoreV1Api;
-import io.kubernetes.client.openapi.apis.NetworkingV1Api;
-import io.kubernetes.client.openapi.apis.RbacAuthorizationV1Api;
-import io.kubernetes.client.util.Yaml;
-import lombok.extern.slf4j.Slf4j;
-
-import static com.kcs.util.KubeApiUtils.*;
-import static com.kcs.util.MiscUtils.*;
+import static com.kcs.util.KubeApiUtils.apiCall;
+import static com.kcs.util.MiscUtils.getCurrentNamespace;
+import static com.kcs.util.MiscUtils.getFileFromUrl;
 
 @Slf4j
 @Component

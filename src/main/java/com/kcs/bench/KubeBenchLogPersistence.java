@@ -7,7 +7,6 @@ import com.kcs.k8s.KubernetesApiClientWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
@@ -21,7 +20,6 @@ class KubeBenchLogPersistence {
   private final KubernetesApiClientWrapper k8sApi;
   private final BenchLogRepository logRepository;
 
-  @Transactional
   public void persistLogs() {
     benchRepository.getAllWithoutStoredLogs()
         .forEach(this::persistRunLogs);

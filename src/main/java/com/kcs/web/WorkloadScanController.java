@@ -1,9 +1,9 @@
 package com.kcs.web;
 
 import com.kcs.aggregated.AggregatedScanResult;
-import com.kcs.aggregated.ResultAggregator;
 import com.kcs.aggregated.AggregatedScanRunDto;
 import com.kcs.aggregated.AggregatedScanRunService;
+import com.kcs.aggregated.ResultAggregator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

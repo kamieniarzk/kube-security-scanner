@@ -2,7 +2,6 @@ package com.kcs.bench.persistence;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -38,7 +37,6 @@ class MongoKubeBenchRepository implements KubeBenchRepository {
   }
 
   @Override
-  @Transactional
   public void updateLogsStored(String id, Boolean logsStored) {
     var runDocument = documentRepository.findById(id).orElseThrow();
     runDocument.setLogsStored(logsStored);
