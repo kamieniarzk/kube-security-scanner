@@ -1,6 +1,6 @@
-package com.kcs.aggregated.persistence;
+package com.kcs.workload.persistence;
 
-import com.kcs.aggregated.ScanRunStatus;
+import com.kcs.workload.ScanRunStatus;
 
 import java.time.LocalDateTime;
 

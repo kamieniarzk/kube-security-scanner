@@ -1,6 +1,6 @@
-package com.kcs.aggregated;
+package com.kcs.workload;
 
-import com.kcs.aggregated.persistence.AggregatedRunRepository;
+import com.kcs.workload.persistence.AggregatedRunRepository;
 import com.kcs.score.KubeScoreFacade;
 import com.kcs.score.KubeScoreRunRequest;
 import com.kcs.trivy.TrivyFacade;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-class DefaultAggregatedScanRunService implements AggregatedScanRunService {
+class DefaultWorkloadScanRunService implements WorkloadScanRunService {
 
   private final KubeScoreFacade scoreFacade;
   private final TrivyFacade trivyFacade;

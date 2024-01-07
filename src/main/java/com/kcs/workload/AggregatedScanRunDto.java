@@ -1,4 +1,4 @@
-package com.kcs.aggregated;
+package com.kcs.workload;
 
 import java.time.LocalDateTime;
 

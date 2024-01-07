@@ -1,7 +1,7 @@
-package com.kcs.aggregated.persistence;
+package com.kcs.workload.persistence;
 
 import com.kcs.NoDataFoundException;
-import com.kcs.aggregated.AggregatedScanRunDto;
+import com.kcs.workload.AggregatedScanRunDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

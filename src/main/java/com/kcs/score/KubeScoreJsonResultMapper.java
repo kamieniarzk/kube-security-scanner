@@ -1,6 +1,6 @@
 package com.kcs.score;
 
-import com.kcs.aggregated.*;
+import com.kcs.workload.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ class KubeScoreJsonResultMapper implements ResultMapper<List<KubeScoreJsonResult
   private static final String ORIGIN_FORMAT = "kube-score ID: %s";
 
   @Override
-  public AggregatedScanResult map(List<KubeScoreJsonResultDto> kubeScoreJsonResultDto) {
+  public WorkloadScanResult map(List<KubeScoreJsonResultDto> kubeScoreJsonResultDto) {
     var resources = kubeScoreJsonResultDto.stream()
         .map(KubeScoreJsonResultMapper::map)
         .toList();
@@ -22,7 +22,7 @@ class KubeScoreJsonResultMapper implements ResultMapper<List<KubeScoreJsonResult
     var resourcesMap = resources.stream()
         .collect(Collectors.groupingBy(K8sResource::getNamespace));
 
-    return new AggregatedScanResult(resourcesMap);
+    return new WorkloadScanResult(resourcesMap);
   }
 
   private static K8sResource map(KubeScoreJsonResultDto scoreResult) {

@@ -1,4 +1,4 @@
-package com.kcs.aggregated.persistence;
+package com.kcs.workload.persistence;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

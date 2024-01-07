@@ -1,6 +1,6 @@
-package com.kcs.aggregated.persistence;
+package com.kcs.workload.persistence;
 
-import com.kcs.aggregated.AggregatedScanRunDto;
+import com.kcs.workload.AggregatedScanRunDto;
 
 import java.util.List;
 
