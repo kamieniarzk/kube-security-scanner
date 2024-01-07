@@ -1,6 +1,6 @@
 package com.kcs.trivy;
 
-import com.kcs.aggregated.*;
+import com.kcs.workload.*;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -14,7 +14,7 @@ class TrivyResultMapper implements ResultMapper<TrivyFullResultDto> {
   private static final String ORIGIN_FORMAT = "trivy-%s";
 
   @Override
-  public AggregatedScanResult map(TrivyFullResultDto trivyFullResultDto) {
+  public WorkloadScanResult map(TrivyFullResultDto trivyFullResultDto) {
     var resources = trivyFullResultDto.getResources().stream()
         .map(TrivyResultMapper::map)
         .filter(Optional::isPresent)
@@ -24,7 +24,7 @@ class TrivyResultMapper implements ResultMapper<TrivyFullResultDto> {
     var resourcesGrouped = resources.stream()
         .collect(Collectors.groupingBy(K8sResource::getNamespace));
 
-    return new AggregatedScanResult(resourcesGrouped);
+    return new WorkloadScanResult(resourcesGrouped);
   }
 
   static Optional<K8sResource> map(TrivyFullResultDto.Resource trivyResource) {

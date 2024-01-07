@@ -1,4 +1,4 @@
-package com.kcs.aggregated;
+package com.kcs.workload;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

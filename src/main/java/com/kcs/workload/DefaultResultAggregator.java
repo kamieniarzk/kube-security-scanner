@@ -1,6 +1,6 @@
-package com.kcs.aggregated;
+package com.kcs.workload;
 
-import com.kcs.aggregated.persistence.AggregatedRunRepository;
+import com.kcs.workload.persistence.AggregatedRunRepository;
 import com.kcs.score.KubeScoreFacade;
 import com.kcs.score.KubeScoreJsonResultDto;
 import com.kcs.trivy.TrivyFacade;
@@ -26,7 +26,7 @@ class DefaultResultAggregator implements ResultAggregator {
   private final ResultMapper<List<KubeScoreJsonResultDto>> scoreResultMapper;
 
   @Override
-  public AggregatedScanResult get(String runId) {
+  public WorkloadScanResult get(String runId) {
     var runDto = runRepository.get(runId);
     var scoreResult = scoreFacade.getResult(runDto.scoreRunId());
     var trivyResult = trivyFacade.getResult(runDto.trivyRunId());
@@ -36,7 +36,7 @@ class DefaultResultAggregator implements ResultAggregator {
     return aggregate(trivyResultMapped, scoreResultMapped);
   }
 
-  private static AggregatedScanResult aggregate(AggregatedScanResult result1, AggregatedScanResult result2) {
+  private static WorkloadScanResult aggregate(WorkloadScanResult result1, WorkloadScanResult result2) {
     var map1 = result1.namespaceResourceMap();
     var map2 = result2.namespaceResourceMap();
 
@@ -56,7 +56,7 @@ class DefaultResultAggregator implements ResultAggregator {
     map2.entrySet().
         forEach(entry -> enrichMap1WithNamespacesFromMap2(entry, map1Enriched));
 
-    var aggregatedByNamespace = new AggregatedScanResult(map1Enriched);
+    var aggregatedByNamespace = new WorkloadScanResult(map1Enriched);
     return aggregateByResource(aggregatedByNamespace);
   }
 
@@ -66,12 +66,12 @@ class DefaultResultAggregator implements ResultAggregator {
     }
   }
 
-  private static AggregatedScanResult aggregateByResource(AggregatedScanResult result) {
+  private static WorkloadScanResult aggregateByResource(WorkloadScanResult result) {
     var resourcesMap =  result.namespaceResourceMap().entrySet().stream().map(entry -> {
       entry.setValue(findDuplicatesInEachList(entry.getValue()));
       return entry;
     }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    return new AggregatedScanResult(resourcesMap);
+    return new WorkloadScanResult(resourcesMap);
   }
 
   private static List<K8sResource> findDuplicatesInEachList(List<K8sResource> listOfResources) {
