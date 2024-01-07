@@ -13,7 +13,7 @@ import java.time.Clock;
 @Document("scheduledRun")
 public class ScheduledRun {
   @Id
-  private String Id;
+  private String id;
   private String cronExpression;
   private RunType runType;
 
