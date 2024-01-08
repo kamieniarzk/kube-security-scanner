@@ -10,3 +10,4 @@ filesystem:
     score: logs/score
     trivy: logs/trivy
     bench: logs/bench
+    kubescape: logs/kubescape

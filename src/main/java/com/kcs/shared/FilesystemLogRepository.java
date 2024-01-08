@@ -1,5 +1,6 @@
 package com.kcs.shared;
 
+import com.kcs.NoDataFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -44,8 +45,12 @@ class FilesystemLogRepository implements LogRepository {
 
   @Override
   public String getAsString(String directory, String fileName) {
+    var path = Path.of(constructPathString(directory, fileName));
+    if (!Files.exists(path)) {
+      throw new NoDataFoundException();
+    }
     try {
-      return Files.readString(Path.of(constructPathString(directory, fileName)));
+      return Files.readString(path);
     } catch (IOException ioException) {
       log.error("Failed to read content from file: {}", constructPathString(directory, fileName));
       throw new RuntimeException(ioException);

@@ -11,7 +11,7 @@ class KubeScorer {
 
   private final KubeScoreRunner runner;
   private final KubeScoreRepository scoreRepository;
-  private final ScoreLogRepository logRepository;
+  private final ScoreResultRepository logRepository;
 
   public String score(String namespace) {
     var score = runner.score(namespace);

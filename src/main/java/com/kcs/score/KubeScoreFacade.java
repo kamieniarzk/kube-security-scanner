@@ -13,7 +13,7 @@ public class KubeScoreFacade {
 
   private final KubeScorer scorer;
   private final KubeScoreRepository scoreRepository;
-  private final ScoreLogRepository logRepository;
+  private final ScoreResultRepository logRepository;
 
   public String score(KubeScoreRunRequest runRequest) {
     if (runRequest.namespaced() != null && runRequest.namespaced() && runRequest.namespace() != null) {

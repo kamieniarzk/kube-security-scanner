@@ -12,6 +12,18 @@ import java.io.InputStreamReader;
 @Slf4j
 public class ProcessRunner {
 
+  public static String runWithExceptionHandling(String command) {
+    try {
+      var runResult = ProcessRunner.run(command);
+      if (runResult.exitCode() != 0) {
+        throw new RuntimeException();
+      }
+      return runResult.stdIn();
+    } catch (IOException | InterruptedException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   public static RunResult run(String command) throws IOException, InterruptedException {
     var builder = new ProcessBuilder();
     var commandSeparated = command.split(" ");

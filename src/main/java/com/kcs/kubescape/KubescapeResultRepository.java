@@ -1,4 +1,4 @@
-package com.kcs.score;
+package com.kcs.kubescape;
 
 import com.kcs.shared.AbstractLogRepository;
 import com.kcs.shared.LogRepository;
@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-class ScoreLogRepository extends AbstractLogRepository {
+class KubescapeResultRepository extends AbstractLogRepository {
 
   private final String scoreDirectory;
 
-  ScoreLogRepository(LogRepository logRepository, @Value("${filesystem.locations.score:/tmp/kube-config-scanner/score}") String scoreDirectory) {
+  KubescapeResultRepository(LogRepository logRepository, @Value("${filesystem.locations.kubescape:/tmp/kube-config-scanner/kubescape}") String resultDirectory) {
     super(logRepository);
-    this.scoreDirectory = scoreDirectory;
+    this.scoreDirectory = resultDirectory;
   }
 
   @Override

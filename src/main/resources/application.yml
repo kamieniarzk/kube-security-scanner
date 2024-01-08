@@ -11,3 +11,4 @@ filesystem:
     score: /tmp/kube-config-scanner/score
     trivy: /tmp/kube-config-scanner/trivy
     bench: /tmp/kube-config-scanner/bench
+    kubescape: /tmp/kube-config-scanner/kubescape
