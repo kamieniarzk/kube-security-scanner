@@ -1,9 +1,10 @@
 package com.kcs.workload;
 
-import com.kcs.workload.persistence.AggregatedRunRepository;
+import com.kcs.NoDataFoundException;
 import com.kcs.score.KubeScoreFacade;
 import com.kcs.score.KubeScoreRunRequest;
 import com.kcs.trivy.TrivyFacade;
+import com.kcs.trivy.TrivyRunRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,22 +16,26 @@ class DefaultWorkloadScanRunService implements WorkloadScanRunService {
 
   private final KubeScoreFacade scoreFacade;
   private final TrivyFacade trivyFacade;
-  private final AggregatedRunRepository repository;
+  private final AggregatedScanRepository repository;
 
   @Override
-  public AggregatedScanRunDto runAggregatedScan() {
+  public AggregatedScanRun runAggregatedScan() {
     var scoreRunId = scoreFacade.score(new KubeScoreRunRequest(false, null));
-    var trivyRunId = trivyFacade.run().id();
-    return repository.save(scoreRunId, trivyRunId);
+    var trivyRunId = trivyFacade.run(new TrivyRunRequest()).getId();
+    return repository.save(
+        AggregatedScanRun.builder()
+            .scoreRunId(scoreRunId)
+            .trivyRunId(trivyRunId)
+            .build());
   }
 
   @Override
-  public AggregatedScanRunDto getAggregatedScanRun(String id) {
-    return repository.get(id);
+  public AggregatedScanRun getAggregatedScanRun(String id) {
+    return repository.findById(id).orElseThrow(NoDataFoundException::new);
   }
 
   @Override
-  public List<AggregatedScanRunDto> getAllScanRuns() {
-    return repository.getAll();
+  public List<AggregatedScanRun> getAllScanRuns() {
+    return repository.findAll();
   }
 }

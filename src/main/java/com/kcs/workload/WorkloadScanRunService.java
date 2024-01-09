@@ -3,7 +3,7 @@ package com.kcs.workload;
 import java.util.List;
 
 public interface WorkloadScanRunService {
-  AggregatedScanRunDto runAggregatedScan();
-  AggregatedScanRunDto getAggregatedScanRun(String id);
-  List<AggregatedScanRunDto> getAllScanRuns();
+  AggregatedScanRun runAggregatedScan();
+  AggregatedScanRun getAggregatedScanRun(String id);
+  List<AggregatedScanRun> getAllScanRuns();
 }

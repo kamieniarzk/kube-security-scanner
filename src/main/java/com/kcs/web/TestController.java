@@ -4,7 +4,9 @@ import com.kcs.bench.KubeBenchFacade;
 import com.kcs.bench.KubeBenchJsonResultDto;
 import com.kcs.bench.persistence.KubeBenchRunDto;
 import com.kcs.trivy.TrivyFacade;
-import com.kcs.trivy.persistence.TrivyRunDto;
+import com.kcs.trivy.TrivyRunDto;
+import com.kcs.trivy.TrivyRunRequest;
+import com.kcs.workload.WorkloadScanResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,14 +25,19 @@ class TestController {
     return trivyFacade.getAll();
   }
 
+  @GetMapping("/trivy/result")
+  WorkloadScanResult getResult(String id) {
+    return trivyFacade.getResult(id);
+  }
+
   @GetMapping("/bench")
   List<KubeBenchRunDto> getAllBenchJobs() {
     return kubeBenchFacade.getAllRuns();
   }
 
   @PostMapping("/trivy")
-  TrivyRunDto runTrivy() {
-    return trivyFacade.run();
+  TrivyRunDto runTrivy(@RequestBody TrivyRunRequest runRequest) {
+    return trivyFacade.run(runRequest);
   }
 
   @PostMapping("/bench")

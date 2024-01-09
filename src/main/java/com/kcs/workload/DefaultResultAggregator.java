@@ -1,10 +1,9 @@
 package com.kcs.workload;
 
-import com.kcs.workload.persistence.AggregatedRunRepository;
+import com.kcs.NoDataFoundException;
 import com.kcs.score.KubeScoreFacade;
 import com.kcs.score.KubeScoreJsonResultDto;
 import com.kcs.trivy.TrivyFacade;
-import com.kcs.trivy.TrivyFullResultDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,21 +18,19 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 class DefaultResultAggregator implements ResultAggregator {
 
-  private final AggregatedRunRepository runRepository;
+  private final AggregatedScanRepository runRepository;
   private final KubeScoreFacade scoreFacade;
   private final TrivyFacade trivyFacade;
-  private final ResultMapper<TrivyFullResultDto> trivyResultMapper;
   private final ResultMapper<List<KubeScoreJsonResultDto>> scoreResultMapper;
 
   @Override
   public WorkloadScanResult get(String runId) {
-    var runDto = runRepository.get(runId);
-    var scoreResult = scoreFacade.getResult(runDto.scoreRunId());
-    var trivyResult = trivyFacade.getResult(runDto.trivyRunId());
+    var runDto = runRepository.findById(runId).orElseThrow(NoDataFoundException::new);
+    var scoreResult = scoreFacade.getResult(runDto.getScoreRunId());
+    var trivyResult = trivyFacade.getResult(runDto.getTrivyRunId());
 
-    var trivyResultMapped = trivyResultMapper.map(trivyResult);
     var scoreResultMapped = scoreResultMapper.map(scoreResult);
-    return aggregate(trivyResultMapped, scoreResultMapped);
+    return aggregate(trivyResult, scoreResultMapped);
   }
 
   private static WorkloadScanResult aggregate(WorkloadScanResult result1, WorkloadScanResult result2) {

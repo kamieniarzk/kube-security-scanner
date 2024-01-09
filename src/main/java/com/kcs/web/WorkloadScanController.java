@@ -1,7 +1,7 @@
 package com.kcs.web;
 
 import com.kcs.workload.WorkloadScanResult;
-import com.kcs.workload.AggregatedScanRunDto;
+import com.kcs.workload.AggregatedScanRun;
 import com.kcs.workload.WorkloadScanRunService;
 import com.kcs.workload.ResultAggregator;
 import lombok.RequiredArgsConstructor;
@@ -21,17 +21,17 @@ class WorkloadScanController {
 
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = "/scans", produces = MediaType.APPLICATION_JSON_VALUE)
-  AggregatedScanRunDto runAggregatedScan() {
+  AggregatedScanRun runAggregatedScan() {
     return scanRunService.runAggregatedScan();
   }
 
   @GetMapping(path = "/scans", produces = MediaType.APPLICATION_JSON_VALUE)
-  List<AggregatedScanRunDto> getAllAggregatedScanRuns() {
+  List<AggregatedScanRun> getAllAggregatedScanRuns() {
     return scanRunService.getAllScanRuns();
   }
 
   @GetMapping(path = "/scans/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  AggregatedScanRunDto getAggregatedScanRun(@PathVariable String id) {
+  AggregatedScanRun getAggregatedScanRun(@PathVariable String id) {
     return scanRunService.getAggregatedScanRun(id);
   }
 

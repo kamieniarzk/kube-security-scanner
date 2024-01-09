@@ -1,14 +1,14 @@
-package com.kcs.trivy.persistence;
+package com.kcs.trivy;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
-interface TrivyRunDocumentRepository extends MongoRepository<TrivyRunDocument, String> {
+interface TrivyRunRepository extends MongoRepository<TrivyRunDto, String> {
   @Query(sort = "{ 'date' : -1 }")
-  List<TrivyRunDocument> findSortedByDate();
+  List<TrivyRunDto> findSortedByDate();
 
   @Query("{ 'logsStored': { $in: [false, null] } }")
-  List<TrivyRunDocument> findWhereLogsStoredNullOrFalse();
+  List<TrivyRunDto> findWhereLogsStoredNullOrFalse();
 }

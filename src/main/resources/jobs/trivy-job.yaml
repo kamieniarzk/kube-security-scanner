@@ -13,5 +13,5 @@ spec:
           command: [ "sh", "-c" ]
           args:
             - >
-              trivy k8s --format json --timeout 3600s --all-namespaces -q --scanners "config,secret" --severity "HIGH,CRITICAL" all
+              ${TRIVY_COMMAND}
       restartPolicy: Never
