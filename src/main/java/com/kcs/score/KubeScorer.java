@@ -1,7 +1,5 @@
 package com.kcs.score;
 
-import com.kcs.score.persistence.document.KubeScoreRepository;
-import com.kcs.score.persistence.document.KubeScoreRunCreate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -10,19 +8,19 @@ import org.springframework.stereotype.Component;
 class KubeScorer {
 
   private final KubeScoreRunner runner;
-  private final KubeScoreRepository scoreRepository;
+  private final KubeScoreRunRepository scoreRepository;
   private final ScoreResultRepository logRepository;
 
-  public String score(String namespace) {
-    var score = runner.score(namespace);
-    var scoreId = scoreRepository.save(new KubeScoreRunCreate(namespace));
+  public String score(String namespace, String additionalFlags) {
+    var score = runner.score(namespace, additionalFlags);
+    var scoreId = scoreRepository.save(new KubeScoreRunDto(namespace)).id();
     logRepository.save(score, scoreId);
     return scoreId;
   }
 
-  public String scoreAll() {
-    var score = runner.scoreAllNamespaces();
-    var scoreId = scoreRepository.save(new KubeScoreRunCreate(false));
+  public String scoreAll(String additionalFlags) {
+    var score = runner.scoreAllNamespaces(additionalFlags);
+    var scoreId = scoreRepository.save(new KubeScoreRunDto()).id();
     logRepository.save(score, scoreId);
     return scoreId;
   }

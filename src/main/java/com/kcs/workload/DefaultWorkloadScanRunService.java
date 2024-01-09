@@ -20,7 +20,7 @@ class DefaultWorkloadScanRunService implements WorkloadScanRunService {
 
   @Override
   public AggregatedScanRun runAggregatedScan() {
-    var scoreRunId = scoreFacade.score(new KubeScoreRunRequest(false, null));
+    var scoreRunId = scoreFacade.score(new KubeScoreRunRequest(null, null));
     var trivyRunId = trivyFacade.run(new TrivyRunRequest()).getId();
     return repository.save(
         AggregatedScanRun.builder()

@@ -3,7 +3,8 @@ package com.kcs.web;
 import com.kcs.score.KubeScoreFacade;
 import com.kcs.score.KubeScoreJsonResultDto;
 import com.kcs.score.KubeScoreRunRequest;
-import com.kcs.score.persistence.document.KubeScoreRunDto;
+import com.kcs.score.KubeScoreRunDto;
+import com.kcs.workload.WorkloadScanResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ class KubeScoreController {
   }
 
   @GetMapping("/runs/{id}/result")
-  List<KubeScoreJsonResultDto> getRunResult(@PathVariable String id) {
+  WorkloadScanResult getRunResult(@PathVariable String id) {
     return facade.getResult(id);
   }
 }

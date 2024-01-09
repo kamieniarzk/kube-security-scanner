@@ -2,8 +2,6 @@ package com.kcs.score;
 
 import com.kcs.k8s.KubernetesApiClientWrapper;
 import com.kcs.k8s.YamlService;
-import com.kcs.score.persistence.document.KubeScoreRepository;
-import com.kcs.score.persistence.document.KubeScoreRunDto;
 import com.kcs.util.ProcessRunner;
 import io.kubernetes.client.common.KubernetesObject;
 import lombok.RequiredArgsConstructor;
@@ -20,17 +18,18 @@ import java.util.List;
 @RequiredArgsConstructor
 class OnHostBinaryKubeScoreRunner implements KubeScoreRunner {
 
-  private static final String KUBE_SCORE_RUN_COMMAND_PATTERN = "kube-score score %s -o json";
+  private static final String KUBE_SCORE_RUN_COMMAND_PATTERN = "kube-score score %s -o json %s";
   private final KubernetesApiClientWrapper k8sApi;
   private final YamlService yamlService;
-  private final KubeScoreRepository scoreRepository;
 
-  public String score(String namespace) {
+  @Override
+  public String score(String namespace, String additionalFlags) {
     var savedYamlsLocation = yamlService.saveAsYamlInTempLocation(getObjectsList(namespace), namespace);
-    return runKubeScoreBinary(KUBE_SCORE_RUN_COMMAND_PATTERN.formatted(savedYamlsLocation));
+    return runKubeScoreBinary(KUBE_SCORE_RUN_COMMAND_PATTERN.formatted(savedYamlsLocation, additionalFlags == null ? "" : additionalFlags));
   }
 
-  public String scoreAllNamespaces() {
+  @Override
+  public String scoreAllNamespaces(String additionalFlags) {
     var allNamespaces = k8sApi.getAllClusterNamespaces().stream()
         .map(namespace -> namespace.getMetadata().getName())
         .toList();
@@ -41,12 +40,7 @@ class OnHostBinaryKubeScoreRunner implements KubeScoreRunner {
         .toList();
 
     var savedYamlsLocation = yamlService.saveAsYamlInTempLocation(allResources);
-    return runKubeScoreBinary(KUBE_SCORE_RUN_COMMAND_PATTERN.formatted(savedYamlsLocation));
-  }
-
-
-  public List<KubeScoreRunDto> getByNamespace(String namespace) {
-    return scoreRepository.getByNamespace(namespace);
+    return runKubeScoreBinary(KUBE_SCORE_RUN_COMMAND_PATTERN.formatted(savedYamlsLocation, additionalFlags == null ? "" : additionalFlags));
   }
 
   private static String runKubeScoreBinary(final String command) {

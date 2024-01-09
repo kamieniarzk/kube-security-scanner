@@ -1,7 +1,7 @@
 package com.kcs.score;
 
-import com.kcs.score.persistence.document.KubeScoreRepository;
-import com.kcs.score.persistence.document.KubeScoreRunDto;
+import com.kcs.workload.ResultMapper;
+import com.kcs.workload.WorkloadScanResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,27 +12,29 @@ import java.util.List;
 public class KubeScoreFacade {
 
   private final KubeScorer scorer;
-  private final KubeScoreRepository scoreRepository;
+  private final KubeScoreRunRepository scoreRepository;
   private final ScoreResultRepository logRepository;
+  private final ResultMapper<List<KubeScoreJsonResultDto>> resultMapper;
 
   public String score(KubeScoreRunRequest runRequest) {
-    if (runRequest.namespaced() != null && runRequest.namespaced() && runRequest.namespace() != null) {
-      throw new IllegalArgumentException();
+    if (runRequest.namespace() == null) {
+      return scorer.scoreAll(runRequest.additionalFlags());
     }
 
-    if (runRequest.namespaced() != null && !runRequest.namespaced()) {
-      return scorer.scoreAll();
-    }
-
-    return scorer.score(runRequest.namespace());
+    return scorer.score(runRequest.namespace(), runRequest.additionalFlags());
   }
 
   public List<KubeScoreRunDto> getRunsByNamespace(String namespace) {
-    return scoreRepository.getByNamespace(namespace);
+    return scoreRepository.findByNamespace(namespace);
   }
 
-  public List<KubeScoreJsonResultDto> getResult(String runId) {
+  public WorkloadScanResult getResult(String runId) {
     var logs = logRepository.getAsString(runId);
-    return KubeScoreJsonResourceParser.parseFullResult(logs);
+    var rawResult = KubeScoreJsonResourceParser.parseFullResult(logs);
+    return resultMapper.map(rawResult);
+  }
+
+  public String getOriginalResult(String runId) {
+    return logRepository.getAsString(runId);
   }
 }
