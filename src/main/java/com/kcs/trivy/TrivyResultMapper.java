@@ -1,13 +1,16 @@
 package com.kcs.trivy;
 
 import com.kcs.workload.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 class TrivyResultMapper implements ResultMapper<TrivyFullResultDto> {
 
@@ -40,11 +43,19 @@ class TrivyResultMapper implements ResultMapper<TrivyFullResultDto> {
       return Collections.emptyList();
     }
 
-    if (trivyResults.size() > 1) {
-      throw new IllegalStateException();
+    var filteredResults = trivyResults.stream()
+        .filter(result -> result.getMisconfigurations() != null && result.getMisconfSummary() != null)
+        .collect(Collectors.toCollection(ArrayList::new));
+
+    if (filteredResults.isEmpty()) {
+      return Collections.emptyList();
     }
 
-    var result = trivyResults.get(0);
+    if (filteredResults.size() > 1) {
+      log.warn("Found more than one result but only taking one into account");
+    }
+
+    var result = filteredResults.get(0);
 
     if (result.getMisconfigurations() == null) {
       return Collections.emptyList();

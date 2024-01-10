@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -28,6 +29,7 @@ class DefaultWorkloadScanRunService implements WorkloadScanRunService {
             .scoreRunId(getKubeScoreRunId(aggregatedRunRequest))
             .trivyRunId(getTrivyRunId(aggregatedRunRequest))
             .kubescapeRunId(getKubescapeRunId(aggregatedRunRequest))
+            .date(LocalDateTime.now())
             .build());
   }
   @Override

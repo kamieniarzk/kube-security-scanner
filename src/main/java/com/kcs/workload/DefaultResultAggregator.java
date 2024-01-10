@@ -1,10 +1,6 @@
 package com.kcs.workload;
 
-import com.kcs.NoDataFoundException;
-import com.kcs.score.KubeScoreFacade;
-import com.kcs.trivy.TrivyFacade;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -13,20 +9,26 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Service
-@RequiredArgsConstructor
+@Component
 class DefaultResultAggregator implements ResultAggregator {
 
-  private final AggregatedScanRepository runRepository;
-  private final KubeScoreFacade scoreFacade;
-  private final TrivyFacade trivyFacade;
-
   @Override
-  public WorkloadScanResult aggregateResult(String runId) {
-    var runDto = runRepository.findById(runId).orElseThrow(NoDataFoundException::new);
-    var scoreResult = scoreFacade.getResult(runDto.getScoreRunId());
-    var trivyResult = trivyFacade.getResult(runDto.getTrivyRunId());
-    return aggregate(trivyResult, scoreResult);
+  public WorkloadScanResult aggregate(WorkloadScanResult... results) {
+    if (results == null || results.length == 0) {
+      return new WorkloadScanResult(null, null);
+    }
+
+    if (results.length == 1) {
+      return results[0];
+    }
+
+    var aggregatedResult = results[0];
+
+    for (int i = 1; i < results.length; i++) {
+      aggregatedResult = aggregate(aggregatedResult, results[i]);
+    }
+
+    return aggregatedResult;
   }
 
   private static WorkloadScanResult aggregate(WorkloadScanResult result1, WorkloadScanResult result2) {

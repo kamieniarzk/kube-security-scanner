@@ -8,4 +8,8 @@ public record WorkloadScanResult(Map<String, List<K8sResource>> namespacedResour
   public WorkloadScanResult(Map<String, List<K8sResource>> namespacedResources) {
     this(namespacedResources, Collections.emptyList());
   }
+
+  public static WorkloadScanResult empty() {
+    return new WorkloadScanResult(Collections.emptyMap(), Collections.emptyList());
+  }
 }

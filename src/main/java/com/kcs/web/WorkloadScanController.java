@@ -14,7 +14,7 @@ import java.util.List;
 class WorkloadScanController {
 
   private final WorkloadScanRunService scanRunService;
-  private final ResultAggregator scanResultService;
+  private final AggregatedResultFacade resultFacade;
 
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = "/scans", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,6 +34,6 @@ class WorkloadScanController {
 
   @GetMapping(path = "/scans/{id}/result", produces = MediaType.APPLICATION_JSON_VALUE)
   WorkloadScanResult getAggregatedScanResult(@PathVariable String id) {
-    return scanResultService.aggregateResult(id);
+    return resultFacade.aggregateResult(id);
   }
 }
