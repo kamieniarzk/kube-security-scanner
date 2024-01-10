@@ -22,7 +22,7 @@ class OnHostBinaryKubescapeRunner implements KubescapeRunner {
   }
 
   @Override
-  public String run(KubescapeRunRequest runRequest) {
+  public KubescapeRun run(KubescapeRunRequest runRequest) {
     var savedRun = runRepository.save(new KubescapeRun(runRequest.frameworks()));
     var command = buildCommand(runRequest, savedRun.getId());
     try {
@@ -36,7 +36,7 @@ class OnHostBinaryKubescapeRunner implements KubescapeRunner {
     savedRun.setCommand(command);
     runRepository.save(savedRun);
 
-    return savedRun.getId();
+    return savedRun;
   }
 
   private String buildCommand(KubescapeRunRequest request, String scanId) {

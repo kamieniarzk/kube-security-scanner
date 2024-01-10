@@ -11,17 +11,17 @@ class KubeScorer {
   private final KubeScoreRunRepository scoreRepository;
   private final ScoreResultRepository logRepository;
 
-  public String score(String namespace, String additionalFlags) {
+  public KubeScoreRunDto score(String namespace, String additionalFlags) {
     var score = runner.score(namespace, additionalFlags);
-    var scoreId = scoreRepository.save(new KubeScoreRunDto(namespace)).id();
-    logRepository.save(score, scoreId);
-    return scoreId;
+    var scoreRun = scoreRepository.save(new KubeScoreRunDto(namespace));
+    logRepository.save(score, scoreRun.id());
+    return scoreRun;
   }
 
-  public String scoreAll(String additionalFlags) {
+  public KubeScoreRunDto scoreAll(String additionalFlags) {
     var score = runner.scoreAllNamespaces(additionalFlags);
-    var scoreId = scoreRepository.save(new KubeScoreRunDto()).id();
-    logRepository.save(score, scoreId);
-    return scoreId;
+    var scoreRun = scoreRepository.save(new KubeScoreRunDto());
+    logRepository.save(score, scoreRun.id());
+    return scoreRun;
   }
 }

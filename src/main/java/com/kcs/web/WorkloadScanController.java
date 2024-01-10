@@ -1,9 +1,6 @@
 package com.kcs.web;
 
-import com.kcs.workload.WorkloadScanResult;
-import com.kcs.workload.AggregatedScanRun;
-import com.kcs.workload.WorkloadScanRunService;
-import com.kcs.workload.ResultAggregator;
+import com.kcs.workload.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,8 +18,8 @@ class WorkloadScanController {
 
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = "/scans", produces = MediaType.APPLICATION_JSON_VALUE)
-  AggregatedScanRun runAggregatedScan() {
-    return scanRunService.runAggregatedScan();
+  AggregatedScanRun runAggregatedScan(@RequestBody AggregatedRunRequest aggregatedRunRequest) {
+    return scanRunService.runAggregatedScan(aggregatedRunRequest);
   }
 
   @GetMapping(path = "/scans", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -37,6 +34,6 @@ class WorkloadScanController {
 
   @GetMapping(path = "/scans/{id}/result", produces = MediaType.APPLICATION_JSON_VALUE)
   WorkloadScanResult getAggregatedScanResult(@PathVariable String id) {
-    return scanResultService.get(id);
+    return scanResultService.aggregateResult(id);
   }
 }

@@ -1,5 +1,6 @@
 package com.kcs.scheduling;
 
+import com.kcs.workload.AggregatedRunRequest;
 import com.kcs.workload.WorkloadScanRunService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,13 +12,7 @@ import org.springframework.stereotype.Component;
 class RunFactory {
   private final WorkloadScanRunService workloadScanRunService;
 
-  Runnable create(RunType runType) {
-    return switch (runType) {
-      case WORKLOAD_SCAN -> () -> {
-        log.info("Running scheduled workload scan");
-        workloadScanRunService.runAggregatedScan();
-      };
-      case COMPLIANCE -> throw new UnsupportedOperationException();
-    };
+  Runnable create(AggregatedRunRequest aggregatedRunRequest) {
+    return () -> workloadScanRunService.runAggregatedScan(aggregatedRunRequest);
   }
 }

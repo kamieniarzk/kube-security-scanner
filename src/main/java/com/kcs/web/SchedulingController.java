@@ -1,6 +1,7 @@
 package com.kcs.web;
 
 import com.kcs.scheduling.ScheduledRun;
+import com.kcs.scheduling.ScheduledRunRequest;
 import com.kcs.scheduling.SchedulerFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +16,8 @@ class SchedulingController {
   private final SchedulerFacade schedulerFacade;
 
   @PostMapping("/runs")
-  String scheduleRun(@RequestBody ScheduledRun scheduledRun) {
-    return schedulerFacade.schedule(scheduledRun);
+  String scheduleRun(@RequestBody ScheduledRunRequest request) {
+    return schedulerFacade.schedule(request);
   }
 
   @DeleteMapping("/runs/{id}")

@@ -1,9 +1,8 @@
 package com.kcs.web;
 
 import com.kcs.kubescape.KubescapeFacade;
-import com.kcs.kubescape.KubescapeResult;
+import com.kcs.kubescape.KubescapeRun;
 import com.kcs.kubescape.KubescapeRunRequest;
-import com.kcs.workload.ResultMapper;
 import com.kcs.workload.WorkloadScanResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +13,9 @@ import org.springframework.web.bind.annotation.*;
 class KubescapeController {
 
   private final KubescapeFacade facade;
-  private final ResultMapper<KubescapeResult> resultResultMapper;
 
   @PostMapping("/runs")
-  String runKubescape(@RequestBody KubescapeRunRequest runRequest) {
+  KubescapeRun runKubescape(@RequestBody KubescapeRunRequest runRequest) {
     return facade.run(runRequest);
   }
 

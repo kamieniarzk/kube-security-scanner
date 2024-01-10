@@ -3,8 +3,10 @@ package com.kcs.scheduling;
 import com.kcs.NoDataFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
 
+import java.time.Clock;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,12 +29,12 @@ class Scheduler {
     this.syncDatabaseAndMemory();
   }
 
-  String schedule(ScheduledRun scheduledRun) {
-    var runnable = runFactory.create(scheduledRun.getRunType());
-    var scheduledTask = taskScheduler.schedule(runnable, scheduledRun.getCronTrigger());
-    var persistedScheduledRun = persistIfNeeded(scheduledRun);
+  String scheduleAndPersist(ScheduledRunRequest runRequest) {
+    var runnable = runFactory.create(runRequest.aggregatedRunRequest());
+    var scheduledTask = taskScheduler.schedule(runnable, buildCronTrigger(runRequest.cronExpression()));
+    var persistedScheduledRun = persistIfNeeded(runRequest);
     inMemoryRuns.put(persistedScheduledRun.getId(), scheduledTask);
-    log.info("Scheduled run with cron: {} and id: {}", scheduledRun.getCronExpression(), persistedScheduledRun.getId());
+    log.info("Scheduled run with cron: {} and id: {}", runRequest.cronExpression(), persistedScheduledRun.getId());
     return persistedScheduledRun.getId();
   }
 
@@ -49,22 +51,26 @@ class Scheduler {
     return removed.get();
   }
 
-  private ScheduledRun persistIfNeeded(ScheduledRun scheduledRun) {
-    var id = scheduledRun.getId();
-
-    if (id == null) {
-      return persist(scheduledRun);
-    }
-
-    if (!scheduledRunRepository.existsById(id)) {
-      return persist(scheduledRun);
-    }
-
-    return scheduledRun;
+  private void schedule(ScheduledRun scheduledRun) {
+    var runnable = runFactory.create(scheduledRun.getAggregatedRunRequest());
+    var scheduledTask = taskScheduler.schedule(runnable, buildCronTrigger(scheduledRun.getCronExpression()));
+    inMemoryRuns.put(scheduledRun.getId(), scheduledTask);
+    log.info("Scheduled run with cron: {} and id: {}", scheduledRun.getCronExpression(), scheduledRun.getId());
   }
 
-  private ScheduledRun persist(ScheduledRun scheduledRun) {
-    log.info("Persisting scheduled {} run with cron: {}", scheduledRun.getRunType(), scheduledRun.getCronExpression());
+  private ScheduledRun persistIfNeeded(ScheduledRunRequest runRequest) {
+    var existingEntity = scheduledRunRepository.findByCronExpressionAndAggregatedRunRequest(runRequest.cronExpression(), runRequest.aggregatedRunRequest());
+
+    if (existingEntity.isPresent()) {
+      return existingEntity.get();
+    }
+
+    var scheduledRun = ScheduledRun.builder()
+        .cronExpression(runRequest.cronExpression())
+        .aggregatedRunRequest(runRequest.aggregatedRunRequest())
+        .build();
+
+    log.info("Persisting scheduled run with cron: {}", scheduledRun.getCronExpression());
     return scheduledRunRepository.save(scheduledRun);
   }
 
@@ -76,5 +82,9 @@ class Scheduler {
     clearMemory();
     var databaseRuns = scheduledRunRepository.findAll();
     databaseRuns.forEach(this::schedule);
+  }
+
+  private static CronTrigger buildCronTrigger(String cronExpression) {
+    return new CronTrigger(cronExpression, Clock.systemDefaultZone().getZone());
   }
 }

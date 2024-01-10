@@ -12,8 +12,8 @@ public class SchedulerFacade {
   private final Scheduler scheduler;
   private final ScheduledRunRepository repository;
 
-  public String schedule(ScheduledRun scheduledRun) {
-    return scheduler.schedule(scheduledRun);
+  public String schedule(ScheduledRunRequest runRequest) {
+    return scheduler.scheduleAndPersist(runRequest);
   }
 
   public boolean unschedule(String runId) {

@@ -23,7 +23,7 @@ class KubeScoreController {
   }
 
   @PostMapping("/runs")
-  String runAndPersistScore(@RequestBody KubeScoreRunRequest runRequest) {
+  KubeScoreRunDto runAndPersistScore(@RequestBody KubeScoreRunRequest runRequest) {
     return facade.score(runRequest);
   }
 

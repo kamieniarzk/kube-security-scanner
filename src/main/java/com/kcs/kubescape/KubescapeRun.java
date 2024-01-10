@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Data
 @Document("kubescape")
-class KubescapeRun {
+public class KubescapeRun {
   @Id
   private String id;
   private LocalDateTime date;

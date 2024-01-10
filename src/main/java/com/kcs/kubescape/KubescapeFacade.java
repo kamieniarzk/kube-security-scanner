@@ -13,7 +13,7 @@ public class KubescapeFacade {
   private final KubescapeResultRepository resultRepository;
   private final ResultMapper<KubescapeResult> resultMapper;
 
-  public String run(KubescapeRunRequest runRequest) {
+  public KubescapeRun run(KubescapeRunRequest runRequest) {
     return runner.run(runRequest);
   }
 

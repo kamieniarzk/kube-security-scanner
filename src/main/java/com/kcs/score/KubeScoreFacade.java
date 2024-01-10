@@ -16,7 +16,7 @@ public class KubeScoreFacade {
   private final ScoreResultRepository logRepository;
   private final ResultMapper<List<KubeScoreJsonResultDto>> resultMapper;
 
-  public String score(KubeScoreRunRequest runRequest) {
+  public KubeScoreRunDto score(KubeScoreRunRequest runRequest) {
     if (runRequest.namespace() == null) {
       return scorer.scoreAll(runRequest.additionalFlags());
     }
