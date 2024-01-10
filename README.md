@@ -88,19 +88,19 @@ helm install my-release \
   * ~~make kube-score run through same set of resources as trivy -all scan~~
   * ~~persist trivy runs~~
   * ~~parse trivy results~~
-* Implement scheduling
-  * generic mechanism for CRON-based scheduling
-  * persist cron definitions (along with run spec)
-* Aggregate results
-  * aggregate kube-score results by namespace
-  * create a generic structure
-* (Optional) introduce database per cluster option
-  * local (in-cluster) MongoDB instance
+* ~~Implement scheduling~~
+  * ~~generic mechanism for CRON-based scheduling~~
+  * ~~persist cron definitions (along with run spec)~~
+* ~~Aggregate results~~
+  * ~~aggregate kube-score results by namespace~~
+  * ~~create a generic structure~~
+* ~~(Optional) introduce database per cluster option~~
+  * ~~local (in-cluster) MongoDB instance~~
   * cluster context perhaps obsolete then?
 * Query API
   * simple query API for scan results (by date, type, id, etc.)
 * Result API
-  * unified workload scan result structure and mapping from trivy and kube-score models
+  * ~~unified workload scan result structure and mapping from trivy and kube-score models~~
   * unified compliance scan structure and mapping from kube-bench (CIS) and trivy (NSA and PSS)
   * JSON and CSV/XLSX response format for summary endpoints
 
