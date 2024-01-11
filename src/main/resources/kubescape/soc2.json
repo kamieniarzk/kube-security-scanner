@@ -1,0 +1,604 @@
+{
+  "guid": "",
+  "name": "SOC2",
+  "attributes": {
+    "armoBuiltin": true
+  },
+  "creationTime": "",
+  "description": "SOC2 compliance related controls",
+  "typeTags": [
+    "compliance"
+  ],
+  "controls": [
+    {
+      "rulesIDs": [
+        ""
+      ],
+      "guid": "",
+      "name": "Firewall (CC6.1,CC6.6,CC7.2)",
+      "attributes": {
+        "controlTypeTags": [
+          "security"
+        ],
+        "attackTracks": [
+          {
+            "attackTrack": "workload-external-track",
+            "categories": [
+              "Lateral Movement (Network)"
+            ]
+          }
+        ]
+      },
+      "controlID": "C-0260",
+      "creationTime": "",
+      "description": "Network is monitored and protected by the following. System firewalls are configured to limit unnecessary ports, protocols and services. Firewall rules are reviewed at least annually by IT management.",
+      "remediation": "Define network policies for all workloads to protect unwanted access",
+      "rules": [
+        {
+          "guid": "",
+          "name": "ensure_network_policy_configured_in_labels",
+          "creationTime": "",
+          "rule": "package armo_builtins\n\n\ndeny[msga] {\n\tworkload := input[_]\n\tworkload_kinds := {\"Deployment\",\"ReplicaSet\",\"DaemonSet\",\"StatefulSet\",\"Job\", \"Pod\", \"CronJob\"}\n\tworkload_kinds[workload.kind]\n\n\tnetworkpolicies := [networkpolicy | networkpolicy = input[_]; networkpolicy.kind == \"NetworkPolicy\"]\n\tnot connected_to_any_network_policy(workload, networkpolicies)\n\t\n\tmsga := {\n\t\t\"alertMessage\": sprintf(\"%v: no networkpolicy configured in labels\", [workload.metadata.name]),\n\t\t\"packagename\": \"armo_builtins\",\n\t\t\"failedPaths\": [],\n\t\t\"fixPaths\":[],\n\t\t\"alertObject\": {\n\t\t\t\"k8sApiObjects\": [workload]\n\t\t}\n\t}\n}\n\n\nconnected_to_any_network_policy(workload, networkpolicies){\n\tconnected_to_network_policy(workload, networkpolicies[_])\n}\n\n# connected_to_network_policy returns true if the workload is connected to the networkpolicy\nconnected_to_network_policy(wl, networkpolicy){\n\tworkload_kinds := {\"Deployment\",\"ReplicaSet\",\"DaemonSet\",\"StatefulSet\",\"Job\"}\n\tworkload_kinds[wl.kind]\n\tis_same_namespace(networkpolicy.metadata, wl.metadata)\n\tcount(networkpolicy.spec.podSelector) > 0\n    count({x | networkpolicy.spec.podSelector.matchLabels[x] == wl.spec.template.metadata.labels[x]}) == count(networkpolicy.spec.podSelector.matchLabels)\n}\n\n# connected_to_network_policy returns true if the workload is connected to the networkpolicy\nconnected_to_network_policy(wl, networkpolicy){\n\twl.kind == \"Pod\"\n\tis_same_namespace(networkpolicy.metadata, wl.metadata)\n    count(networkpolicy.spec.podSelector) > 0\n    count({x | networkpolicy.spec.podSelector.matchLabels[x] == wl.metadata.labels[x]}) == count(networkpolicy.spec.podSelector.matchLabels)\n}\n\n# connected_to_network_policy returns true if the workload is connected to the networkpolicy\nconnected_to_network_policy(wl, networkpolicy){\n\twl.kind == \"CronJob\"\n\tis_same_namespace(networkpolicy.metadata, wl.metadata)\n\tcount(networkpolicy.spec.podSelector) > 0\n    count({x | networkpolicy.spec.podSelector.matchLabels[x] == wl.spec.jobTemplate.spec.template.metadata.labels[x]}) == count(networkpolicy.spec.podSelector.matchLabels)\n}\n\n# connected_to_network_policy returns true if the NetworkPolicy has no podSelector.\n# if the NetworkPolicy has no podSelector, it is applied to all workloads in the namespace of the NetworkPolicy\nconnected_to_network_policy(wl, networkpolicy){\n\tis_same_namespace(networkpolicy.metadata, wl.metadata)\n    count(networkpolicy.spec.podSelector) == 0\n}\n\n\nis_same_namespace(metadata1, metadata2) {\n\tmetadata1.namespace == metadata2.namespace\n}\n\nis_same_namespace(metadata1, metadata2) {\n\tnot metadata1.namespace\n\tnot metadata2.namespace\n}\n\nis_same_namespace(metadata1, metadata2) {\n\tnot metadata2.namespace\n\tmetadata1.namespace == \"default\"\n}\n\nis_same_namespace(metadata1, metadata2) {\n\tnot metadata1.namespace\n\tmetadata2.namespace == \"default\"\n}",
+          "resourceEnumerator": "",
+          "ruleLanguage": "Rego",
+          "match": [
+            {
+              "apiGroups": [
+                ""
+              ],
+              "apiVersions": [
+                "v1"
+              ],
+              "resources": [
+                "Pod",
+                "ConfigMap"
+              ]
+            },
+            {
+              "apiGroups": [
+                "apps"
+              ],
+              "apiVersions": [
+                "v1"
+              ],
+              "resources": [
+                "Deployment",
+                "ReplicaSet",
+                "DaemonSet",
+                "StatefulSet"
+              ]
+            },
+            {
+              "apiGroups": [
+                "batch"
+              ],
+              "apiVersions": [
+                "*"
+              ],
+              "resources": [
+                "Job",
+                "CronJob"
+              ]
+            },
+            {
+              "apiGroups": [
+                "networking.k8s.io"
+              ],
+              "apiVersions": [
+                "v1"
+              ],
+              "resources": [
+                "NetworkPolicy"
+              ]
+            }
+          ],
+          "ruleDependencies": null,
+          "controlConfigInputs": null,
+          "description": "fails if no networkpolicy configured in workload labels",
+          "remediation": "",
+          "ruleQuery": "armo_builtins",
+          "relevantCloudProviders": null
+        }
+      ],
+      "baseScore": 5,
+      "scanningScope": {
+        "matches": [
+          "cluster",
+          "file"
+        ]
+      },
+      "category": {
+        "name": "Network",
+        "id": "Cat-4"
+      }
+    },
+    {
+      "rulesIDs": [
+        "",
+        ""
+      ],
+      "guid": "",
+      "name": "Cryptographic key management - misplaced secrets (CC6.1,CC6.6,CC6.7)",
+      "attributes": {
+        "actionRequired": "configuration",
+        "microsoftMitreColumns": [
+          "Credential access",
+          "Lateral Movement"
+        ],
+        "controlTypeTags": [
+          "security",
+          "compliance",
+          "security-impact"
+        ]
+      },
+      "controlID": "C-0012",
+      "creationTime": "",
+      "description": "Encryption keys used to protect data at rest and in transit are stored and managed in accordance with the organization's cryptography policy. Access to encryption keys are restricted to authorized personnel.",
+      "remediation": "Use Kubernetes secrets or Key Management Systems to store credentials.",
+      "rules": [
+        {
+          "guid": "",
+          "name": "rule-credentials-in-env-var",
+          "attributes": {
+            "m$K8sThreatMatrix": "Credential access::Applications credentials in configuration files, Lateral Movement::Applications credentials in configuration files"
+          },
+          "creationTime": "",
+          "rule": "\tpackage armo_builtins\n\n\tdeny[msga] {\n\t\tpod := input[_]\n\t\tpod.kind == \"Pod\"\n\t\t# see default-config-inputs.json for list values\n\t\tsensitive_key_names := data.postureControlInputs.sensitiveKeyNames\n\t\tkey_name := sensitive_key_names[_]\n\t\tcontainer := pod.spec.containers[i]\n\t\tenv := container.env[j]\n\n\t\tcontains(lower(env.name), lower(key_name))\n\t\tenv.value != \"\"\n\t\t# check that value wasn't allowed by user\n\t\tnot is_allowed_value(env.value)\n\n\t\tis_not_reference(env)\n\n\t\tpath := sprintf(\"spec.containers[%v].env[%v].name\", [format_int(i, 10), format_int(j, 10)])\n\n\t\tmsga := {\n\t\t\t\"alertMessage\": sprintf(\"Pod: %v has sensitive information in environment variables\", [pod.metadata.name]),\n\t\t\t\"alertScore\": 9,\n\t\t\t\"fixPaths\": [],\n\t\t\t\"deletePaths\": [path],\n\t\t\t\"failedPaths\": [path],\n\t\t\t\"packagename\": \"armo_builtins\",\n\t\t\t\"alertObject\": {\n\t\t\t\t\"k8sApiObjects\": [pod]\n\t\t\t}\n\t\t}\n\t}\n\n\tdeny[msga] {\n\t\twl := input[_]\n\t\tspec_template_spec_patterns := {\"Deployment\",\"ReplicaSet\",\"DaemonSet\",\"StatefulSet\",\"Job\"}\n\t\tspec_template_spec_patterns[wl.kind]\n\n\t\t# see default-config-inputs.json for list values\n\t\tsensitive_key_names := data.postureControlInputs.sensitiveKeyNames\n\t\tkey_name := sensitive_key_names[_]\n\t\tcontainer := wl.spec.template.spec.containers[i]\n\t\tenv := container.env[j]\n\n\t\tcontains(lower(env.name), lower(key_name))\n\t\tenv.value != \"\"\n\t\t# check that value wasn't allowed by user\n\t\tnot is_allowed_value(env.value)\n\n\t\tis_not_reference(env)\n\n\t\tpath := sprintf(\"spec.template.spec.containers[%v].env[%v].name\", [format_int(i, 10), format_int(j, 10)])\n\n\t\tmsga := {\n\t\t\t\"alertMessage\": sprintf(\"%v: %v has sensitive information in environment variables\", [wl.kind, wl.metadata.name]),\n\t\t\t\"alertScore\": 9,\n\t\t\t\"fixPaths\": [],\n\t\t\t\"deletePaths\": [path],\n\t\t\t\"failedPaths\": [path],\n\t\t\t\"packagename\": \"armo_builtins\",\n\t\t\t\"alertObject\": {\n\t\t\t\t\"k8sApiObjects\": [wl]\n\t\t\t}\n\t\t}\n\t}\n\n\tdeny[msga] {\n\t\twl := input[_]\n\t\twl.kind == \"CronJob\"\n\t\t# see default-config-inputs.json for list values\n\t\tsensitive_key_names := data.postureControlInputs.sensitiveKeyNames\n\t\tkey_name := sensitive_key_names[_]\n\t\tcontainer := wl.spec.jobTemplate.spec.template.spec.containers[i]\n\t\tenv := container.env[j]\n\n\t\tcontains(lower(env.name), lower(key_name))\n\n\t\tenv.value != \"\"\n\t\t# check that value wasn't allowed by user\n\t\tnot is_allowed_value(env.value)\n\n\t\tis_not_reference(env)\n\n\t\tpath := sprintf(\"spec.jobTemplate.spec.template.spec.containers[%v].env[%v].name\", [format_int(i, 10), format_int(j, 10)])\n\n\t\tmsga := {\n\t\t\t\"alertMessage\": sprintf(\"Cronjob: %v has sensitive information in environment variables\", [wl.metadata.name]),\n\t\t\t\"alertScore\": 9,\n\t\t\t\"fixPaths\": [],\n\t\t\t\"deletePaths\": [path],\n\t\t\t\"failedPaths\": [path],\n\t\t\t\"packagename\": \"armo_builtins\",\n\t\t\t\"alertObject\": {\n\t\t\t\t\"k8sApiObjects\": [wl]\n\t\t\t}\n\t\t}\n\t}\n\n# check sensitive values\ndeny[msga] {\n\t\tpod := input[_]\n\t\tpod.kind == \"Pod\"\n\t\t# see default-config-inputs.json for list values\n\t\tsensitive_values := data.postureControlInputs.sensitiveValues\n    \tvalue := sensitive_values[_]\n\t\tcontainer := pod.spec.containers[i]\n\t\tenv := container.env[j]\n\n\t\t# check that value wasn't allowed by user\n\t\tnot is_allowed_value(env.value)\n\t\tcontains(lower(env.value), lower(value))\n\n\t\tis_not_reference(env)\n\n\t\tpath := sprintf(\"spec.containers[%v].env[%v].name\", [format_int(i, 10), format_int(j, 10)])\n\n\t\tmsga := {\n\t\t\t\"alertMessage\": sprintf(\"Pod: %v has sensitive information in environment variables\", [pod.metadata.name]),\n\t\t\t\"alertScore\": 9,\n\t\t\t\"fixPaths\": [],\n\t\t\t\"deletePaths\": [path],\n\t\t\t\"failedPaths\": [path],\n\t\t\t\"packagename\": \"armo_builtins\",\n\t\t\t\"alertObject\": {\n\t\t\t\t\"k8sApiObjects\": [pod]\n\t\t\t}\n\t\t}\n\t}\n\n\tdeny[msga] {\n\t\twl := input[_]\n\t\tspec_template_spec_patterns := {\"Deployment\",\"ReplicaSet\",\"DaemonSet\",\"StatefulSet\",\"Job\"}\n\t\tspec_template_spec_patterns[wl.kind]\n\n\t\t# see default-config-inputs.json for list values\n\t\tsensitive_values := data.postureControlInputs.sensitiveValues\n    \tvalue := sensitive_values[_]\n\t\tcontainer := wl.spec.template.spec.containers[i]\n\t\tenv := container.env[j]\n\n\t\tnot is_allowed_value(env.value)\n\t\tcontains(lower(env.value), lower(value))\n\t\t# check that value wasn't allowed by user\n\n\t\tis_not_reference(env)\n\n\t\tpath := sprintf(\"spec.template.spec.containers[%v].env[%v].name\", [format_int(i, 10), format_int(j, 10)])\n\n\t\tmsga := {\n\t\t\t\"alertMessage\": sprintf(\"%v: %v has sensitive information in environment variables\", [wl.kind, wl.metadata.name]),\n\t\t\t\"alertScore\": 9,\n\t\t\t\"fixPaths\": [],\n\t\t\t\"deletePaths\": [path],\n\t\t\t\"failedPaths\": [path],\n\t\t\t\"packagename\": \"armo_builtins\",\n\t\t\t\"alertObject\": {\n\t\t\t\t\"k8sApiObjects\": [wl]\n\t\t\t}\n\t\t}\n\t}\n\n\tdeny[msga] {\n\t\twl := input[_]\n\t\twl.kind == \"CronJob\"\n\t\t# see default-config-inputs.json for list values\n\t\tsensitive_values := data.postureControlInputs.sensitiveValues\n    \tvalue := sensitive_values[_]\n\t\tcontainer := wl.spec.jobTemplate.spec.template.spec.containers[i]\n\t\tenv := container.env[j]\n\n\t\t# check that value wasn't allowed by user\n\t\tnot is_allowed_value(env.value)\n\t\tcontains(lower(env.value), lower(value))\n\n\t\tis_not_reference(env)\n\n\t\tpath := sprintf(\"spec.jobTemplate.spec.template.spec.containers[%v].env[%v].name\", [format_int(i, 10), format_int(j, 10)])\n\n\t\tmsga := {\n\t\t\t\"alertMessage\": sprintf(\"Cronjob: %v has sensitive information in environment variables\", [wl.metadata.name]),\n\t\t\t\"alertScore\": 9,\n\t\t\t\"fixPaths\": [],\n\t\t\t\"deletePaths\": [path],\n\t\t\t\"failedPaths\": [path],\n\t\t\t\"packagename\": \"armo_builtins\",\n\t\t\t\"alertObject\": {\n\t\t\t\t\"k8sApiObjects\": [wl]\n\t\t\t}\n\t\t}\n\t}\n\n\nis_not_reference(env)\n{\n\tnot env.valueFrom.secretKeyRef\n\tnot env.valueFrom.configMapKeyRef\n}\n\nis_allowed_value(value) {\n    allow_val := data.postureControlInputs.sensitiveValuesAllowed[_]\n    value == allow_val\n}",
+          "resourceEnumerator": "",
+          "ruleLanguage": "Rego",
+          "match": [
+            {
+              "apiGroups": [
+                ""
+              ],
+              "apiVersions": [
+                "v1"
+              ],
+              "resources": [
+                "Pod"
+              ]
+            },
+            {
+              "apiGroups": [
+                "apps"
+              ],
+              "apiVersions": [
+                "v1"
+              ],
+              "resources": [
+                "Deployment",
+                "ReplicaSet",
+                "DaemonSet",
+                "StatefulSet"
+              ]
+            },
+            {
+              "apiGroups": [
+                "batch"
+              ],
+              "apiVersions": [
+                "*"
+              ],
+              "resources": [
+                "Job",
+                "CronJob"
+              ]
+            }
+          ],
+          "ruleDependencies": [],
+          "controlConfigInputs": [
+            {
+              "path": "settings.postureControlInputs.sensitiveValues",
+              "name": "Values",
+              "description": "Strings that identify a value that Kubescape believes should be stored in a Secret, and not in a ConfigMap or an environment variable."
+            },
+            {
+              "path": "settings.postureControlInputs.sensitiveKeyNames",
+              "name": "Keys",
+              "description": "Key names that identify a potential value that should be stored in a Secret, and not in a ConfigMap or an environment variable."
+            },
+            {
+              "path": "settings.postureControlInputs.sensitiveValuesAllowed",
+              "name": "AllowedValues",
+              "description": "Explicitly allowed values, which will override sensitiveValues."
+            }
+          ],
+          "description": "fails if Pods have sensitive information in configuration",
+          "remediation": "",
+          "ruleQuery": "armo_builtins",
+          "relevantCloudProviders": null
+        },
+        {
+          "guid": "",
+          "name": "rule-credentials-configmap",
+          "attributes": {
+            "m$K8sThreatMatrix": "Credential access::Applications credentials in configuration files, Lateral Movement::Applications credentials in configuration files"
+          },
+          "creationTime": "",
+          "rule": "package armo_builtins\n\n# fails if config map has keys with suspicious name\ndeny[msga] {\n\tconfigmap := input[_]\n    configmap.kind == \"ConfigMap\"\n    # see default-config-inputs.json for list values\n    sensitive_key_names := data.postureControlInputs.sensitiveKeyNames\n    key_name := sensitive_key_names[_]\n    map_secret := configmap.data[map_key]\n    map_secret != \"\"\n\n    contains(lower(map_key), lower(key_name))\n    # check that value wasn't allowed by user\n    not is_allowed_value(map_secret)\n\n    path := sprintf(\"data[%v]\", [map_key])\n\n\tmsga := {\n\t\t\"alertMessage\": sprintf(\"this configmap has sensitive information: %v\", [configmap.metadata.name]),\n\t\t\"alertScore\": 9,\n\t\t\"deletePaths\": [path],\n        \"failedPaths\": [path],\n        \"fixPaths\": [],\n\t\t\"packagename\": \"armo_builtins\",\n          \"alertObject\": {\n\t\t\t\"k8sApiObjects\": [configmap]\n\t\t}\n     }\n}\n\n# fails if config map has values with suspicious content - not base 64\ndeny[msga] {\n    # see default-config-inputs.json for list values\n    sensitive_values := data.postureControlInputs.sensitiveValues\n    value := sensitive_values[_]\n\n\tconfigmap := input[_]\n    configmap.kind == \"ConfigMap\"\n    map_secret := configmap.data[map_key]\n    map_secret != \"\"\n\n    regex.match(value , map_secret)\n    # check that value wasn't allowed by user\n    not is_allowed_value(map_secret)\n\n    path := sprintf(\"data[%v]\", [map_key])\n\n\tmsga := {\n\t\t\"alertMessage\": sprintf(\"this configmap has sensitive information: %v\", [configmap.metadata.name]),\n\t\t\"alertScore\": 9,\n\t\t\"deletePaths\": [path],\n       \"failedPaths\": [path],\n        \"fixPaths\": [],\n\t\t\"packagename\": \"armo_builtins\",\n          \"alertObject\": {\n\t\t\t\"k8sApiObjects\": [configmap]\n\t\t}\n     }\n}\n\n# fails if config map has values with suspicious content - base 64\ndeny[msga] {\n    # see default-config-inputs.json for list values\n    sensitive_values := data.postureControlInputs.sensitiveValues\n    value := sensitive_values[_]\n\n\tconfigmap := input[_]\n    configmap.kind == \"ConfigMap\"\n    map_secret := configmap.data[map_key]\n    map_secret != \"\"\n\n    decoded_secret := base64.decode(map_secret)\n\n    # check that value wasn't allowed by user\n    not is_allowed_value(map_secret)\n\n    regex.match(value , decoded_secret)\n\n    path := sprintf(\"data[%v]\", [map_key])\n\n\tmsga := {\n\t\t\"alertMessage\": sprintf(\"this configmap has sensitive information: %v\", [configmap.metadata.name]),\n\t\t\"alertScore\": 9,\n\t\t\"deletePaths\": [path],\n       \"failedPaths\": [path],\n        \"fixPaths\": [],\n\t\t\"packagename\": \"armo_builtins\",\n          \"alertObject\": {\n\t\t\t\"k8sApiObjects\": [configmap]\n\t\t}\n     }\n}\n\n\nis_allowed_value(value) {\n    allow_val := data.postureControlInputs.sensitiveValuesAllowed[_]\n    value == allow_val\n}",
+          "resourceEnumerator": "",
+          "ruleLanguage": "Rego",
+          "match": [
+            {
+              "apiGroups": [
+                "*"
+              ],
+              "apiVersions": [
+                "*"
+              ],
+              "resources": [
+                "ConfigMap"
+              ]
+            }
+          ],
+          "ruleDependencies": [],
+          "controlConfigInputs": [
+            {
+              "path": "settings.postureControlInputs.sensitiveValues",
+              "name": "Values",
+              "description": "Strings that identify a value that Kubescape believes should be stored in a Secret, and not in a ConfigMap or an environment variable."
+            },
+            {
+              "path": "settings.postureControlInputs.sensitiveKeyNames",
+              "name": "Keys",
+              "description": "Key names that identify a potential value that should be stored in a Secret, and not in a ConfigMap or an environment variable."
+            },
+            {
+              "path": "settings.postureControlInputs.sensitiveValuesAllowed",
+              "name": "AllowedValues",
+              "description": "Explicitly allowed values, which will override sensitiveValues."
+            }
+          ],
+          "description": "fails if ConfigMaps have sensitive information in configuration",
+          "remediation": "",
+          "ruleQuery": "armo_builtins",
+          "relevantCloudProviders": null
+        }
+      ],
+      "baseScore": 8,
+      "scanningScope": {
+        "matches": [
+          "cluster",
+          "file"
+        ]
+      },
+      "category": {
+        "name": "Secrets",
+        "id": "Cat-3"
+      }
+    },
+    {
+      "rulesIDs": [
+        ""
+      ],
+      "guid": "",
+      "name": "Cryptographic key management - minimize access to secrets (CC6.1,CC6.6,CC6.7)",
+      "controlID": "C-0186",
+      "creationTime": "",
+      "description": "Encryption keys used to protect data at rest and in transit are stored and managed in accordance with the organization's cryptography policy. Access to encryption keys are restricted to authorized personnel.",
+      "remediation": "Where possible, remove `get`, `list` and `watch` access to `secret` objects in the cluster.",
+      "rules": [
+        {
+          "guid": "",
+          "name": "rule-can-list-get-secrets-v1",
+          "attributes": {
+            "microsoftK8sThreatMatrix": "Discovery::Access the K8s API server",
+            "resourcesAggregator": "subject-role-rolebinding",
+            "useFromKubescapeVersion": "v1.0.133"
+          },
+          "creationTime": "",
+          "rule": "package armo_builtins\n\nimport future.keywords.in\n\n# fails if user can list/get secrets \ndeny[msga] {\n\tsubjectVector := input[_]\n\trole := subjectVector.relatedObjects[i]\n\trolebinding := subjectVector.relatedObjects[j]\n\tendswith(role.kind, \"Role\")\n\tendswith(rolebinding.kind, \"Binding\")\n\n\trule := role.rules[p]\n\n\tsubject := rolebinding.subjects[k]\n\tis_same_subjects(subjectVector, subject)\n\nis_same_subjects(subjectVector, subject)\n\trule_path := sprintf(\"relatedObjects[%d].rules[%d]\", [i, p])\n\n\tverbs := [\"get\", \"list\", \"watch\", \"*\"]\n\tverb_path := [sprintf(\"%s.verbs[%d]\", [rule_path, l]) | verb = rule.verbs[l]; verb in verbs]\n\tcount(verb_path) > 0\n\n\tapi_groups := [\"\", \"*\"]\n\tapi_groups_path := [sprintf(\"%s.apiGroups[%d]\", [rule_path, a]) | apiGroup = rule.apiGroups[a]; apiGroup in api_groups]\n\tcount(api_groups_path) > 0\n\n\tresources := [\"secrets\", \"*\"]\n\tresources_path := [sprintf(\"%s.resources[%d]\", [rule_path, l]) | resource = rule.resources[l]; resource in resources]\n\tcount(resources_path) > 0\n\n\tpath := array.concat(resources_path, verb_path)\n\tpath2 := array.concat(path, api_groups_path)\n\tfinalpath := array.concat(path2, [\n\t\tsprintf(\"relatedObjects[%d].subjects[%d]\", [j, k]),\n\t\tsprintf(\"relatedObjects[%d].roleRef.name\", [j]),\n\t])\n\n\tmsga := {\n\t\t\"alertMessage\": sprintf(\"Subject: %s-%s can read secrets\", [subjectVector.kind, subjectVector.name]),\n\t\t\"alertScore\": 3,\n\t\t\"reviewPaths\": finalpath,\n\t\t\"failedPaths\": finalpath,\n\t\t\"fixPaths\": [],\n\t\t\"packagename\": \"armo_builtins\",\n\t\t\"alertObject\": {\n\t\t\t\"k8sApiObjects\": [],\n\t\t\t\"externalObjects\": subjectVector,\n\t\t},\n\t}\n}\n\n# for service accounts\nis_same_subjects(subjectVector, subject) {\n\tsubjectVector.kind == subject.kind\n\tsubjectVector.name == subject.name\n\tsubjectVector.namespace == subject.namespace\n}\n\n# for users/ groups\nis_same_subjects(subjectVector, subject) {\n\tsubjectVector.kind == subject.kind\n\tsubjectVector.name == subject.name\n\tsubjectVector.apiGroup == subject.apiGroup\n}\n",
+          "resourceEnumerator": "",
+          "ruleLanguage": "Rego",
+          "match": [
+            {
+              "apiGroups": [
+                "rbac.authorization.k8s.io"
+              ],
+              "apiVersions": [
+                "v1"
+              ],
+              "resources": [
+                "Role",
+                "ClusterRole",
+                "ClusterRoleBinding",
+                "RoleBinding"
+              ]
+            }
+          ],
+          "ruleDependencies": [],
+          "controlConfigInputs": null,
+          "description": "determines which users can list/get secrets",
+          "remediation": "",
+          "ruleQuery": "armo_builtins",
+          "relevantCloudProviders": null
+        }
+      ],
+      "baseScore": 6,
+      "scanningScope": {
+        "matches": [
+          "cluster",
+          "file"
+        ]
+      },
+      "category": {
+        "name": "Access control",
+        "id": "Cat-2"
+      }
+    },
+    {
+      "rulesIDs": [
+        "",
+        ""
+      ],
+      "guid": "",
+      "name": "Access restriction to infrastructure - admin access (CC6.1 ,CC6.2, CC6.7, CC6.8)",
+      "attributes": {
+        "microsoftMitreColumns": [
+          "Privilege escalation"
+        ],
+        "rbacQuery": "Show cluster_admin",
+        "controlTypeTags": [
+          "security",
+          "compliance"
+        ]
+      },
+      "controlID": "C-0035",
+      "creationTime": "",
+      "description": "Administrative access on the in-scope production infrastructure (cloud platform, servers, database) are restricted to authorized users based on job responsibilities.",
+      "remediation": "You should apply least privilege principle. Make sure cluster admin permissions are granted only when it is absolutely necessary. Don't use subjects with such high permissions for daily operations.",
+      "rules": [
+        {
+          "guid": "",
+          "name": "rule-list-all-cluster-admins",
+          "attributes": {
+            "m$K8sThreatMatrix": "Privilege Escalation::Cluster-admin binding",
+            "useUntilKubescapeVersion": "v1.0.133"
+          },
+          "creationTime": "",
+          "rule": "package armo_builtins\n\nimport data.cautils\n\n# input: roles\n# apiversion: v1\n# does: returns roles+ related subjects in rolebinding\n\ndeny[msga] {\n\troles := [role |  role= input[_]; role.kind == \"Role\"]\n    rolebindings := [rolebinding | rolebinding = input[_]; rolebinding.kind == \"RoleBinding\"]\n    role:= roles[_]\n    rolebinding := rolebindings[_]\n\n    rule:= role.rules[i]\n\tcanCreate(rule, i)\n\tcanCreateResources(rule, i)\n\n\trolebinding.roleRef.kind == \"Role\"\n\trolebinding.roleRef.name == role.metadata.name\n    subject := rolebinding.subjects[i]\n    path := sprintf(\"subjects[%v]\", [format_int(i, 10)])\n\n    msga := {\n\t\t\"alertMessage\": sprintf(\"The following %v: %v have high privileges, such as cluster-admin\", [subject.kind, subject.name]),\n\t\t\"alertScore\": 9,\n\t\t\"fixPaths\": [],\n\t\t\"deletePaths\": [path],\n\t\t\"failedPaths\": [path],\n\t\t\"packagename\": \"armo_builtins\",\n        \"alertObject\": {\n\t\t\t\"k8sApiObjects\": [role,rolebinding],\n\t\t\t\"externalObjects\": {\n\t\t\t\t\"subject\" : [subject]\n\t\t\t}\n\t\t}\n    }\n}\n\n# input: ClusterRole\n# apiversion: v1\n# does: returns clusterroles+ related subjects in rolebinding\n\ndeny[msga] {\n    roles := [role |  role= input[_]; role.kind == \"ClusterRole\"]\n    rolebindings := [rolebinding | rolebinding = input[_]; rolebinding.kind == \"RoleBinding\"]\n    role:= roles[_]\n    rolebinding := rolebindings[_]\n\n    rule:= role.rules[i]\n\tcanCreate(rule, i)\n\tcanCreateResources(rule, i)\n\n\trolebinding.roleRef.kind == \"ClusterRole\"\n\trolebinding.roleRef.name == role.metadata.name\n\n    subject := rolebinding.subjects[i]\n    path := sprintf(\"subjects[%v]\", [format_int(i, 10)])\n\n    msga := {\n\t\t\"alertMessage\": sprintf(\"The following %v: %v have high privileges, such as cluster-admin\", [subject.kind, subject.name]),\n\t\t\"alertScore\": 9,\n\t\t\"fixPaths\": [],\n\t\t\"deletePaths\": [path],\n\t\t\"failedPaths\": [path],\n\t\t\"packagename\": \"armo_builtins\",\n        \"alertObject\": {\n\t\t\t\"k8sApiObjects\": [role,rolebinding],\n\t\t\t\"externalObjects\": {\n\t\t\t\t\"subject\" : [subject]\n\t\t\t}\n\t\t}\n    }\n}\n\n# input: ClusterRole\n# apiversion: v1\n# does:\treturns clusterroles+ related subjects in clusterrolebinding\n\ndeny[msga] {\n    roles := [role |  role= input[_]; role.kind == \"ClusterRole\"]\n    rolebindings := [rolebinding | rolebinding = input[_]; rolebinding.kind == \"ClusterRoleBinding\"]\n    role:= roles[_]\n    rolebinding := rolebindings[_]\n\n    rule:= role.rules[i]\n\tcanCreate(rule, i)\n    canCreateResources(rule, i)\n\n\trolebinding.roleRef.kind == \"ClusterRole\"\n\trolebinding.roleRef.name == role.metadata.name\n\n    subject := rolebinding.subjects[i]\n    path := sprintf(\"subjects[%v]\", [format_int(i, 10)])\n\n\tmsga := {\n\t\t\"alertMessage\": sprintf(\"The following %v: %v have high privileges, such as cluster-admin\", [subject.kind, subject.name]),\n\t\t\"alertScore\": 9,\n\t\t\"fixPaths\": [],\n\t\t\"deletePaths\": [path],\n\t\t\"failedPaths\": [path],\n\t\t\"packagename\": \"armo_builtins\",\n\t\t\"alertObject\": {\n\t\t\t\"k8sApiObjects\": [role,rolebinding],\n\t\t\t\"externalObjects\": {\n\t\t\t\t\"subject\" : [subject]\n\t\t\t}\n\t\t}\n\t}\n}\n\n\ncanCreate(rule, i) {\n\tverb := rule.verbs[j]\n\tverb == \"*\"\n}\n\ncanCreateResources(rule, i){\n\tis_api_group(rule)\n\tresource := rule.resources[j]\n\tresource == \"*\"\n}\n\nis_api_group(rule) {\n\tapiGroup := rule.apiGroups[_]\n\tapiGroup == \"\"\n}\n\nis_api_group(rule) {\n\tapiGroup := rule.apiGroups[_]\n\tapiGroup == \"*\"\n}\n",
+          "resourceEnumerator": "",
+          "ruleLanguage": "Rego",
+          "match": [
+            {
+              "apiGroups": [
+                "rbac.authorization.k8s.io"
+              ],
+              "apiVersions": [
+                "v1"
+              ],
+              "resources": [
+                "Role",
+                "ClusterRole",
+                "ClusterRoleBinding",
+                "RoleBinding"
+              ]
+            }
+          ],
+          "ruleDependencies": [
+            {
+              "packageName": "cautils"
+            }
+          ],
+          "controlConfigInputs": null,
+          "description": "determines which users have cluster admin permissions",
+          "remediation": "",
+          "ruleQuery": "armo_builtins",
+          "relevantCloudProviders": null
+        },
+        {
+          "guid": "",
+          "name": "rule-list-all-cluster-admins-v1",
+          "attributes": {
+            "resourcesAggregator": "subject-role-rolebinding",
+            "useFromKubescapeVersion": "v1.0.133",
+            "m$K8sThreatMatrix": "Privilege Escalation::Cluster-admin binding"
+          },
+          "creationTime": "",
+          "rule": "package armo_builtins\n\nimport future.keywords.in\n\n# returns subjects with cluster admin permissions\ndeny[msga] {\n\tsubjectVector := input[_]\n\trole := subjectVector.relatedObjects[i]\n\trolebinding := subjectVector.relatedObjects[j]\n\tendswith(role.kind, \"Role\")\n\tendswith(rolebinding.kind, \"Binding\")\n\n\trule := role.rules[p]\n\tsubject := rolebinding.subjects[k]\n\tis_same_subjects(subjectVector, subject)\n\nis_same_subjects(subjectVector, subject)\n\trule_path := sprintf(\"relatedObjects[%d].rules[%d]\", [i, p])\n\n\tverbs := [\"*\"]\n\tverb_path := [sprintf(\"%s.verbs[%d]\", [rule_path, l]) | verb = rule.verbs[l]; verb in verbs]\n\tcount(verb_path) > 0\n\n\tapi_groups := [\"*\", \"\"]\n\tapi_groups_path := [sprintf(\"%s.apiGroups[%d]\", [rule_path, a]) | apiGroup = rule.apiGroups[a]; apiGroup in api_groups]\n\tcount(api_groups_path) > 0\n\n\tresources := [\"*\"]\n\tresources_path := [sprintf(\"%s.resources[%d]\", [rule_path, l]) | resource = rule.resources[l]; resource in resources]\n\tcount(resources_path) > 0\n\n\tpath := array.concat(resources_path, verb_path)\n\tpath2 := array.concat(path, api_groups_path)\n\tfinalpath := array.concat(path2, [\n\t\tsprintf(\"relatedObjects[%d].subjects[%d]\", [j, k]),\n\t\tsprintf(\"relatedObjects[%d].roleRef.name\", [j]),\n\t])\n\n\tmsga := {\n\t\t\"alertMessage\": sprintf(\"Subject: %s-%s have high privileges, such as cluster-admin\", [subjectVector.kind, subjectVector.name]),\n\t\t\"alertScore\": 3,\n\t\t\"fixPaths\": [],\n\t\t\"reviewPaths\": finalpath,\n\t\t\"failedPaths\": finalpath,\n\t\t\"packagename\": \"armo_builtins\",\n\t\t\"alertObject\": {\n\t\t\t\"k8sApiObjects\": [],\n\t\t\t\"externalObjects\": subjectVector,\n\t\t},\n\t}\n}\n\n# for service accounts\nis_same_subjects(subjectVector, subject) {\n\tsubjectVector.kind == subject.kind\n\tsubjectVector.name == subject.name\n\tsubjectVector.namespace == subject.namespace\n}\n\n# for users/ groups\nis_same_subjects(subjectVector, subject) {\n\tsubjectVector.kind == subject.kind\n\tsubjectVector.name == subject.name\n\tsubjectVector.apiGroup == subject.apiGroup\n}\n",
+          "resourceEnumerator": "",
+          "ruleLanguage": "Rego",
+          "match": [
+            {
+              "apiGroups": [
+                "rbac.authorization.k8s.io"
+              ],
+              "apiVersions": [
+                "v1"
+              ],
+              "resources": [
+                "Role",
+                "ClusterRole",
+                "ClusterRoleBinding",
+                "RoleBinding"
+              ]
+            }
+          ],
+          "ruleDependencies": [],
+          "controlConfigInputs": null,
+          "description": "determines which users have cluster admin permissions",
+          "remediation": "",
+          "ruleQuery": "armo_builtins",
+          "relevantCloudProviders": null
+        }
+      ],
+      "baseScore": 6,
+      "scanningScope": {
+        "matches": [
+          "cluster",
+          "file"
+        ]
+      },
+      "category": {
+        "name": "Access control",
+        "id": "Cat-2"
+      }
+    },
+    {
+      "rulesIDs": [
+        "",
+        ""
+      ],
+      "guid": "",
+      "name": "Event logging (CC6.8,CC7.1,CC7.2)",
+      "attributes": {
+        "controlTypeTags": [
+          "security",
+          "compliance"
+        ]
+      },
+      "controlID": "C-0067",
+      "creationTime": "",
+      "description": "Logging is enabled to monitor the following events at the application and/or infrastructure layers.",
+      "remediation": "Turn on audit logging for your cluster. Look at the vendor guidelines for more details",
+      "rules": [
+        {
+          "guid": "",
+          "name": "k8s-audit-logs-enabled-cloud",
+          "creationTime": "",
+          "rule": "package armo_builtins\n\nimport future.keywords.every\nimport future.keywords.in\n\n# =============================== GKE ===============================\n# Check if audit logs is enabled for GKE\ndeny[msga] {\n\tcluster_config := input[_]\n\tcluster_config.apiVersion == \"container.googleapis.com/v1\"\n\tcluster_config.kind == \"ClusterDescribe\"\n\tcluster_config.metadata.provider == \"gke\"\n\tconfig := cluster_config.data\n\n\t# If enableComponents is empty, it will disable logging\n\t# https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters#loggingcomponentconfig\n\tis_logging_disabled(config)\n\tmsga := {\n\t\t\"alertMessage\": \"audit logs is disabled\",\n\t\t\"alertScore\": 3,\n\t\t\"packagename\": \"armo_builtins\",\n\t\t\"failedPaths\": [],\n\t\t\"fixPaths\": [],\n\t\t\"fixCommand\": \"\",\n\t\t\"alertObject\": {\n\t\t\t\"k8sApiObjects\": [],\n\t\t\t\"externalObjects\": cluster_config,\n\t\t},\n\t}\n}\n\nis_logging_disabled(cluster_config) {\n\tnot cluster_config.logging_config.component_config.enable_components\n}\n\nis_logging_disabled(cluster_config) {\n\tcluster_config.logging_config.component_config.enable_components\n\tcount(cluster_config.logging_config.component_config.enable_components) == 0\n}\n\n# =============================== EKS ===============================\n# Check if audit logs is enabled for EKS\ndeny[msga] {\n\tcluster_config := input[_]\n\tcluster_config.apiVersion == \"eks.amazonaws.com/v1\"\n\tcluster_config.kind == \"ClusterDescribe\"\n\tcluster_config.metadata.provider == \"eks\"\n\tconfig := cluster_config.data\n\n\t# logSetup is an object representing the enabled or disabled Kubernetes control plane logs for your cluster.\n\t# types - available cluster control plane log types\n\t# https://docs.aws.amazon.com/eks/latest/APIReference/API_LogSetup.html\n\tlogging_types := {\"api\", \"audit\", \"authenticator\", \"controllerManager\", \"scheduler\"}\n\tlogSetups = config.Cluster.Logging.ClusterLogging\n\tnot all_auditlogs_enabled(logSetups, logging_types)\n\n\tmsga := {\n\t\t\"alertMessage\": \"audit logs is disabled\",\n\t\t\"alertScore\": 3,\n\t\t\"packagename\": \"armo_builtins\",\n\t\t\"failedPaths\": [],\n\t\t\"fixCommand\": \"aws eks update-cluster-config --region '${REGION_CODE}' --name '${CLUSTER_NAME}' --logging '{'clusterLogging':[{'types':['api','audit','authenticator','controllerManager','scheduler'],'enabled':true}]}'\",\n\t\t\"fixPaths\": [],\n\t\t\"alertObject\": {\n\t\t\t\"k8sApiObjects\": [],\n\t\t\t\"externalObjects\": cluster_config,\n\t\t},\n\t}\n}\n\nall_auditlogs_enabled(logSetups, types) {\n\tevery type in types {\n\t\tauditlogs_enabled(logSetups, type)\n\t}\n}\n\nauditlogs_enabled(logSetups, type) {\n\tlogSetup := logSetups[_]\n\tlogSetup.Enabled == true\n\ttype in logSetup.Types\n}\n",
+          "resourceEnumerator": "",
+          "ruleLanguage": "Rego",
+          "match": [
+            {
+              "apiGroups": [],
+              "apiVersions": [],
+              "resources": []
+            }
+          ],
+          "dynamicMatch": [
+            {
+              "apiGroups": [
+                "container.googleapis.com",
+                "eks.amazonaws.com"
+              ],
+              "apiVersions": [
+                "v1"
+              ],
+              "resources": [
+                "ClusterDescribe"
+              ]
+            }
+          ],
+          "ruleDependencies": [],
+          "controlConfigInputs": null,
+          "description": "",
+          "remediation": "",
+          "ruleQuery": "armo_builtins",
+          "relevantCloudProviders": [
+            "EKS",
+            "GKE"
+          ]
+        },
+        {
+          "guid": "",
+          "name": "k8s-audit-logs-enabled-native",
+          "attributes": {
+            "resourcesAggregator": "apiserver-pod",
+            "useFromKubescapeVersion": "v1.0.133"
+          },
+          "creationTime": "",
+          "rule": "package armo_builtins\n\nimport data.cautils\n\n# Check if audit logs is  enabled for native k8s\ndeny[msga] {\n\tapiserverpod := input[_]\n    cmd := apiserverpod.spec.containers[0].command\n\taudit_policy :=  [ command |command := cmd[_] ; contains(command, \"--audit-policy-file=\")]\n    count(audit_policy) < 1\n\tpath := \"spec.containers[0].command\"\n\n\n\tmsga := {\n\t\t\"alertMessage\": \"audit logs is not enabled\",\n\t\t\"alertScore\": 9,\n\t\t\"packagename\": \"armo_builtins\",\n\t\t\"reviewPaths\": [path],\n\t\t\"failedPaths\": [path],\n\t\t\"fixPaths\": [],\n\t\t\"alertObject\": {\n\t\t\t\"k8sApiObjects\": [apiserverpod],\n\n\t\t}\n\t}\n}",
+          "resourceEnumerator": "",
+          "ruleLanguage": "Rego",
+          "match": [
+            {
+              "apiGroups": [
+                ""
+              ],
+              "apiVersions": [
+                "v1"
+              ],
+              "resources": [
+                "Pod"
+              ]
+            }
+          ],
+          "ruleDependencies": [],
+          "controlConfigInputs": null,
+          "description": "",
+          "remediation": "",
+          "ruleQuery": "armo_builtins",
+          "relevantCloudProviders": null
+        }
+      ],
+      "baseScore": 5,
+      "scanningScope": {
+        "matches": [
+          "cluster"
+        ]
+      },
+      "category": {
+        "name": "Control plane",
+        "id": "Cat-1"
+      }
+    },
+    {
+      "rulesIDs": [
+        ""
+      ],
+      "guid": "",
+      "name": "Data in motion encryption - Ingress is TLS encrypted (CC6.1,CC6.6,CC6.7)",
+      "attributes": {
+        "controlTypeTags": [
+          "security",
+          "compliance"
+        ]
+      },
+      "controlID": "C-0263",
+      "creationTime": "",
+      "description": "Transport Layer Security (TLS) is used to protect the transmission of data sent over the internet to and from the organization's application server.",
+      "remediation": "The user needs to implement TLS for the Ingress resource in order to encrypt the incoming traffic",
+      "rules": [
+        {
+          "guid": "",
+          "name": "ingress-no-tls",
+          "creationTime": "",
+          "rule": "package armo_builtins\n\n# Checks if Ingress is connected to a service and a workload to expose something\ndeny[msga] {\n\tingress := input[_]\n\tingress.kind == \"Ingress\"\n\n\t# Check if ingress has TLS enabled\n\tnot ingress.spec.tls\n\n\tmsga := {\n\t\t\"alertMessage\": sprintf(\"Ingress '%v' has not TLS definition\", [ingress.metadata.name]),\n\t\t\"packagename\": \"armo_builtins\",\n\t\t\"failedPaths\": [],\n\t\t\"fixPaths\": [{\n        \"path\": \"spec.tls\",\n        \"value\": \"<your-tls-definition>\"\n        }],\n\t\t\"alertScore\": 7,\n\t\t\"alertObject\": {\"k8sApiObjects\": [ingress]}\n\t}\n}\n",
+          "resourceEnumerator": "",
+          "ruleLanguage": "Rego",
+          "match": [
+            {
+              "apiGroups": [
+                "networking.k8s.io"
+              ],
+              "apiVersions": [
+                "v1"
+              ],
+              "resources": [
+                "Ingress"
+              ]
+            }
+          ],
+          "ruleDependencies": null,
+          "controlConfigInputs": null,
+          "description": "Ingress should not be configured without TLS",
+          "remediation": "",
+          "ruleQuery": "armo_builtins",
+          "relevantCloudProviders": null
+        }
+      ],
+      "baseScore": 7,
+      "scanningScope": {
+        "matches": [
+          "cluster",
+          "file"
+        ]
+      }
+    }
+  ],
+  "controlsIDs": [
+    "C-0260",
+    "C-0012",
+    "C-0186",
+    "C-0035",
+    "C-0067",
+    "C-0263"
+  ],
+  "scanningScope": {
+    "matches": [
+      "cluster",
+      "file"
+    ]
+  }
+}

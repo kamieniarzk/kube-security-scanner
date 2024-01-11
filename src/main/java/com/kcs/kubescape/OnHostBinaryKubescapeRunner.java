@@ -47,7 +47,7 @@ class OnHostBinaryKubescapeRunner implements KubescapeRunner {
 
   private static String buildFrameworksString(Set<KubescapeFramework> frameworks) {
     var sb = new StringBuilder();
-    frameworks.forEach(framework -> sb.append(framework).append(" "));
+    frameworks.forEach(framework -> sb.append(framework.getName()).append(" "));
     return sb.toString();
   }
 }

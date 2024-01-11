@@ -47,7 +47,10 @@ class KubescapeResultMapper implements ResultMapper<KubescapeResult> {
 
   Vulnerability map(KubescapeResult.Control control) {
     var controlMetadata =  controlDictionary.get(control.getControlID());
-    return new Vulnerability(mapSeverity(controlMetadata), controlMetadata.getName(), controlMetadata.getDescription(), controlMetadata.getRemediation(), ORIGIN_FORMAT.formatted(controlMetadata.getControlID()));
+    if (controlMetadata == null) {
+      System.out.println("");
+    }
+    return new Vulnerability(mapSeverity(controlMetadata), controlMetadata.getName(), controlMetadata.getDescription(), controlMetadata.getRemediation(), ORIGIN_FORMAT.formatted(controlMetadata.getControlID()), "passed".equals(control.getStatus().getStatus()));
   }
 
   Severity mapSeverity(KubescapeControls.Control control) {

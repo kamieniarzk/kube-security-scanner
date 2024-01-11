@@ -7,6 +7,8 @@ import com.kcs.workload.WorkloadScanResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/kubescape")
 @RequiredArgsConstructor
@@ -17,6 +19,16 @@ class KubescapeController {
   @PostMapping("/runs")
   KubescapeRun runKubescape(@RequestBody KubescapeRunRequest runRequest) {
     return facade.run(runRequest);
+  }
+
+  @GetMapping("/runs")
+  List<KubescapeRun> getAllRuns() {
+    return facade.getAllRuns();
+  }
+
+  @GetMapping("/runs/{id}")
+  KubescapeRun getRun(@PathVariable String id) {
+    return facade.getRun(id);
   }
 
   @GetMapping("/runs/{id}/result")

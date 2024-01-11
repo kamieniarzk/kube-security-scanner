@@ -26,7 +26,16 @@ final class KubescapeJsonResultParser {
     }
   }
 
-  public static KubescapeResult parseFullResult(String input) {
+  public static KubescapeResult parseAllResults(String input) {
+    try {
+      return objectMapper.readValue(input, KubescapeResult.class);
+    } catch (JsonProcessingException exception) {
+      log.error("Failed to parse kubescape JSON result", exception);
+      throw new RuntimeException(exception);
+    }
+  }
+
+  public static KubescapeResult parseFailedResults(String input) {
     try {
       var rawParsed = objectMapper.readValue(input, KubescapeResult.class);
       return filterOutPassedControls(rawParsed);
