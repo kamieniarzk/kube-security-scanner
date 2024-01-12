@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @Component
 class KubeScoreJsonResultMapper implements ResultMapper<List<KubeScoreJsonResultDto>> {
 
-  private static final String ORIGIN_FORMAT = "kube-score ID: %s";
+  private static final String ORIGIN = "kube-score";
 
   @Override
   public WorkloadScanResult map(List<KubeScoreJsonResultDto> kubeScoreJsonResultDto) {
@@ -37,7 +37,7 @@ class KubeScoreJsonResultMapper implements ResultMapper<List<KubeScoreJsonResult
     return scoreResult.getObjectMeta().getOwnerReferences() == null || scoreResult.getObjectMeta().getOwnerReferences().isEmpty();
   }
 
-  private static List<Vulnerability> mapChecksToVulnerabilities(List<KubeScoreJsonResultDto.Check> checks) {
+  private static List<Check> mapChecksToVulnerabilities(List<KubeScoreJsonResultDto.Check> checks) {
     return checks.stream()
         .map(KubeScoreJsonResultMapper::mapCheckToVulnerabilities)
         .flatMap(Collection::stream)
@@ -45,22 +45,18 @@ class KubeScoreJsonResultMapper implements ResultMapper<List<KubeScoreJsonResult
   }
 
   @NotNull
-  private static List<Vulnerability> mapCheckToVulnerabilities(KubeScoreJsonResultDto.Check check) {
+  private static List<Check> mapCheckToVulnerabilities(KubeScoreJsonResultDto.Check check) {
     return check.getComments().stream()
         .map(comment -> mapCommentToVulnerability(check, comment))
         .toList();
   }
 
   @NotNull
-  private static Vulnerability mapCommentToVulnerability(KubeScoreJsonResultDto.Check check, KubeScoreJsonResultDto.Comment comment) {
+  private static Check mapCommentToVulnerability(KubeScoreJsonResultDto.Check check, KubeScoreJsonResultDto.Comment comment) {
     var title = comment.getPath().concat(" ").concat(comment.getSummary());
     var description = check.getCheck().getComment();
     var remediation = comment.getDescription();
-    return new Vulnerability(map(check.getGrade()), title, description, remediation, buildOrigin(check.getCheck()));
-  }
-
-  private static String buildOrigin(KubeScoreJsonResultDto.CheckData checkData) {
-    return ORIGIN_FORMAT.formatted(checkData.getId());
+    return new Check(map(check.getGrade()), title, description, remediation, ORIGIN, check.getCheck().getId());
   }
 
   private static Severity map(int grade) {

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 class KubescapeResultMapper implements ResultMapper<KubescapeResult> {
 
-  private static final String ORIGIN_FORMAT = "kubescape %s";
+  private static final String ORIGIN = "kubescape";
 
   private final KubescapeControlDictionary controlDictionary = new KubescapeControlDictionary();
 
@@ -41,16 +41,13 @@ class KubescapeResultMapper implements ResultMapper<KubescapeResult> {
     return new K8sResource(kubescapeResource.getObject().getKind(), kubescapeResource.getObject().getNamespace(), kubescapeResource.getObject().getName(), map(result.getControls()));
   }
 
-  List<Vulnerability> map(List<KubescapeResult.Control> controls) {
+  List<Check> map(List<KubescapeResult.Control> controls) {
     return controls.stream().map(this::map).collect(Collectors.toList());
   }
 
-  Vulnerability map(KubescapeResult.Control control) {
+  Check map(KubescapeResult.Control control) {
     var controlMetadata =  controlDictionary.get(control.getControlID());
-    if (controlMetadata == null) {
-      System.out.println("");
-    }
-    return new Vulnerability(mapSeverity(controlMetadata), controlMetadata.getName(), controlMetadata.getDescription(), controlMetadata.getRemediation(), ORIGIN_FORMAT.formatted(controlMetadata.getControlID()), "passed".equals(control.getStatus().getStatus()));
+    return new Check(mapSeverity(controlMetadata), controlMetadata.getName(), controlMetadata.getDescription(), controlMetadata.getRemediation(), ORIGIN, controlMetadata.getControlID(), "passed".equals(control.getStatus().getStatus()));
   }
 
   Severity mapSeverity(KubescapeControls.Control control) {

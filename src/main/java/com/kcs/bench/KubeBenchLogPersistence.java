@@ -25,7 +25,7 @@ class KubeBenchLogPersistence {
         .forEach(this::persistRunLogs);
   }
 
-  private void persistRunLogs(KubeBenchRunDto benchRunDto) {
+  private void persistRunLogs(KubeBenchRunDto benchRunDto) { // TODO (optional) - extract the pull based log persistence abstraction for job-based runs (this and trivy)
     var jobRunDto = jobRunRepository.get(benchRunDto.jobRunId());
     if (jobRunDto.podName() == null) {
       log.warn("kube-bench run {} has null podName. Can not store logs", benchRunDto.id());
@@ -33,9 +33,9 @@ class KubeBenchLogPersistence {
     }
     log.info("Persisting missing logs for run: {}", benchRunDto.id());
     try (var logStream = k8sApi.streamPodLogs(jobRunDto.podName())) {
-      logRepository.save(logStream, jobRunDto.podName());
-    } catch (IOException ioException) {
-      log.error("Failed to persist run logs for run: {}", benchRunDto.id(), ioException);
+      logRepository.save(logStream, benchRunDto.id());
+    } catch (Exception any) {
+      log.error("Failed to persist run logs for run: {}", benchRunDto.id(), any);
     }
     benchRepository.updateLogsStored(benchRunDto.id(), true);
   }

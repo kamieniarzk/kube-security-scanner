@@ -74,10 +74,10 @@ class DefaultResultAggregator implements ResultAggregator {
     for (K8sResource resource : listOfResources) {
       if (!setOfResources.add(resource)) { // duplicate found
         var vulnerabilitiesOfAllDuplicates = findAllDuplicates(resource, listOfResources).stream()
-            .map(K8sResource::getVulnerabilities)
+            .map(K8sResource::getChecks)
             .flatMap(Collection::stream)
             .toList();
-        setOfResources.stream().filter(res -> res.equals(resource)).findAny().orElseThrow().setVulnerabilities(vulnerabilitiesOfAllDuplicates);
+        setOfResources.stream().filter(res -> res.equals(resource)).findAny().orElseThrow().setChecks(vulnerabilitiesOfAllDuplicates);
       }
     }
     return setOfResources.stream().toList();

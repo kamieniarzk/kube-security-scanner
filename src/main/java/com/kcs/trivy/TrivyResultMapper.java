@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Component
 class TrivyResultMapper implements ResultMapper<TrivyFullResultDto> {
 
-  private static final String ORIGIN_FORMAT = "trivy-%s";
+  private static final String ORIGIN = "trivy";
 
   @Override
   public WorkloadScanResult map(TrivyFullResultDto trivyFullResultDto) {
@@ -38,7 +38,7 @@ class TrivyResultMapper implements ResultMapper<TrivyFullResultDto> {
     return Optional.of(new K8sResource(trivyResource.getKind(), trivyResource.getNamespace(), trivyResource.getName(), vulnerabilities));
   }
 
-  static List<Vulnerability> map(List<TrivyFullResultDto.Result> trivyResults) {
+  static List<Check> map(List<TrivyFullResultDto.Result> trivyResults) {
     if (trivyResults == null) {
       return Collections.emptyList();
     }
@@ -66,12 +66,12 @@ class TrivyResultMapper implements ResultMapper<TrivyFullResultDto> {
         .toList();
   }
 
-  static Vulnerability map(TrivyFullResultDto.Misconfiguration trivyMisconfiguration) {
-    return new Vulnerability(
+  static Check map(TrivyFullResultDto.Misconfiguration trivyMisconfiguration) {
+    return new Check(
         Severity.valueOf(trivyMisconfiguration.getSeverity()),
         trivyMisconfiguration.getTitle(),
         trivyMisconfiguration.getDescription(),
         trivyMisconfiguration.getResolution(),
-        ORIGIN_FORMAT.formatted(trivyMisconfiguration.getId()));
+        ORIGIN, trivyMisconfiguration.getId());
   }
 }

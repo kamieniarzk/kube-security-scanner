@@ -15,7 +15,7 @@ public class K8sResource {
   private final String namespace;
   private final String name;
   @Setter
-  private List<Vulnerability> vulnerabilities;
+  private List<Check> checks;
 
   @Override
   public boolean equals(Object o) {
