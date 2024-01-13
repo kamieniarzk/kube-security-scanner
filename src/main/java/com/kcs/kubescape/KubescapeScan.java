@@ -15,9 +15,11 @@ public class KubescapeScan {
   private LocalDateTime date;
   private String command;
   private Set<KubescapeFramework> frameworks;
+  private Set<String> namespaces;
 
-  public KubescapeScan(Set<KubescapeFramework> frameworks) {
+  public KubescapeScan(Set<KubescapeFramework> frameworks, Set<String> namespaces) {
     this.frameworks = frameworks;
     this.date = LocalDateTime.now();
+    this.namespaces = namespaces;
   }
 }

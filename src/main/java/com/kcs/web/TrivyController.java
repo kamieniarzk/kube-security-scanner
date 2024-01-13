@@ -26,7 +26,7 @@ class TrivyController {
     return trivyFacade.run(runRequest);
   }
 
-  @GetMapping("/{id}}/result")
+  @GetMapping("/{id}/result")
   ScanResult getResult(@PathVariable String id) {
     return trivyFacade.getResult(id);
   }

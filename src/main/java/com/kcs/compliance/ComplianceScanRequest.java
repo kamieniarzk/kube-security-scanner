@@ -2,5 +2,7 @@ package com.kcs.compliance;
 
 import com.kcs.kubescape.KubescapeFramework;
 
-public record ComplianceScanRequest(KubescapeFramework framework) {
+import java.util.Set;
+
+public record ComplianceScanRequest(KubescapeFramework framework, Set<String> namespaces) {
 }

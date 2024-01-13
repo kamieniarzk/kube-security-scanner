@@ -59,7 +59,7 @@ class Scheduler {
   }
 
   private ScheduledRun persistIfNeeded(ScheduledRunRequest runRequest) {
-    var existingEntity = scheduledRunRepository.findByCronExpressionAndAggregatedRunRequest(runRequest.cronExpression(), runRequest.aggregatedScanRequest());
+    var existingEntity = scheduledRunRepository.findByCronExpressionAndAggregatedScanRequest(runRequest.cronExpression(), runRequest.aggregatedScanRequest());
 
     if (existingEntity.isPresent()) {
       return existingEntity.get();

@@ -19,7 +19,7 @@ public class ComplianceFacade {
   private final ComplianceByNamespaceCalculator<KubescapeResult> calculator;
 
   public ComplianceScanRun runComplianceScan(ComplianceScanRequest runRequest) {
-    var kubescapeRunRequest = new KubescapeScanRequest(Set.of(runRequest.framework()), null);
+    var kubescapeRunRequest = new KubescapeScanRequest(Set.of(runRequest.framework()), null, runRequest.namespaces());
     var kubescapeComplianceRun = kubescapeFacade.run(kubescapeRunRequest);
     return runRepository.save(new ComplianceScanRun(kubescapeComplianceRun));
   }

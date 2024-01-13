@@ -16,6 +16,8 @@ public class ProcessRunner {
     try {
       var runResult = ProcessRunner.run(command);
       if (runResult.exitCode() != 0) {
+        var message = "Process run error - stderr:\n%s".formatted(runResult.stdErr);
+        log.error(message);
         throw new RuntimeException();
       }
       return runResult.stdIn();
