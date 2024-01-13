@@ -1,7 +1,6 @@
 package com.kcs.web;
 
 import com.kcs.compliance.ComplianceByNamespaceSummary;
-import com.kcs.compliance.ComplianceSummary;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;

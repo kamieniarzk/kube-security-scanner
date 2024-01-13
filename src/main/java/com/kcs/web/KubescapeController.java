@@ -31,7 +31,7 @@ class KubescapeController {
     return facade.getRun(id);
   }
 
-  @GetMapping("/runs/{id}/result")
+  @GetMapping(path = "/runs/{id}/result", produces = {"application/json", "text/csv"})
   WorkloadScanResult getWorkloadResult(@PathVariable String id) {
     return facade.getResult(id);
   }

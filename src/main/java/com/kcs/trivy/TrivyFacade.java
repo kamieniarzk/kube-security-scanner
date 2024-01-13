@@ -33,7 +33,7 @@ public class TrivyFacade {
     }
     var logs = logRepository.getAsString(runId);
     var rawResult = TrivyResultParser.parseFullResult(logs);
-    return resultMapper.map(rawResult);
+    return resultMapper.map(rawResult).setScanId(runId);
   }
 
   public String getOriginalResult(String runId) {

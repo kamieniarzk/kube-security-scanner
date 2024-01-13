@@ -32,7 +32,7 @@ class WorkloadScanController {
     return scanRunService.getAggregatedScanRun(id);
   }
 
-  @GetMapping(path = "/scans/{id}/result", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(path = "/scans/{id}/result", produces = {"application/json", "text/csv"})
   WorkloadScanResult getAggregatedScanResult(@PathVariable String id) {
     return resultFacade.aggregateResult(id);
   }

@@ -27,7 +27,7 @@ class KubeScoreController {
     return facade.score(runRequest);
   }
 
-  @GetMapping("/runs/{id}/result")
+  @GetMapping(path = "/runs/{id}/result", produces = {"application/json", "text/csv"})
   WorkloadScanResult getRunResult(@PathVariable String id) {
     return facade.getResult(id);
   }

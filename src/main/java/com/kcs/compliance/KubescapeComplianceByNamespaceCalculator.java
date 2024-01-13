@@ -32,16 +32,16 @@ class KubescapeComplianceByNamespaceCalculator implements ComplianceByNamespaceC
     private final Map<String, Compliance> globalPerCheckMap = new HashMap<>();
 
     public ComplianceByNamespaceSummary calculate(String framework, WorkloadScanResult resultMapped) {
-      var byNamespace = resultMapped.namespacedResources().entrySet().stream()
+      var byNamespace = resultMapped.getNamespacedResources().entrySet().stream()
           .map(entry -> Map.entry(entry.getKey(), map(entry.getValue())))
           .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-      return new ComplianceByNamespaceSummary(framework, byNamespace, calculateGlobal(resultMapped), resultMapped.skippedChecks());
+      return new ComplianceByNamespaceSummary(framework, byNamespace, calculateGlobal(resultMapped), resultMapped.getSkippedChecks());
     }
 
     private ComplianceSummary calculateGlobal(WorkloadScanResult workloadScanResult) {
-      var namespacedResources = workloadScanResult.namespacedResources().values().stream().flatMap(Collection::stream);
-      var allResources = Stream.concat(namespacedResources, workloadScanResult.nonNamespacedResources().stream()).toList();
+      var namespacedResources = workloadScanResult.getNamespacedResources().values().stream().flatMap(Collection::stream);
+      var allResources = Stream.concat(namespacedResources, workloadScanResult.getNonNamespacedResources().stream()).toList();
       return calculate(allResources, globalPerCheckMap);
     }
 

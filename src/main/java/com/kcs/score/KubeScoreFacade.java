@@ -31,7 +31,7 @@ public class KubeScoreFacade {
   public WorkloadScanResult getResult(String runId) {
     var logs = logRepository.getAsString(runId);
     var rawResult = KubeScoreJsonResourceParser.parseFullResult(logs);
-    return resultMapper.map(rawResult);
+    return resultMapper.map(rawResult).setScanId(runId);
   }
 
   public String getOriginalResult(String runId) {

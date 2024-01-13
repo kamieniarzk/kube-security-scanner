@@ -31,7 +31,7 @@ public class KubescapeFacade {
 
   public WorkloadScanResult getResult(String runId) {
     var domainResult = KubescapeJsonResultParser.parseFailedResults(getRawResult(runId));
-    return resultMapper.map(domainResult);
+    return resultMapper.map(domainResult).setScanId(runId);
   }
 
   public KubescapeResult getFullDomainResult(String runId) {

@@ -15,7 +15,7 @@ class DefaultResultAggregator implements ResultAggregator {
   @Override
   public WorkloadScanResult aggregate(WorkloadScanResult... results) {
     if (results == null || results.length == 0) {
-      return new WorkloadScanResult(null, null, null);
+      return new WorkloadScanResult();
     }
 
     if (results.length == 1) {
@@ -32,8 +32,8 @@ class DefaultResultAggregator implements ResultAggregator {
   }
 
   private static WorkloadScanResult aggregate(WorkloadScanResult result1, WorkloadScanResult result2) {
-    var map1 = result1.namespacedResources();
-    var map2 = result2.namespacedResources();
+    var map1 = result1.getNamespacedResources();
+    var map2 = result2.getNamespacedResources();
 
     var map1Enriched = map1.entrySet().stream()
         .map(entry -> {
@@ -62,7 +62,7 @@ class DefaultResultAggregator implements ResultAggregator {
   }
 
   private static WorkloadScanResult aggregateByResource(WorkloadScanResult result) {
-    var resourcesMap =  result.namespacedResources().entrySet().stream().map(entry -> {
+    var resourcesMap =  result.getNamespacedResources().entrySet().stream().map(entry -> {
       entry.setValue(findDuplicatesInEachList(entry.getValue()));
       return entry;
     }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

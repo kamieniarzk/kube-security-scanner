@@ -22,6 +22,6 @@ public class AggregatedResultFacade {
     var scoreResult = runDto.getScoreRunId() == null ? WorkloadScanResult.empty() : scoreFacade.getResult(runDto.getScoreRunId());
     var trivyResult = runDto.getTrivyRunId() == null ? WorkloadScanResult.empty() : trivyFacade.getResult(runDto.getTrivyRunId());
     var kubescapeResult = runDto.getKubescapeRunId() == null ? WorkloadScanResult.empty() : kubescapeFacade.getResult(runDto.getKubescapeRunId());
-    return aggregator.aggregate(trivyResult, scoreResult, kubescapeResult);
+    return aggregator.aggregate(trivyResult, scoreResult, kubescapeResult).setAggregatedScanId(runId);
   }
 }
