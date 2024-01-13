@@ -29,13 +29,13 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Common parameters
 
-| Name                     | Description                                                                             | Value                               |
-|--------------------------|-----------------------------------------------------------------------------------------|-------------------------------------|
-| `image.repository`       | The repository of app container image                                                   | `"kamieniarzk/kube-config-scanner"` |
-| `image.tag`              | App container image tag                                                                 | `"latest"`                          |
-| `mongo.uri`              | Full MongoDB connection string URI                                                      | `"your-mongo-uri"`                  |
-| `mongo.database`         | MongoDB database name                                                                   | `"your-mongo-database"`             |
-| `logStorage.size`        | Size of persistent storage for in-cluster scan results                                  | `1Gi`                               |
+| Name               | Description                                            | Value                               |
+|--------------------|--------------------------------------------------------|-------------------------------------|
+| `image.repository` | The repository of app container image                  | `"kamieniarzk/kube-config-scanner"` |
+| `image.tag`        | App container image tag                                | `"latest"`                          |
+| `storage.results`  | Size of persistent storage for in-cluster scan results | `"1Gi"`                             |
+| `storage.mongo`    | In-cluster MongoDB database size                       | `"1Gi"`                             |
+| `clusterName`      | Cluster name for context                               | `your-cluster-name`                 |
 
 
 Either put the parameters inside `values.yaml`
@@ -48,9 +48,9 @@ or specify each parameter using the `--set key=value[,key=value]` argument to `h
 
 ```console
 helm install my-release \
-               --set mongo.uri=my-mongo-uri \
-               --set mongo.database=my-mongo-database \
-               --set logStorage.size=512Mi \
+               --set storage.results=2Gi \
+               --set storage.mongo=512Mi \
+               --set clusterName="my-rke-cluster" \
                ./kcs
 ```
 > **Tip**: You can use the default [values.yaml](helm/kcs/values.yaml)
@@ -102,11 +102,11 @@ helm install my-release \
 * Result API
   * ~~unified workload scan result structure and mapping from trivy and kube-score models~~
   * unified compliance scan structure and mapping from kube-bench (CIS) and trivy (NSA and PSS)
-  * JSON and CSV/XLSX response format for summary endpoints
+  * ~~JSON and CSV/XLSX response format for summary endpoints~~
 
 
 ### References
-* [kube-hunter](https://github.com/aquasecurity/kube-hunter)
 * [kube-bench](https://github.com/aquasecurity/kube-bench)
 * [kube-score](https://github.com/zegl/kube-score)
 * [trivy](https://github.com/aquasecurity/trivy)
+* [kubescape](https://github.com/kubescape/kubescape)

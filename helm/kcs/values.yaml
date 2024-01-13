@@ -2,7 +2,8 @@ image:
   repository: kamieniarzk/kube-config-scanner
   tag: latest
 
-logStorage:
-  size: 1Gi
+storage:
+  results: 1Gi
+  mongo: 1Gi
 
 clusterName: your-cluster-name
