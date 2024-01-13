@@ -103,7 +103,10 @@ helm install my-release \
   * ~~unified workload scan result structure and mapping from trivy and kube-score models~~
   * unified compliance scan structure and mapping from kube-bench (CIS) and trivy (NSA and PSS)
   * ~~JSON and CSV/XLSX response format for summary endpoints~~
-
+* (Optional) hexagonal architecture
+  * separate domain and infrastructure (at least at package-level)
+  * java-based configuration (avoid spring annotations for class initialization)
+  * extract the abstraction related to job-based scans
 
 ### References
 * [kube-bench](https://github.com/aquasecurity/kube-bench)
