@@ -15,7 +15,7 @@ class DefaultResultAggregator implements ResultAggregator {
   @Override
   public WorkloadScanResult aggregate(WorkloadScanResult... results) {
     if (results == null || results.length == 0) {
-      return new WorkloadScanResult(null, null);
+      return new WorkloadScanResult(null, null, null);
     }
 
     if (results.length == 1) {

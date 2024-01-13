@@ -36,7 +36,7 @@ class KubescapeComplianceByNamespaceCalculator implements ComplianceByNamespaceC
           .map(entry -> Map.entry(entry.getKey(), map(entry.getValue())))
           .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-      return new ComplianceByNamespaceSummary(framework, byNamespace, calculateGlobal(resultMapped));
+      return new ComplianceByNamespaceSummary(framework, byNamespace, calculateGlobal(resultMapped), resultMapped.skippedChecks());
     }
 
     private ComplianceSummary calculateGlobal(WorkloadScanResult workloadScanResult) {

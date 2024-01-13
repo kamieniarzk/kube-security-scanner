@@ -36,6 +36,7 @@ class KubeBenchLogPersistence {
       logRepository.save(logStream, benchRunDto.id());
     } catch (Exception any) {
       log.error("Failed to persist run logs for run: {}", benchRunDto.id(), any);
+      return;
     }
     benchRepository.updateLogsStored(benchRunDto.id(), true);
   }

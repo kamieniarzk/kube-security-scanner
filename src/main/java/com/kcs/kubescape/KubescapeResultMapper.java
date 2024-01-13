@@ -25,7 +25,18 @@ class KubescapeResultMapper implements ResultMapper<KubescapeResult> {
     var namespacedResources = k8sResources.stream()
         .filter(resource -> resource.getNamespace() != null)
         .collect(Collectors.groupingBy(K8sResource::getNamespace));
-    return new WorkloadScanResult(namespacedResources, nonNamespacedResources);
+
+    var skippedControls = kubescapeResult.getSummaryDetails().getControls().values().stream()
+        .filter(controlSummary -> "skipped".equals(controlSummary.getStatusInfo().getStatus()))
+        .map(this::map)
+        .toList();
+
+    return new WorkloadScanResult(namespacedResources, nonNamespacedResources, skippedControls);
+  }
+
+  private Check map(KubescapeResult.SummaryDetails.ControlSummary controlSummary) {
+    var controlMetadata = controlDictionary.get(controlSummary.getControlID());
+    return new Check(mapSeverity(controlMetadata), controlMetadata.getName(), controlMetadata.getDescription(), controlMetadata.getRemediation(), ORIGIN, controlMetadata.getControlID(), false, true, controlSummary.getStatusInfo().getInfo());
   }
 
   List<K8sResource> mapInternal(KubescapeResult result) {
@@ -46,7 +57,7 @@ class KubescapeResultMapper implements ResultMapper<KubescapeResult> {
   }
 
   Check map(KubescapeResult.Control control) {
-    var controlMetadata =  controlDictionary.get(control.getControlID());
+    var controlMetadata = controlDictionary.get(control.getControlID());
     return new Check(mapSeverity(controlMetadata), controlMetadata.getName(), controlMetadata.getDescription(), controlMetadata.getRemediation(), ORIGIN, controlMetadata.getControlID(), "passed".equals(control.getStatus().getStatus()));
   }
 

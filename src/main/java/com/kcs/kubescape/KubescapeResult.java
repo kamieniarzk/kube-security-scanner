@@ -3,12 +3,14 @@ package com.kcs.kubescape;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 public class KubescapeResult {
 
   private List<Resource> resources;
   private List<Result> results;
+  private SummaryDetails summaryDetails;
 
   @Data
   static class Result {
@@ -67,5 +69,20 @@ public class KubescapeResult {
   static class ResourceMetadata {
     private String name;
     private String namespace;
+  }
+
+  @Data
+  static class SummaryDetails {
+    private Map<String, ControlSummary> controls;
+    @Data
+    static class ControlSummary {
+      private String controlID;
+      private StatusInfo statusInfo;
+      @Data
+      static class StatusInfo {
+        private String status;
+        private String info;
+      }
+    }
   }
 }
