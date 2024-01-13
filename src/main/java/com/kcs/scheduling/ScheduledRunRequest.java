@@ -1,6 +1,6 @@
 package com.kcs.scheduling;
 
-import com.kcs.workload.AggregatedRunRequest;
+import com.kcs.aggregated.AggregatedScanRequest;
 
-public record ScheduledRunRequest(String cronExpression, AggregatedRunRequest aggregatedRunRequest) {
+public record ScheduledRunRequest(String cronExpression, AggregatedScanRequest aggregatedScanRequest) {
 }

@@ -1,6 +1,6 @@
 package com.kcs.trivy;
 
-import com.kcs.job.JobRunDto;
+import com.kcs.job.JobDto;
 import com.kcs.job.JobService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -15,19 +15,19 @@ class InClusterJobTrivyRunner implements TrivyRunner {
 
   private static final String COMMAND_PATTERN = "trivy k8s --format json --timeout 3600s --all-namespaces -q %s %s %s %s all";
   private final JobService jobService;
-  private final TrivyRunRepository repository;
+  private final TrivyScanRepository repository;
 
   @Override
-  public TrivyRunDto run(TrivyRunRequest runRequest) {
+  public TrivyScanDto run(TrivyRunRequest runRequest) {
     var command = buildCommand(runRequest);
     var jobRunDto = jobService.runJobFromUrlDefinitionWithContextServiceAccount(getJobDefinitionWithCommand(command), "trivy-scan-job");
     return saveTrivyRun(runRequest, jobRunDto, command);
   }
 
   @NotNull
-  private TrivyRunDto saveTrivyRun(TrivyRunRequest runRequest, JobRunDto jobRunDto, String command) {
-    var trivyRun = TrivyRunDto.builder()
-        .jobRunId(jobRunDto.id())
+  private TrivyScanDto saveTrivyRun(TrivyRunRequest runRequest, JobDto jobDto, String command) {
+    var trivyRun = TrivyScanDto.builder()
+        .jobRunId(jobDto.id())
         .command(command)
         .scanners(runRequest.scanners())
         .severity(runRequest.severityFilter())

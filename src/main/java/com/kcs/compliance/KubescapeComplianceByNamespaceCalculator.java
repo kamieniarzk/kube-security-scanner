@@ -1,10 +1,10 @@
 package com.kcs.compliance;
 
 import com.kcs.kubescape.KubescapeResult;
-import com.kcs.workload.Check;
-import com.kcs.workload.K8sResource;
-import com.kcs.workload.ResultMapper;
-import com.kcs.workload.WorkloadScanResult;
+import com.kcs.shared.Check;
+import com.kcs.shared.KubernetesResource;
+import com.kcs.aggregated.ResultMapper;
+import com.kcs.shared.ScanResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -29,9 +29,9 @@ class KubescapeComplianceByNamespaceCalculator implements ComplianceByNamespaceC
 
   static final class KubescapeInternalComplianceCalculator {
 
-    private final Map<String, Compliance> globalPerCheckMap = new HashMap<>();
+    private final Map<String, LocalCompliance> globalPerCheckMap = new HashMap<>();
 
-    public ComplianceByNamespaceSummary calculate(String framework, WorkloadScanResult resultMapped) {
+    public ComplianceByNamespaceSummary calculate(String framework, ScanResult resultMapped) {
       var byNamespace = resultMapped.getNamespacedResources().entrySet().stream()
           .map(entry -> Map.entry(entry.getKey(), map(entry.getValue())))
           .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -39,14 +39,14 @@ class KubescapeComplianceByNamespaceCalculator implements ComplianceByNamespaceC
       return new ComplianceByNamespaceSummary(framework, byNamespace, calculateGlobal(resultMapped), resultMapped.getSkippedChecks());
     }
 
-    private ComplianceSummary calculateGlobal(WorkloadScanResult workloadScanResult) {
-      var namespacedResources = workloadScanResult.getNamespacedResources().values().stream().flatMap(Collection::stream);
-      var allResources = Stream.concat(namespacedResources, workloadScanResult.getNonNamespacedResources().stream()).toList();
+    private ComplianceSummary calculateGlobal(ScanResult scanResult) {
+      var namespacedResources = scanResult.getNamespacedResources().values().stream().flatMap(Collection::stream);
+      var allResources = Stream.concat(namespacedResources, scanResult.getNonNamespacedResources().stream()).toList();
       return calculate(allResources, globalPerCheckMap);
     }
 
-    private ComplianceSummary map(List<K8sResource> resources) {
-      var perCheckMap = new HashMap<String, Compliance>();
+    private ComplianceSummary map(List<KubernetesResource> resources) {
+      var perCheckMap = new HashMap<String, LocalCompliance>();
       resources.forEach(resource -> resource.getChecks().forEach(check -> {
         updateMap(check, perCheckMap);
         updateMap(check, globalPerCheckMap);
@@ -54,22 +54,22 @@ class KubescapeComplianceByNamespaceCalculator implements ComplianceByNamespaceC
       return calculate(resources, perCheckMap);
     }
 
-    private static ComplianceSummary calculate(List<K8sResource> resources, Map<String, Compliance> perCheckCompliance) {
+    private static ComplianceSummary calculate(List<KubernetesResource> resources, Map<String, LocalCompliance> perCheckCompliance) {
       var sum = 0.0d;
       for (var controlCompliance : perCheckCompliance.values()) {
         sum += controlCompliance.getScore();
       }
       var checks = perCheckCompliance.size();
       var namespaceScore = sum / checks;
-      var failedChecks = perCheckCompliance.values().stream().map(Compliance::getFailedChecks).filter(value -> value > 0).count();
+      var failedChecks = perCheckCompliance.values().stream().map(LocalCompliance::getFailedChecks).filter(value -> value > 0).count();
       var passedChecks = checks - failedChecks;
       var failedResources = resources.stream().filter(resource -> resource.getChecks().stream().anyMatch(check -> !check.passed())).count();
       var passedResources = resources.size() - failedResources;
       return new ComplianceSummary((int) failedChecks, (int) passedChecks, (int) failedResources, (int) passedResources, namespaceScore);
     }
 
-    private static void updateMap(Check check, Map<String, Compliance> perCheckMap) {
-      var complianceSummary = perCheckMap.getOrDefault(check.originId(), new Compliance());
+    private static void updateMap(Check check, Map<String, LocalCompliance> perCheckMap) {
+      var complianceSummary = perCheckMap.getOrDefault(check.originId(), new LocalCompliance());
       if (check.passed()) {
         complianceSummary.pass();
       } else {

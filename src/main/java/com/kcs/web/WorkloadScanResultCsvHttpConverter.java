@@ -1,9 +1,9 @@
 package com.kcs.web;
 
 
-import com.kcs.workload.K8sResource;
-import com.kcs.workload.Severity;
-import com.kcs.workload.WorkloadScanResult;
+import com.kcs.shared.KubernetesResource;
+import com.kcs.shared.Severity;
+import com.kcs.shared.ScanResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -24,7 +24,7 @@ import java.util.List;
 
 @Slf4j
 @Component
-class WorkloadScanResultCsvHttpConverter implements GenericHttpMessageConverter<WorkloadScanResult> {
+class WorkloadScanResultCsvHttpConverter implements GenericHttpMessageConverter<ScanResult> {
   private static final MediaType CSV = MediaType.valueOf("text/csv");
 
   @Override
@@ -33,18 +33,18 @@ class WorkloadScanResultCsvHttpConverter implements GenericHttpMessageConverter<
   }
 
   @Override
-  public WorkloadScanResult read(Type type, Class<?> contextClass, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
+  public ScanResult read(Type type, Class<?> contextClass, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
     throw new UnsupportedOperationException("Not implemented");
   }
 
   @Override
   public boolean canWrite(Type type, Class<?> clazz, MediaType mediaType) {
-    return canWrite(clazz, mediaType) && type.getTypeName() != null && (type.getTypeName().equals(WorkloadScanResult.class.getTypeName()) || type.getTypeName().endsWith(String.format("<%s>", WorkloadScanResult.class.getName())));
+    return canWrite(clazz, mediaType) && type.getTypeName() != null && (type.getTypeName().equals(ScanResult.class.getTypeName()) || type.getTypeName().endsWith(String.format("<%s>", ScanResult.class.getName())));
   }
 
   @Override
-  public void write(WorkloadScanResult workloadScanResult, Type type, MediaType contentType, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
-    write(workloadScanResult, contentType, outputMessage);
+  public void write(ScanResult scanResult, Type type, MediaType contentType, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
+    write(scanResult, contentType, outputMessage);
   }
 
   @Override
@@ -54,7 +54,7 @@ class WorkloadScanResultCsvHttpConverter implements GenericHttpMessageConverter<
 
   @Override
   public boolean canWrite(Class<?> clazz, MediaType mediaType) {
-    return CSV.equals(mediaType) && WorkloadScanResult.class.isAssignableFrom(clazz);
+    return CSV.equals(mediaType) && ScanResult.class.isAssignableFrom(clazz);
   }
 
   @Override
@@ -63,32 +63,32 @@ class WorkloadScanResultCsvHttpConverter implements GenericHttpMessageConverter<
   }
 
   @Override
-  public WorkloadScanResult read(Class<? extends WorkloadScanResult> clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
+  public ScanResult read(Class<? extends ScanResult> clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
     throw new UnsupportedOperationException("Not implemented");
   }
 
   @Override
-  public void write(WorkloadScanResult workloadScanResult, MediaType contentType, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
+  public void write(ScanResult scanResult, MediaType contentType, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
     var headers = outputMessage.getHeaders();
-    var aggregated = workloadScanResult.getAggregated();
-    var fileName = aggregated ? "aggregated-".concat(workloadScanResult.getScanId()) : workloadScanResult.getScanId();
+    var aggregated = scanResult.getAggregated();
+    var fileName = aggregated ? "aggregated-".concat(scanResult.getScanId()) : scanResult.getScanId();
     headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=%s.csv".formatted(fileName));
     headers.add(HttpHeaders.CONTENT_TYPE, "text/csv");
     outputMessage.getBody()
-        .write(convert(workloadScanResult));
+        .write(convert(scanResult));
   }
 
-  private static byte[] convert(WorkloadScanResult workloadScanResult) {
+  private static byte[] convert(ScanResult scanResult) {
     try (var byteArrayOutputStream = new ByteArrayOutputStream();
          var printWriter = new PrintWriter(byteArrayOutputStream);
          var csvPrinter = new CSVPrinter(printWriter, CSVFormat.DEFAULT)) {
 
       csvPrinter.printRecord("namespace", "kind", "name", "low", "medium", "high", "critical");
-      for (var entry : workloadScanResult.getNamespacedResources().entrySet()) {
+      for (var entry : scanResult.getNamespacedResources().entrySet()) {
         var namespace = entry.getKey();
         printAllResourcesInNamespace(entry.getValue(), csvPrinter, namespace);
       }
-      printAllResourcesInNamespace(workloadScanResult.getNonNamespacedResources(), csvPrinter, null);
+      printAllResourcesInNamespace(scanResult.getNonNamespacedResources(), csvPrinter, null);
       csvPrinter.flush();
       return byteArrayOutputStream.toByteArray();
     } catch (IOException e) {
@@ -97,7 +97,7 @@ class WorkloadScanResultCsvHttpConverter implements GenericHttpMessageConverter<
     }
   }
 
-  private static void printAllResourcesInNamespace(List<K8sResource> resources, CSVPrinter csvPrinter, String namespace) throws IOException {
+  private static void printAllResourcesInNamespace(List<KubernetesResource> resources, CSVPrinter csvPrinter, String namespace) throws IOException {
     for (var resource : resources) {
       var low = countChecksWithSeverity(resource, Severity.LOW);
       var medium = countChecksWithSeverity(resource, Severity.MEDIUM);
@@ -107,7 +107,7 @@ class WorkloadScanResultCsvHttpConverter implements GenericHttpMessageConverter<
     }
   }
 
-  private static int countChecksWithSeverity(K8sResource resource, Severity severity) {
+  private static int countChecksWithSeverity(KubernetesResource resource, Severity severity) {
     return (int) resource.getChecks().stream().filter(check -> severity.equals(check.severity())).count();
   }
 }

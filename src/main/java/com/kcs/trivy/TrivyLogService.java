@@ -1,7 +1,7 @@
 package com.kcs.trivy;
 
-import com.kcs.job.JobRunRepository;
-import com.kcs.k8s.KubernetesApiClientWrapper;
+import com.kcs.job.JobRepository;
+import com.kcs.apiserver.ApiServerClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,9 +13,9 @@ import java.io.IOException;
 @RequiredArgsConstructor
 class TrivyLogService {
 
-  private final TrivyRunRepository repository;
-  private final JobRunRepository jobRunRepository;
-  private final KubernetesApiClientWrapper k8sApi;
+  private final TrivyScanRepository repository;
+  private final JobRepository jobRepository;
+  private final ApiServerClient k8sApi;
   private final TrivyLogRepository logRepository;
 
   public void persistLogs() {
@@ -23,8 +23,8 @@ class TrivyLogService {
         .forEach(this::persistRunLogs);
   }
 
-  private void persistRunLogs(TrivyRunDto runDto) {
-    var jobRunDto = jobRunRepository.get(runDto.getJobRunId());
+  private void persistRunLogs(TrivyScanDto runDto) {
+    var jobRunDto = jobRepository.get(runDto.getJobRunId());
     if (jobRunDto.podName() == null) {
       log.warn("trivy run {} has null podName. Can not store logs", runDto.getId());
       return;

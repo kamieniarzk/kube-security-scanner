@@ -2,5 +2,5 @@ package com.kcs.kubescape;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-interface KubescapeRunRepository extends MongoRepository<KubescapeRun, String> {
+interface KubescapeRunRepository extends MongoRepository<KubescapeScan, String> {
 }

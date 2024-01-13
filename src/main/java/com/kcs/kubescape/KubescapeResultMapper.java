@@ -1,6 +1,10 @@
 package com.kcs.kubescape;
 
-import com.kcs.workload.*;
+import com.kcs.shared.Check;
+import com.kcs.shared.KubernetesResource;
+import com.kcs.shared.ScanResult;
+import com.kcs.shared.Severity;
+import com.kcs.aggregated.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,20 +22,20 @@ class KubescapeResultMapper implements ResultMapper<KubescapeResult> {
   private final KubescapeControlDictionary controlDictionary = new KubescapeControlDictionary();
 
   @Override
-  public WorkloadScanResult map(KubescapeResult kubescapeResult) {
+  public ScanResult map(KubescapeResult kubescapeResult) {
     var k8sResources = mapInternal(kubescapeResult);
 
     var nonNamespacedResources = k8sResources.stream().filter(resource -> resource.getNamespace() == null).toList();
     var namespacedResources = k8sResources.stream()
         .filter(resource -> resource.getNamespace() != null)
-        .collect(Collectors.groupingBy(K8sResource::getNamespace));
+        .collect(Collectors.groupingBy(KubernetesResource::getNamespace));
 
     var skippedControls = kubescapeResult.getSummaryDetails().getControls().values().stream()
         .filter(controlSummary -> "skipped".equals(controlSummary.getStatusInfo().getStatus()))
         .map(this::map)
         .toList();
 
-    return new WorkloadScanResult(namespacedResources, nonNamespacedResources, skippedControls);
+    return new ScanResult(namespacedResources, nonNamespacedResources, skippedControls);
   }
 
   private Check map(KubescapeResult.SummaryDetails.ControlSummary controlSummary) {
@@ -39,7 +43,7 @@ class KubescapeResultMapper implements ResultMapper<KubescapeResult> {
     return new Check(mapSeverity(controlMetadata), controlMetadata.getName(), controlMetadata.getDescription(), controlMetadata.getRemediation(), ORIGIN, controlMetadata.getControlID(), false, true, controlSummary.getStatusInfo().getInfo());
   }
 
-  List<K8sResource> mapInternal(KubescapeResult result) {
+  List<KubernetesResource> mapInternal(KubescapeResult result) {
     var mapOfResources = result.getResources().stream()
         .collect(Collectors.toMap(KubescapeResult.Resource::getResourceID, Function.identity()));
     return result.getResults().stream()
@@ -47,9 +51,9 @@ class KubescapeResultMapper implements ResultMapper<KubescapeResult> {
         .collect(Collectors.toList());
   }
 
-  K8sResource map(KubescapeResult.Result result, Map<String, KubescapeResult.Resource> resourcesMap) {
+  KubernetesResource map(KubescapeResult.Result result, Map<String, KubescapeResult.Resource> resourcesMap) {
     var kubescapeResource = resourcesMap.get(result.getResourceID());
-    return new K8sResource(kubescapeResource.getObject().getKind(), kubescapeResource.getObject().getNamespace(), kubescapeResource.getObject().getName(), map(result.getControls()));
+    return new KubernetesResource(kubescapeResource.getObject().getKind(), kubescapeResource.getObject().getNamespace(), kubescapeResource.getObject().getName(), map(result.getControls()));
   }
 
   List<Check> map(List<KubescapeResult.Control> controls) {

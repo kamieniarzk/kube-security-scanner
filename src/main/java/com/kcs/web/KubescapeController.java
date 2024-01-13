@@ -1,9 +1,9 @@
 package com.kcs.web;
 
 import com.kcs.kubescape.KubescapeFacade;
-import com.kcs.kubescape.KubescapeRun;
-import com.kcs.kubescape.KubescapeRunRequest;
-import com.kcs.workload.WorkloadScanResult;
+import com.kcs.kubescape.KubescapeScan;
+import com.kcs.kubescape.KubescapeScanRequest;
+import com.kcs.shared.ScanResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,22 +17,22 @@ class KubescapeController {
   private final KubescapeFacade facade;
 
   @PostMapping("/runs")
-  KubescapeRun runKubescape(@RequestBody KubescapeRunRequest runRequest) {
+  KubescapeScan runKubescape(@RequestBody KubescapeScanRequest runRequest) {
     return facade.run(runRequest);
   }
 
   @GetMapping("/runs")
-  List<KubescapeRun> getAllRuns() {
+  List<KubescapeScan> getAllRuns() {
     return facade.getAllRuns();
   }
 
   @GetMapping("/runs/{id}")
-  KubescapeRun getRun(@PathVariable String id) {
+  KubescapeScan getRun(@PathVariable String id) {
     return facade.getRun(id);
   }
 
   @GetMapping(path = "/runs/{id}/result", produces = {"application/json", "text/csv"})
-  WorkloadScanResult getWorkloadResult(@PathVariable String id) {
+  ScanResult getWorkloadResult(@PathVariable String id) {
     return facade.getResult(id);
   }
 

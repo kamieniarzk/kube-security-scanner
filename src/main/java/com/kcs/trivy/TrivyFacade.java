@@ -1,8 +1,8 @@
 package com.kcs.trivy;
 
-import com.kcs.NoDataFoundException;
-import com.kcs.workload.ResultMapper;
-import com.kcs.workload.WorkloadScanResult;
+import com.kcs.shared.NoDataFoundException;
+import com.kcs.aggregated.ResultMapper;
+import com.kcs.shared.ScanResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,20 +13,20 @@ import java.util.List;
 public class TrivyFacade {
 
   private final TrivyRunner runner;
-  private final TrivyRunRepository repository;
+  private final TrivyScanRepository repository;
   private final TrivyLogRepository logRepository;
-  private final ResultMapper<TrivyFullResultDto> resultMapper;
+  private final ResultMapper<TrivyResult> resultMapper;
 
 
-  public TrivyRunDto run(TrivyRunRequest runRequest) {
+  public TrivyScanDto run(TrivyRunRequest runRequest) {
     return runner.run(runRequest);
   }
 
-  public List<TrivyRunDto> getAll() {
+  public List<TrivyScanDto> getAll() {
     return repository.findAll();
   }
 
-  public WorkloadScanResult getResult(String runId) {
+  public ScanResult getResult(String runId) {
     var runDto = repository.findById(runId).orElseThrow(NoDataFoundException::new);
     if (runDto.getCompliance() != null) {
       throw new UnsupportedOperationException("Not possible to aggregate trivy compliance scans, as they do not show result namespace");

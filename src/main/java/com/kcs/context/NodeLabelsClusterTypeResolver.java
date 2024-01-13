@@ -1,6 +1,6 @@
 package com.kcs.context;
 
-import com.kcs.k8s.KubernetesApiClientWrapper;
+import com.kcs.apiserver.ApiServerClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -22,7 +22,7 @@ class NodeLabelsClusterTypeResolver implements ClusterTypeResolver {
       "k3s", ClusterType.K3S,
       "rke2", ClusterType.RKE2
   );
-  private final KubernetesApiClientWrapper k8sApi;
+  private final ApiServerClient k8sApi;
 
 
   @Override

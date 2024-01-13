@@ -1,6 +1,6 @@
 package com.kcs.compliance;
 
-import com.kcs.workload.Check;
+import com.kcs.shared.Check;
 
 import java.util.List;
 import java.util.Map;

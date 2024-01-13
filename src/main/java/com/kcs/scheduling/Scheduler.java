@@ -1,6 +1,6 @@
 package com.kcs.scheduling;
 
-import com.kcs.NoDataFoundException;
+import com.kcs.shared.NoDataFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
@@ -30,7 +30,7 @@ class Scheduler {
   }
 
   String scheduleAndPersist(ScheduledRunRequest runRequest) {
-    var runnable = runFactory.create(runRequest.aggregatedRunRequest());
+    var runnable = runFactory.create(runRequest.aggregatedScanRequest());
     var scheduledTask = taskScheduler.schedule(runnable, buildCronTrigger(runRequest.cronExpression()));
     var persistedScheduledRun = persistIfNeeded(runRequest);
     inMemoryRuns.put(persistedScheduledRun.getId(), scheduledTask);
@@ -52,14 +52,14 @@ class Scheduler {
   }
 
   private void schedule(ScheduledRun scheduledRun) {
-    var runnable = runFactory.create(scheduledRun.getAggregatedRunRequest());
+    var runnable = runFactory.create(scheduledRun.getAggregatedScanRequest());
     var scheduledTask = taskScheduler.schedule(runnable, buildCronTrigger(scheduledRun.getCronExpression()));
     inMemoryRuns.put(scheduledRun.getId(), scheduledTask);
     log.info("Scheduled run with cron: {} and id: {}", scheduledRun.getCronExpression(), scheduledRun.getId());
   }
 
   private ScheduledRun persistIfNeeded(ScheduledRunRequest runRequest) {
-    var existingEntity = scheduledRunRepository.findByCronExpressionAndAggregatedRunRequest(runRequest.cronExpression(), runRequest.aggregatedRunRequest());
+    var existingEntity = scheduledRunRepository.findByCronExpressionAndAggregatedRunRequest(runRequest.cronExpression(), runRequest.aggregatedScanRequest());
 
     if (existingEntity.isPresent()) {
       return existingEntity.get();
@@ -67,7 +67,7 @@ class Scheduler {
 
     var scheduledRun = ScheduledRun.builder()
         .cronExpression(runRequest.cronExpression())
-        .aggregatedRunRequest(runRequest.aggregatedRunRequest())
+        .aggregatedScanRequest(runRequest.aggregatedScanRequest())
         .build();
 
     log.info("Persisting scheduled run with cron: {}", scheduledRun.getCronExpression());

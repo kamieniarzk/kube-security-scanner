@@ -9,23 +9,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/scheduled")
+@RequestMapping("/api/scheduled/scans")
 @RequiredArgsConstructor
 class SchedulingController {
 
   private final SchedulerFacade schedulerFacade;
 
-  @PostMapping("/runs")
+  @PostMapping
   String scheduleRun(@RequestBody ScheduledRunRequest request) {
     return schedulerFacade.schedule(request);
   }
 
-  @DeleteMapping("/runs/{id}")
+  @DeleteMapping("/{id}")
   boolean unschedule(@PathVariable String id) {
     return schedulerFacade.unschedule(id);
   }
 
-  @GetMapping("/runs")
+  @GetMapping
   List<ScheduledRun> getAllScheduledRuns() {
     return schedulerFacade.getAllScheduledRuns();
   }

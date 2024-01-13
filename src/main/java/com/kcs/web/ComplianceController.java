@@ -2,7 +2,7 @@ package com.kcs.web;
 
 import com.kcs.compliance.ComplianceByNamespaceSummary;
 import com.kcs.compliance.ComplianceFacade;
-import com.kcs.compliance.ComplianceRunRequest;
+import com.kcs.compliance.ComplianceScanRequest;
 import com.kcs.compliance.ComplianceScanRun;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ class ComplianceController {
   private final ComplianceFacade complianceFacade;
 
   @PostMapping("/runs")
-  public ComplianceScanRun runComplianceScan(@RequestBody ComplianceRunRequest runRequest) {
+  public ComplianceScanRun runComplianceScan(@RequestBody ComplianceScanRequest runRequest) {
     return complianceFacade.runComplianceScan(runRequest);
   }
 

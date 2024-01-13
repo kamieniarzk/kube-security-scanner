@@ -1,7 +1,7 @@
 package com.kcs.scheduling;
 
-import com.kcs.workload.AggregatedRunRequest;
-import com.kcs.workload.WorkloadScanRunService;
+import com.kcs.aggregated.AggregatedScanRequest;
+import com.kcs.aggregated.WorkloadScanService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 class RunFactory {
-  private final WorkloadScanRunService workloadScanRunService;
+  private final WorkloadScanService workloadScanService;
 
-  Runnable create(AggregatedRunRequest aggregatedRunRequest) {
-    return () -> workloadScanRunService.runAggregatedScan(aggregatedRunRequest);
+  Runnable create(AggregatedScanRequest aggregatedScanRequest) {
+    return () -> workloadScanService.runAggregatedScan(aggregatedScanRequest);
   }
 }

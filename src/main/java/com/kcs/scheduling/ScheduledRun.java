@@ -1,6 +1,6 @@
 package com.kcs.scheduling;
 
-import com.kcs.workload.AggregatedRunRequest;
+import com.kcs.aggregated.AggregatedScanRequest;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +14,5 @@ public class ScheduledRun {
   @Id
   private String id;
   private String cronExpression;
-  private AggregatedRunRequest aggregatedRunRequest;
+  private AggregatedScanRequest aggregatedScanRequest;
 }

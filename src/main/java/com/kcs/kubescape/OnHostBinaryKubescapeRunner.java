@@ -22,8 +22,8 @@ class OnHostBinaryKubescapeRunner implements KubescapeRunner {
   }
 
   @Override
-  public KubescapeRun run(KubescapeRunRequest runRequest) {
-    var savedRun = runRepository.save(new KubescapeRun(runRequest.frameworks()));
+  public KubescapeScan run(KubescapeScanRequest runRequest) {
+    var savedRun = runRepository.save(new KubescapeScan(runRequest.frameworks()));
     var command = buildCommand(runRequest, savedRun.getId());
     try {
       var output = ProcessRunner.runWithExceptionHandling(command);
@@ -39,7 +39,7 @@ class OnHostBinaryKubescapeRunner implements KubescapeRunner {
     return savedRun;
   }
 
-  private String buildCommand(KubescapeRunRequest request, String scanId) {
+  private String buildCommand(KubescapeScanRequest request, String scanId) {
     var frameworksString = request.frameworks() == null || request.frameworks().isEmpty() ? "" : "framework ".concat(buildFrameworksString(request.frameworks()));
     var scanLocation = Paths.get(resultDirectory, scanId);
     return KUBESCAPE_RUN_COMMAND_PATTERN.formatted(frameworksString, scanLocation, request.additionalFlags() == null ? "" : request.additionalFlags());

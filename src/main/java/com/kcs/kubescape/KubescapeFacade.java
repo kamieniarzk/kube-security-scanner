@@ -1,8 +1,8 @@
 package com.kcs.kubescape;
 
-import com.kcs.NoDataFoundException;
-import com.kcs.workload.ResultMapper;
-import com.kcs.workload.WorkloadScanResult;
+import com.kcs.shared.NoDataFoundException;
+import com.kcs.aggregated.ResultMapper;
+import com.kcs.shared.ScanResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,19 +17,19 @@ public class KubescapeFacade {
   private final ResultMapper<KubescapeResult> resultMapper;
   private final KubescapeRunRepository runRepository;
 
-  public KubescapeRun run(KubescapeRunRequest runRequest) {
+  public KubescapeScan run(KubescapeScanRequest runRequest) {
     return runner.run(runRequest);
   }
 
-  public List<KubescapeRun> getAllRuns() {
+  public List<KubescapeScan> getAllRuns() {
     return runRepository.findAll();
   }
 
-  public KubescapeRun getRun(String id) {
+  public KubescapeScan getRun(String id) {
     return runRepository.findById(id).orElseThrow(NoDataFoundException::new);
   }
 
-  public WorkloadScanResult getResult(String runId) {
+  public ScanResult getResult(String runId) {
     var domainResult = KubescapeJsonResultParser.parseFailedResults(getRawResult(runId));
     return resultMapper.map(domainResult).setScanId(runId);
   }

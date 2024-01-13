@@ -21,9 +21,9 @@ public final class TrivyResultParser {
   private TrivyResultParser() {
   }
 
-  public static TrivyFullResultDto parseFullResult(String input) {
+  public static TrivyResult parseFullResult(String input) {
     try {
-      return objectMapper.readValue(sanitizeInput(input), TrivyFullResultDto.class);
+      return objectMapper.readValue(sanitizeInput(input), TrivyResult.class);
     } catch (JsonProcessingException exception) {
       log.error("Failed to parse trivy JSON result", exception);
       throw new RuntimeException(exception);

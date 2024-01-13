@@ -1,9 +1,9 @@
 package com.kcs.compliance;
 
-import com.kcs.NoDataFoundException;
+import com.kcs.shared.NoDataFoundException;
 import com.kcs.kubescape.KubescapeFacade;
 import com.kcs.kubescape.KubescapeResult;
-import com.kcs.kubescape.KubescapeRunRequest;
+import com.kcs.kubescape.KubescapeScanRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +18,8 @@ public class ComplianceFacade {
   private final KubescapeFacade kubescapeFacade;
   private final ComplianceByNamespaceCalculator<KubescapeResult> calculator;
 
-  public ComplianceScanRun runComplianceScan(ComplianceRunRequest runRequest) {
-    var kubescapeRunRequest = new KubescapeRunRequest(Set.of(runRequest.framework()), null);
+  public ComplianceScanRun runComplianceScan(ComplianceScanRequest runRequest) {
+    var kubescapeRunRequest = new KubescapeScanRequest(Set.of(runRequest.framework()), null);
     var kubescapeComplianceRun = kubescapeFacade.run(kubescapeRunRequest);
     return runRepository.save(new ComplianceScanRun(kubescapeComplianceRun));
   }

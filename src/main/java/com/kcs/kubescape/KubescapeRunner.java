@@ -1,5 +1,5 @@
 package com.kcs.kubescape;
 
 public interface KubescapeRunner {
-  KubescapeRun run(KubescapeRunRequest runRequest);
+  KubescapeScan run(KubescapeScanRequest runRequest);
 }
