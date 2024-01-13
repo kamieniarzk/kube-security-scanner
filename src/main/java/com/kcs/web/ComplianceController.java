@@ -26,7 +26,7 @@ class ComplianceController {
     return complianceFacade.getAllRuns();
   }
 
-  @GetMapping("/runs/{id}/result")
+  @GetMapping(path = "/runs/{id}/result", produces = {"application/json", "text/csv"})
   public ComplianceByNamespaceSummary getComplianceRunResult(@PathVariable String id) {
     return complianceFacade.getComplianceScanResult(id);
   }
