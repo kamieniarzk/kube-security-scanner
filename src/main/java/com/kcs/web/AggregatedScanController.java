@@ -1,5 +1,6 @@
 package com.kcs.web;
 
+import com.kcs.shared.ResultSearchParams;
 import com.kcs.shared.ScanResult;
 import com.kcs.aggregated.*;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,7 @@ class AggregatedScanController {
   }
 
   @GetMapping(path = "/{id}/result", produces = {"application/json", "text/csv"})
-  ScanResult getAggregatedScanResult(@PathVariable String id) {
-    return resultFacade.aggregateResult(id);
+  ScanResult getAggregatedScanResult(@PathVariable String id, ResultSearchParams searchParams) {
+    return resultFacade.aggregateResult(id, searchParams);
   }
 }

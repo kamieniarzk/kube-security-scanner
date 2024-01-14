@@ -3,6 +3,7 @@ package com.kcs.web;
 import com.kcs.kubescore.KubeScoreFacade;
 import com.kcs.kubescore.KubeScoreScanDto;
 import com.kcs.kubescore.KubeScoreScanRequest;
+import com.kcs.shared.ResultSearchParams;
 import com.kcs.shared.ScanResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ class KubeScoreController {
   }
 
   @GetMapping(path = "/{id}/result", produces = {"application/json", "text/csv"})
-  ScanResult getRunResult(@PathVariable String id) {
-    return facade.getResult(id);
+  ScanResult getRunResult(@PathVariable String id, ResultSearchParams searchParams) {
+    return facade.getResult(id, searchParams);
   }
 }

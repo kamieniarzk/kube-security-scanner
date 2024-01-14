@@ -97,12 +97,12 @@ helm install my-release \
 * ~~(Optional) introduce database per cluster option~~
   * ~~local (in-cluster) MongoDB instance~~
   * cluster context perhaps obsolete then?
-* Query API
-  * simple query API for scan results (by date, type, id, etc.)
 * Result API
   * ~~unified workload scan result structure and mapping from trivy and kube-score models~~
   * unified compliance scan structure and mapping from kube-bench (CIS) and trivy (NSA and PSS)
   * ~~JSON and CSV/XLSX response format for summary endpoints~~
+* ~~Filter API~~
+  * ~~filtering of results based on namespace, kind, name, severity, and check origin~~
 * (Optional) hexagonal architecture
   * separate domain and infrastructure (at least at package-level)
   * java-based configuration (avoid spring annotations for class initialization)

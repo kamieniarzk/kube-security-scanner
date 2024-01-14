@@ -1,5 +1,6 @@
 package com.kcs.web;
 
+import com.kcs.shared.ResultSearchParams;
 import com.kcs.trivy.TrivyFacade;
 import com.kcs.trivy.TrivyScanDto;
 import com.kcs.trivy.TrivyRunRequest;
@@ -26,8 +27,8 @@ class TrivyController {
     return trivyFacade.run(runRequest);
   }
 
-  @GetMapping("/{id}/result")
-  ScanResult getResult(@PathVariable String id) {
-    return trivyFacade.getResult(id);
+  @GetMapping(path = "/{id}/result", produces = {"application/json", "text/csv"})
+  ScanResult getResult(@PathVariable String id, ResultSearchParams searchParams) {
+    return trivyFacade.getResult(id, searchParams);
   }
 }

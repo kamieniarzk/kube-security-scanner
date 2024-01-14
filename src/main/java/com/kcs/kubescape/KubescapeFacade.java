@@ -1,8 +1,7 @@
 package com.kcs.kubescape;
 
-import com.kcs.shared.NoDataFoundException;
+import com.kcs.shared.*;
 import com.kcs.aggregated.ResultMapper;
-import com.kcs.shared.ScanResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -29,9 +28,12 @@ public class KubescapeFacade {
     return runRepository.findById(id).orElseThrow(NoDataFoundException::new);
   }
 
-  public ScanResult getResult(String runId) {
+  public ScanResult getResult(String runId, ResultSearchParams searchParams) {
     var domainResult = KubescapeJsonResultParser.parseFailedResults(getRawResult(runId));
-    return resultMapper.map(domainResult).setScanId(runId);
+    var mappedResult = resultMapper.map(domainResult).setScanId(runId);
+    return ScanResultFilter
+        .withParams(searchParams)
+        .filter(mappedResult);
   }
 
   public KubescapeResult getFullDomainResult(String runId) {

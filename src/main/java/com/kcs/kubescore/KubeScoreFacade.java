@@ -1,7 +1,9 @@
 package com.kcs.kubescore;
 
 import com.kcs.aggregated.ResultMapper;
+import com.kcs.shared.ResultSearchParams;
 import com.kcs.shared.ScanResult;
+import com.kcs.shared.ScanResultFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -28,10 +30,13 @@ public class KubeScoreFacade {
     return scoreRepository.findByNamespace(namespace);
   }
 
-  public ScanResult getResult(String runId) {
+  public ScanResult getResult(String runId, ResultSearchParams searchParams) {
     var logs = logRepository.getAsString(runId);
     var rawResult = KubeScoreJsonResultParser.parseFullResult(logs);
-    return resultMapper.map(rawResult).setScanId(runId);
+    var mappedResult = resultMapper.map(rawResult).setScanId(runId);
+    return ScanResultFilter
+        .withParams(searchParams)
+        .filter(mappedResult);
   }
 
   public String getOriginalResult(String runId) {

@@ -3,6 +3,7 @@ package com.kcs.web;
 import com.kcs.kubescape.KubescapeFacade;
 import com.kcs.kubescape.KubescapeScan;
 import com.kcs.kubescape.KubescapeScanRequest;
+import com.kcs.shared.ResultSearchParams;
 import com.kcs.shared.ScanResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,8 @@ class KubescapeController {
   }
 
   @GetMapping(path = "/runs/{id}/result", produces = {"application/json", "text/csv"})
-  ScanResult getWorkloadResult(@PathVariable String id) {
-    return facade.getResult(id);
+  ScanResult getWorkloadResult(@PathVariable String id, ResultSearchParams searchParams) {
+    return facade.getResult(id, searchParams);
   }
 
   @GetMapping("/runs/{id}/original-result")
