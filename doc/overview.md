@@ -39,3 +39,61 @@ Two less resource-consuming scanners are ran as an executable mounted in the con
 Results from the job-based scans are pulled every minute and if present saved in the same Persistent Volume as previously.
 ### Installation
 The system can be installed via Helm which is a package manager for Kubernetes that includes all the necessary code and resources needed to deploy an application to a cluster.
+### Example usage
+For documentation purposes, as well as ease of use, the tool exposes an OpenAPI v3 specification, along with Swagger UI.
+The UI is exposed at path `/swagger-ui/index.html` and the API documentation at `v3/api-docs`.
+![Swagger UI with API documentation](img/open-api.png)
+Below is an example of launching an aggregated scan using a POST request.
+![Running an aggregated scan using POST](img/example-post.png)
+The response data points to the ids of every scan from the aggregation, as well as the id of the aggregated scan entity itself.
+The result can be fetched using a corresponding GET request.
+![Fetching aggregated scan result using GET](img/example-get.png)
+When the accept HTTP header has a value of `text/csv`, the result is downloaded in CSV format instead of JSON. Below is an example of an aggregated result CSV response converted into a table. Non-namespaced resources have the first column empty.
+
+|namespace  |kind                          |name                                                      |low|medium|high|critical|
+|-----------|------------------------------|----------------------------------------------------------|---|------|----|--------|
+|gmp-system |ServiceAccount                |operator                                                  |0  |2     |1   |0       |
+|gmp-system |ServiceAccount                |operator                                                  |0  |1     |1   |0       |
+|gmp-system |ServiceAccount                |operator                                                  |0  |1     |1   |0       |
+|gmp-system |ServiceAccount                |operator                                                  |0  |2     |1   |0       |
+|gmp-system |ServiceAccount                |operator                                                  |0  |1     |0   |0       |
+|gmp-system |ServiceAccount                |collector                                                 |0  |1     |0   |0       |
+|kube-system|DaemonSet                     |nvidia-gpu-device-plugin-small-ubuntu                     |0  |0     |3   |0       |
+|kube-system|DaemonSet                     |tpu-device-plugin                                         |0  |0     |3   |0       |
+|kube-system|ConfigMap                     |gke-metrics-agent-conf                                    |0  |0     |1   |0       |
+|kube-system|DaemonSet                     |nvidia-gpu-device-plugin-small-cos                        |0  |0     |3   |0       |
+|kube-system|ServiceAccount                |pkgextract-cleanup-service                                |0  |1     |0   |0       |
+|kube-system|ServiceAccount                |pkgextract-service                                        |0  |1     |0   |0       |
+|kube-system|DaemonSet                     |nvidia-gpu-device-plugin-large-ubuntu                     |0  |0     |3   |0       |
+|kube-system|DaemonSet                     |nvidia-gpu-device-plugin-large-cos                        |0  |0     |3   |0       |
+|kube-system|ServiceAccount                |cilium-win                                                |0  |1     |0   |0       |
+|kube-system|DaemonSet                     |runsc-metric-server                                       |0  |0     |2   |0       |
+|kube-system|DaemonSet                     |nvidia-gpu-device-plugin-medium-cos                       |0  |0     |3   |0       |
+|kube-system|DaemonSet                     |nvidia-gpu-device-plugin-medium-ubuntu                    |0  |0     |3   |0       |
+|           |Namespace                     |kubescape                                                 |0  |1     |0   |0       |
+|           |Namespace                     |gmp-public                                                |0  |1     |0   |0       |
+|           |ValidatingWebhookConfiguration|gmp-operator.gmp-system.monitoring.googleapis.com         |1  |0     |0   |0       |
+|           |Namespace                     |kcs                                                       |0  |1     |0   |0       |
+|           |MutatingWebhookConfiguration  |warden-mutating.config.common-webhooks.networking.gke.io  |0  |1     |0   |0       |
+|           |MutatingWebhookConfiguration  |gmp-operator.gmp-system.monitoring.googleapis.com         |0  |1     |0   |0       |
+|           |ValidatingWebhookConfiguration|warden-validating.config.common-webhooks.networking.gke.io|1  |0     |0   |0       |
+|           |User                          |system:cloud-controller-manager                           |0  |1     |1   |0       |
+|           |Namespace                     |gmp-system                                                |0  |1     |0   |0       |
+
+For contrast, below is an example of an NSA compliance summary per namespace and globally (the last row with first column empty)
+
+|namespace  |failedChecks                  |passedChecks                                              |failedResources|passedResources|score|
+|-----------|------------------------------|----------------------------------------------------------|---------------|---------------|-----|
+|default    |0                             |2                                                         |0              |2              |100.0|
+|gmp-public |1                             |1                                                         |1              |1              |50.0 |
+|kube-node-lease|0                             |2                                                         |0              |2              |100.0|
+|gmp-system |4                             |11                                                        |7              |11             |76.19047619047619|
+|kube-system|12                            |3                                                         |13             |171            |87.05691786283893|
+|kube-public|0                             |2                                                         |0              |2              |100.0|
+|           |12                            |3                                                         |30             |248            |83.36895407717826|
+
+### Known limitations
+* Aggregated scan status is not handled properly yet - one has to either query individual APIs for status or just query for the whole result until it is ready
+* Some checks are skipped because of their requirements and nature (such as the checks for control plane on cloud provider clusters, where we can not schedule workloads on the control plane)
+* Due to the nature of scan based jobs that additionally take a long time, the scans are ran asynchronously, i.e., the client has to fetch the result separately as it would take too long
+* to compute it within one HTTP request
