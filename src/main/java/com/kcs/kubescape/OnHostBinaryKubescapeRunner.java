@@ -27,6 +27,7 @@ class OnHostBinaryKubescapeRunner implements KubescapeRunner {
     var command = buildCommand(runRequest, savedRun.getId());
     try {
       var output = ProcessRunner.runWithExceptionHandling(command);
+      log.info("Kubescape run stdout:\n{}", output);
     } catch (RuntimeException runtimeException) {
       log.error("Failed to run kubescape", runtimeException);
       runRepository.deleteById(savedRun.getId());
