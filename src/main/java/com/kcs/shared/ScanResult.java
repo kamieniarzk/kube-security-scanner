@@ -1,5 +1,6 @@
 package com.kcs.shared;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,6 +39,7 @@ public class ScanResult {
     return this;
   }
 
+  @JsonIgnore
   public ScanResult setAggregatedScanId(String scanId) {
     this.scanId = scanId;
     this.aggregated = true;
