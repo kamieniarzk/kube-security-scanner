@@ -20,6 +20,7 @@ public class ProcessRunner {
         log.error(message);
         throw new RuntimeException();
       }
+      log.error("process run stderr:\n{}", runResult.stdErr);
       return runResult.stdIn();
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
