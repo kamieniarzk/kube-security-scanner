@@ -9,6 +9,7 @@ RUN chmod +x /usr/local/bin/kube-score
 ARG KUBESCAPE_VERSION=3.0.3
 RUN curl -L "https://github.com/kubescape/kubescape/releases/download/v${KUBESCAPE_VERSION}/kubescape-ubuntu-latest" > /usr/local/bin/kubescape
 RUN chmod +x /usr/local/bin/kubescape
+RUN touch /kubescape.sh && chmod +x /kubescape.sh
 
 
 COPY ./build/libs/out.jar /app.jar

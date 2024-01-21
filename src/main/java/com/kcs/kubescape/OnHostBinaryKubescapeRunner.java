@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Set;
 
@@ -13,6 +16,7 @@ import java.util.Set;
 class OnHostBinaryKubescapeRunner implements KubescapeRunner {
 
   private static final String KUBESCAPE_RUN_COMMAND_PATTERN = "kubescape scan %s--format json --format-version v2 %s --output %s %s";
+  private static final String KUBESCAPE_SH = "/kubescape.sh";
   private final String resultDirectory;
   private final KubescapeRunRepository runRepository;
 
@@ -26,18 +30,24 @@ class OnHostBinaryKubescapeRunner implements KubescapeRunner {
     var savedRun = runRepository.save(new KubescapeScan(runRequest.frameworks(), runRequest.namespaces()));
     var command = buildCommand(runRequest, savedRun.getId());
     try {
-      var output = ProcessRunner.runWithExceptionHandling(command);
+      overrideScript(command);
+      var output = ProcessRunner.runWithExceptionHandling(KUBESCAPE_SH);
       log.info("Kubescape run stdout:\n{}", output);
-    } catch (RuntimeException runtimeException) {
-      log.error("Failed to run kubescape", runtimeException);
+    } catch (RuntimeException | IOException exception) {
+      log.error("Failed to run kubescape", exception);
       runRepository.deleteById(savedRun.getId());
-      throw runtimeException;
+      throw new RuntimeException(exception);
     }
 
     savedRun.setCommand(command);
     runRepository.save(savedRun);
 
     return savedRun;
+  }
+
+  private static void overrideScript(String command) throws IOException {
+    var scriptFile = new File(KUBESCAPE_SH);
+    Files.write(scriptFile.toPath(), command.getBytes());
   }
 
   private String buildCommand(KubescapeScanRequest request, String scanId) {
