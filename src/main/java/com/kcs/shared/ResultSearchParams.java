@@ -8,7 +8,7 @@ public record ResultSearchParams(Set<String> namespace,
                                  Set<Severity> severity,
                                  String origin,
                                  String originId) {
-  public ResultSearchParams() {
-    this(null, null, null, null, null, null);
+  public static ResultSearchParams empty() {
+    return new ResultSearchParams(null, null, null, null, null, null);
   }
 }

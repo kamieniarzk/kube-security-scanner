@@ -23,7 +23,7 @@ public final class MiscUtils {
       return readFileToString("/var/run/secrets/kubernetes.io/serviceaccount/namespace");
     } catch (IOException exception) {
       log.debug("Failed to read current namespace, assuming default");
-      return "kcs";
+      return "kss";
     }
   }
 

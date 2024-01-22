@@ -12,7 +12,7 @@ class ScanResultFilterSpec extends Specification {
 
   def "filter returns all results when no search parameters are set"() {
     given: "A ScanResultFilter with no search parameters"
-    def searchParams = new ResultSearchParams()
+    def searchParams = ResultSearchParams.empty()
     def filter = ScanResultFilter.withParams(searchParams)
 
     and: "A sample ScanResult"
