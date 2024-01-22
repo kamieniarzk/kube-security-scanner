@@ -53,8 +53,11 @@ class DefaultResultAggregator implements ResultAggregator {
     map2.entrySet().
         forEach(entry -> enrichMap1WithNamespacesFromMap2(entry, map1Enriched));
 
-    var aggregatedByNamespace = new ScanResult(map1Enriched);
-    return aggregateByResource(aggregatedByNamespace);
+    var skippedChecks = Stream.concat(result1.getSkippedChecks().stream(), result2.getSkippedChecks().stream()).toList();
+    var nonNamespacedResources = Stream.concat(result1.getNonNamespacedResources().stream(), result2.getNonNamespacedResources().stream()).toList();
+    var nonNamespacedResourcesAggregated = findDuplicatesInEachList(nonNamespacedResources);
+
+    return aggregateByResource(new ScanResult(map1Enriched, nonNamespacedResourcesAggregated, skippedChecks));
   }
 
   private static void enrichMap1WithNamespacesFromMap2(Map.Entry<String, List<KubernetesResource>> entry, Map<String, List<KubernetesResource>> map1) {
@@ -68,7 +71,7 @@ class DefaultResultAggregator implements ResultAggregator {
       entry.setValue(findDuplicatesInEachList(entry.getValue()));
       return entry;
     }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    return new ScanResult(resourcesMap);
+    return new ScanResult(resourcesMap, result.getNonNamespacedResources(), result.getSkippedChecks());
   }
 
   private static List<KubernetesResource> findDuplicatesInEachList(List<KubernetesResource> listOfResources) {

@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -54,9 +55,11 @@ public final class ScanResultFilter {
     return resources.stream()
         .filter(this::resourceFilter)
         .map(this::filterChecks)
+        .filter(Objects::nonNull)
         .toList();
   }
 
+  @Nullable
   private KubernetesResource filterChecks(KubernetesResource resource) {
     if (resource.getChecks() == null) {
       return resource;
@@ -65,7 +68,7 @@ public final class ScanResultFilter {
         .filter(checkOriginAndSeverityPredicate())
         .toList();
     resource.setChecks(filteredChecks);
-    return resource;
+    return resource.getChecks().isEmpty() ? null : resource;
   }
 
   @NotNull
