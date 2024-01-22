@@ -1,5 +1,6 @@
 package com.kcs.web;
 
+import com.kcs.shared.CheckSummary;
 import com.kcs.shared.ResultSearchParams;
 import com.kcs.shared.ScanResult;
 import com.kcs.aggregated.*;
@@ -37,5 +38,10 @@ class AggregatedScanController {
   @GetMapping(path = "/{id}/result", produces = {"application/json", "text/csv"})
   ScanResult getAggregatedScanResult(@PathVariable String id, ResultSearchParams searchParams) {
     return resultFacade.aggregateResult(id, searchParams);
+  }
+
+  @GetMapping(path = "/{id}/result/checks", produces = {"application/json", "text/csv"})
+  List<CheckSummary> getAggregatedChecks(@PathVariable String id, ResultSearchParams searchParams) {
+    return resultFacade.getChecksAggregated(id, searchParams);
   }
 }
