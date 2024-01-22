@@ -31,4 +31,9 @@ class KubeScoreController {
   ScanResult getRunResult(@PathVariable String id, ResultSearchParams searchParams) {
     return facade.getResult(id, searchParams);
   }
+
+  @GetMapping("/{id}/original-result")
+  String getOriginalResult(@PathVariable String id) {
+    return facade.getOriginalResult(id);
+  }
 }

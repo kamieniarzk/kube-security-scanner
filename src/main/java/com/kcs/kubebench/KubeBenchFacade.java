@@ -26,4 +26,8 @@ public class KubeBenchFacade {
   public KubeBenchJsonResultDto getRunResult(String id) {
     return KubeBenchJsonResultParser.parse(logRepository.getAsString(id));
   }
+
+  public String getOriginalResult(String id) {
+    return logRepository.getAsString(id);
+  }
 }

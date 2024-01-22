@@ -31,4 +31,9 @@ class TrivyController {
   ScanResult getResult(@PathVariable String id, ResultSearchParams searchParams) {
     return trivyFacade.getResult(id, searchParams);
   }
+
+  @GetMapping("/{id}/original-result")
+  String getOriginalResult(@PathVariable String id) {
+    return trivyFacade.getOriginalResult(id);
+  }
 }

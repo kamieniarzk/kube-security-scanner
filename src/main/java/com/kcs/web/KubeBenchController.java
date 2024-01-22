@@ -30,5 +30,10 @@ class KubeBenchController {
     return kubeBenchFacade.getRunResult(id);
   }
 
+  @GetMapping("/{id}/original-result")
+  String getOriginalResult(@PathVariable String id) {
+    return kubeBenchFacade.getOriginalResult(id);
+  }
+
   record BenchRunRequest() {}
 }
