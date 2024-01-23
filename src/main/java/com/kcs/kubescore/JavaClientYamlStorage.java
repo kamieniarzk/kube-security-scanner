@@ -24,7 +24,7 @@ class JavaClientYamlStorage implements YamlStorage {
 
   private final String tempYamlLocation;
 
-  JavaClientYamlStorage(@Value("${filesystem.yaml-location:/tmp/kube-config-scanner/yaml}") String tempYamlLocation) {
+  JavaClientYamlStorage(@Value("${filesystem.yaml-location:/tmp/kube-security-scanner/yaml}") String tempYamlLocation) {
     this.tempYamlLocation = tempYamlLocation;
   }
 

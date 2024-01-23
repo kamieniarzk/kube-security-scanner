@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kube-config-scanner-deployment
-  namespace: kube-config-scanner
+  name: kube-security-scanner-deployment
+  namespace: kube-security-scanner
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kube-config-scanner
+      app: kube-security-scanner
   template:
     metadata:
       labels:
-        app: kube-config-scanner
+        app: kube-security-scanner
     spec:
-      serviceAccountName: kube-config-scanner-serviceaccount
+      serviceAccountName: kube-security-scanner-serviceaccount
       containers:
-        - name: kube-config-scanner
-          image: kamieniarzk/kube-config-scanner:latest
+        - name: kube-security-scanner
+          image: kamieniarzk/kube-security-scanner:latest
           ports:
             - containerPort: 8080
-          env: # create those using kubectl create secret generic mongodb-secret --from-literal=MONGO_URI=<your_mongo_uri> --from-literal=MONGO_DATABASE=<your_mongo_database> -n kube-config-scanner
+          env: # create those using kubectl create secret generic mongodb-secret --from-literal=MONGO_URI=<your_mongo_uri> --from-literal=MONGO_DATABASE=<your_mongo_database> -n kube-security-scanner
             - name: MONGO_URI
               valueFrom:
                 secretKeyRef:
@@ -32,13 +32,13 @@ spec:
                   key: MONGO_DATABASE
           volumeMounts:
             - name: temp-storage
-              mountPath: /tmp/kube-config-scanner
+              mountPath: /tmp/kube-security-scanner
             - name: logs-storage
-              mountPath: /kube-config-scanner/logs
+              mountPath: /kube-security-scanner/logs
       volumes:
         - name: temp-storage
           emptyDir:
             sizeLimit: "200Mi"
         - name: logs-storage
           persistentVolumeClaim:
-            claimName: kube-config-scanner-pvc
+            claimName: kube-security-scanner-pvc

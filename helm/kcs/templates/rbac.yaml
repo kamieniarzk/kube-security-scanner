@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "kube-config-scanner.fullname" . }}-clusterrole
+  name: {{ include "kube-security-scanner.fullname" . }}-clusterrole
   namespace: {{ .Release.Namespace }}
 rules:
   - apiGroups: [ "" ]
@@ -30,19 +30,19 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ include "kube-config-scanner.fullname" . }}-clusterrolebinding
+  name: {{ include "kube-security-scanner.fullname" . }}-clusterrolebinding
 subjects:
   - kind: ServiceAccount
-    name: {{ include "kube-config-scanner.fullname" . }}-serviceaccount
+    name: {{ include "kube-security-scanner.fullname" . }}-serviceaccount
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: {{ include "kube-config-scanner.fullname" . }}-clusterrole
+  name: {{ include "kube-security-scanner.fullname" . }}-clusterrole
   apiGroup: rbac.authorization.k8s.io
 
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ include "kube-config-scanner.fullname" . }}-serviceaccount
+  name: {{ include "kube-security-scanner.fullname" . }}-serviceaccount
   namespace: {{ .Release.Namespace }}

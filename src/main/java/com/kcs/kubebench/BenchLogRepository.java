@@ -10,7 +10,7 @@ class BenchLogRepository extends AbstractLogRepository {
 
   private final String directory;
 
-  BenchLogRepository(LogRepository logRepository, @Value("${filesystem.locations.bench:/tmp/kube-config-scanner/bench}") String logsDirectory) {
+  BenchLogRepository(LogRepository logRepository, @Value("${filesystem.locations.bench:/tmp/kube-security-scanner/bench}") String logsDirectory) {
     super(logRepository);
     this.directory = logsDirectory;
   }

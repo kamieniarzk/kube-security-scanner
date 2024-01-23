@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "kube-config-scanner.fullname" . }}-deployment
+  name: {{ include "kube-security-scanner.fullname" . }}-deployment
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ include "kube-config-scanner.fullname" . }}
+      app: {{ include "kube-security-scanner.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ include "kube-config-scanner.fullname" . }}
+        app: {{ include "kube-security-scanner.fullname" . }}
     spec:
-      serviceAccountName: {{ include "kube-config-scanner.fullname" . }}-serviceaccount
+      serviceAccountName: {{ include "kube-security-scanner.fullname" . }}-serviceaccount
       containers:
-          - name: {{ include "kube-config-scanner.fullname" . }}
+          - name: {{ include "kube-security-scanner.fullname" . }}
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
             imagePullPolicy: Always
             ports:
@@ -33,14 +33,14 @@ spec:
               - name: CLUSTER_NAME
                 value: {{ .Values.clusterName | quote }}
               - name: HELM_RELEASE_NAME
-                value: {{ include "kube-config-scanner.fullname" . }}
+                value: {{ include "kube-security-scanner.fullname" . }}
             envFrom:
               - secretRef:
                   name: mongo-secret
             volumeMounts:
               - name: logs-storage
-                mountPath: /kube-config-scanner
+                mountPath: /kube-security-scanner
       volumes:
         - name: logs-storage
           persistentVolumeClaim:
-            claimName: {{ include "kube-config-scanner.fullname" . }}-pvc
+            claimName: {{ include "kube-security-scanner.fullname" . }}-pvc

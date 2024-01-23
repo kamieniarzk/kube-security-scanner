@@ -16,7 +16,7 @@ public final class MiscUtils {
 
   /**
    *
-   * @return namespace in which the application is deployed (taken from /var/run/secrets or default value of "kube-config-scanner")
+   * @return namespace in which the application is deployed (taken from /var/run/secrets or default value of "kube-security-scanner")
    */
   public static String getCurrentNamespace() {
     try {

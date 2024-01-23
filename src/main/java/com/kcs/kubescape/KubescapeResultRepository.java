@@ -10,7 +10,7 @@ class KubescapeResultRepository extends AbstractLogRepository {
 
   private final String scoreDirectory;
 
-  KubescapeResultRepository(LogRepository logRepository, @Value("${filesystem.locations.kubescape:/tmp/kube-config-scanner/kubescape}") String resultDirectory) {
+  KubescapeResultRepository(LogRepository logRepository, @Value("${filesystem.locations.kubescape:/tmp/kube-security-scanner/kubescape}") String resultDirectory) {
     super(logRepository);
     this.scoreDirectory = resultDirectory;
   }

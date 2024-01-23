@@ -1,8 +1,8 @@
-<!--- app-name: kube-config-scanner -->
+<!--- app-name: kube-security-scanner -->
 
-# kube-config-scanner
+# kube-security-scanner
 
-`kube-config-scanner` is a tool for security scan automation and analysis.
+`kube-security-scanner` is a tool for security scan automation and analysis.
 
 ## Installing the Chart
 
@@ -12,7 +12,7 @@ To install the chart with the release name `my-release`:
 helm install my-release ./kcs -f ./kcs/values.yaml -n <my-namespace> --create-namespace
 ```
 
-These commands deploy kube-config-scanner on the Kubernetes cluster in the default configuration.
+These commands deploy kube-security-scanner on the Kubernetes cluster in the default configuration.
 The [Parameters](#parameters) section lists the parameters that can be configured during installation.
 
 ## Uninstalling the Chart
@@ -31,7 +31,7 @@ The command removes all the Kubernetes components associated with the chart and 
 
 | Name               | Description                                            | Value                               |
 |--------------------|--------------------------------------------------------|-------------------------------------|
-| `image.repository` | The repository of app container image                  | `"kamieniarzk/kube-config-scanner"` |
+| `image.repository` | The repository of app container image                  | `"kamieniarzk/kube-security-scanner"` |
 | `image.tag`        | App container image tag                                | `"latest"`                          |
 | `storage.results`  | Size of persistent storage for in-cluster scan results | `"1Gi"`                             |
 | `storage.mongo`    | In-cluster MongoDB database size                       | `"1Gi"`                             |

@@ -646,7 +646,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 17773
   },
   {
@@ -717,7 +717,7 @@
         "comments": null
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 14936
   },
   {
@@ -1377,7 +1377,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 3678
   },
   {
@@ -2300,7 +2300,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 17404
   },
   {
@@ -3118,7 +3118,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 19117
   },
   {
@@ -3195,7 +3195,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 14905
   },
   {
@@ -3977,7 +3977,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 3096
   },
   {
@@ -4760,7 +4760,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 2515
   },
   {
@@ -5407,7 +5407,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 19590
   },
   {
@@ -6190,7 +6190,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 18004
   },
   {
@@ -6882,7 +6882,7 @@
         "comments": null
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 18263
   },
   {
@@ -7490,7 +7490,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 18533
   },
   {
@@ -8130,7 +8130,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 19393
   },
   {
@@ -8833,7 +8833,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 20031
   },
   {
@@ -8908,7 +8908,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 1
   },
   {
@@ -8976,7 +8976,7 @@
         "comments": null
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 2257
   },
   {
@@ -9583,7 +9583,7 @@
         "comments": null
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 18672
   },
   {
@@ -10213,7 +10213,7 @@
         "comments": null
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 18854
   },
   {
@@ -10288,7 +10288,7 @@
         "comments": null
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 14879
   },
   {
@@ -11071,7 +11071,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 2725
   },
   {
@@ -11705,7 +11705,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 2967
   },
   {
@@ -11773,7 +11773,7 @@
         "comments": null
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 2231
   },
   {
@@ -12504,7 +12504,7 @@
         "comments": null
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 17867
   },
   {
@@ -13145,7 +13145,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 19489
   },
   {
@@ -13898,7 +13898,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 19790
   },
   {
@@ -13968,7 +13968,7 @@
         "comments": null
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 14969
   },
   {
@@ -14608,7 +14608,7 @@
         ]
       }
     ],
-    "file_name": "/tmp/kube-config-scanner/yaml/ALL/ALL.yaml",
+    "file_name": "/tmp/kube-security-scanner/yaml/ALL/ALL.yaml",
     "file_row": 19018
   }
 ]

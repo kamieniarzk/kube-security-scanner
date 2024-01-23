@@ -20,7 +20,7 @@ class OnHostBinaryKubescapeRunner implements KubescapeRunner {
   private final String resultDirectory;
   private final KubescapeRunRepository runRepository;
 
-  public OnHostBinaryKubescapeRunner(@Value("${filesystem.locations.kubescape:/tmp/kube-config-scanner/kubescape}") String resultDirectory, KubescapeRunRepository runRepository) {
+  public OnHostBinaryKubescapeRunner(@Value("${filesystem.locations.kubescape:/tmp/kube-security-scanner/kubescape}") String resultDirectory, KubescapeRunRepository runRepository) {
     this.resultDirectory = resultDirectory;
     this.runRepository = runRepository;
   }

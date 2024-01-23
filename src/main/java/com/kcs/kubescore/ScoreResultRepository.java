@@ -10,7 +10,7 @@ class ScoreResultRepository extends AbstractLogRepository {
 
   private final String scoreDirectory;
 
-  ScoreResultRepository(LogRepository logRepository, @Value("${filesystem.locations.score:/tmp/kube-config-scanner/score}") String scoreDirectory) {
+  ScoreResultRepository(LogRepository logRepository, @Value("${filesystem.locations.score:/tmp/kube-security-scanner/score}") String scoreDirectory) {
     super(logRepository);
     this.scoreDirectory = scoreDirectory;
   }

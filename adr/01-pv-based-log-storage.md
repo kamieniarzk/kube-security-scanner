@@ -6,8 +6,8 @@ Accepted
 
 ## Context
 
-There is a need for persisting log output of jobs scheduled by kube-config-scanner. 
-The need is motivated by the fact that those logs are usually ephemeral (unless some cluster-wide logging solution is configured but that would make kube-config-scanner depend on it and introduce unnecessary coupling).
+There is a need for persisting log output of jobs scheduled by kube-security-scanner.
+The need is motivated by the fact that those logs are usually ephemeral (unless some cluster-wide logging solution is configured but that would make kube-security-scanner depend on it and introduce unnecessary coupling).
 
 ## Decision
 

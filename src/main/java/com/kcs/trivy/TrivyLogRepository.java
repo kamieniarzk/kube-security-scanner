@@ -10,7 +10,7 @@ class TrivyLogRepository extends AbstractLogRepository {
 
   private final String directory;
 
-  public TrivyLogRepository(LogRepository logRepository, @Value("${filesystem.locations.trivy:/tmp/kube-config-scanner/trivy}") String logsDirectory) {
+  public TrivyLogRepository(LogRepository logRepository, @Value("${filesystem.locations.trivy:/tmp/kube-security-scanner/trivy}") String logsDirectory) {
     super(logRepository);
     this.directory = logsDirectory;
   }
