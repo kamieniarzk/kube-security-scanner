@@ -17,6 +17,7 @@ spec:
       containers:
           - name: {{ include "kube-config-scanner.fullname" . }}
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: Always
             ports:
               - containerPort: 8080
             env:
@@ -38,7 +39,7 @@ spec:
                   name: mongo-secret
             volumeMounts:
               - name: logs-storage
-                mountPath: /kube-config-scanner/logs
+                mountPath: /kube-config-scanner
       volumes:
         - name: logs-storage
           persistentVolumeClaim:
