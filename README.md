@@ -108,6 +108,7 @@ helm install my-release \
   * java-based configuration (avoid spring annotations for class initialization)
   * extract the abstraction related to job-based scans
 
+
 ### References
 * [kube-bench](https://github.com/aquasecurity/kube-bench)
 * [kube-score](https://github.com/zegl/kube-score)
