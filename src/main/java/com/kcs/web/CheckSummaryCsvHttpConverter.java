@@ -83,9 +83,9 @@ class CheckSummaryCsvHttpConverter implements GenericHttpMessageConverter<List<C
          var printWriter = new PrintWriter(byteArrayOutputStream);
          var csvPrinter = new CSVPrinter(printWriter, CSVFormat.DEFAULT)) {
 
-      csvPrinter.printRecord("origin", "originId", "title", "count");
+      csvPrinter.printRecord("category", "origin", "originId", "title", "count");
       for (var check : checkSummaries) {
-        csvPrinter.printRecord(check.getOrigin(), check.getOriginId(), check.getTitle(), check.getCount());
+        csvPrinter.printRecord(check.getCategory(), check.getOrigin(), check.getOriginId(), check.getTitle(), check.getCount());
       }
 
       csvPrinter.flush();

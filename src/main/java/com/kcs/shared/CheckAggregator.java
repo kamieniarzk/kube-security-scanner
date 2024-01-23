@@ -25,6 +25,6 @@ public final class CheckAggregator {
       }
     }
 
-    return checkMap.values().stream().toList();
+    return checkMap.values().stream().sorted().toList();
   }
 }
