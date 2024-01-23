@@ -37,14 +37,9 @@ spec:
               - secretRef:
                   name: mongo-secret
             volumeMounts:
-              - name: temp-storage
-                mountPath: /tmp/kube-config-scanner
               - name: logs-storage
                 mountPath: /kube-config-scanner/logs
       volumes:
-        - name: temp-storage
-          emptyDir:
-            sizeLimit: "200Mi"
         - name: logs-storage
           persistentVolumeClaim:
             claimName: {{ include "kube-config-scanner.fullname" . }}-pvc

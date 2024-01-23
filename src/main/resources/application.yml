@@ -7,8 +7,8 @@ environment:
 
 filesystem:
   locations:
-    yaml: /tmp/kube-config-scanner/yaml
-    score: /tmp/kube-config-scanner/score
-    trivy: /tmp/kube-config-scanner/trivy
-    bench: /tmp/kube-config-scanner/bench
-    kubescape: /tmp/kube-config-scanner/kubescape
+    yaml: /kube-config-scanner/yaml
+    score: /kube-config-scanner/score
+    trivy: /kube-config-scanner/trivy
+    bench: /kube-config-scanner/bench
+    kubescape: /kube-config-scanner/kubescape
