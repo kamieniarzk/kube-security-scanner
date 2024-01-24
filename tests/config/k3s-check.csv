@@ -1,0 +1,42 @@
+category,origin,originId,title,count
+IMAGE,kube-score,container-image-pull-policy,traefik ImagePullPolicy is not set to Always,28
+PORT_BINDING,trivy,KSV117,Prevent binding to privileged ports,2
+HOST_ACCESS,kubescape,C-0044,Container hostPort,1
+HOST_ACCESS,trivy,KSV024,Access to host ports,4
+NETWORK_POLICIES,kubescape,C-0030,Ingress and Egress blocked,5
+NETWORK_POLICIES,kubescape,C-0054,Cluster internal networking,4
+NETWORK_POLICIES,kube-score,pod-networkpolicy," The pod does not have a matching NetworkPolicy",20
+RESOURCE_LIMITS_AND_REQUESTS,kubescape,C-0050,Resources CPU limit and request,5
+RESOURCE_LIMITS_AND_REQUESTS,kube-score,container-resources,traefik CPU limit is not set,102
+RESOURCE_LIMITS_AND_REQUESTS,kube-score,container-ephemeral-storage-request-and-limit,traefik Ephemeral Storage limit is not set,28
+RESOURCE_LIMITS_AND_REQUESTS,kubescape,C-0004,Resources memory limit and request,5
+RESOURCE_LIMITS_AND_REQUESTS,kubescape,C-0009,Resource limits,5
+PROBES_AND_HEALTHCHECKS,kubescape,C-0056,Configured liveness probe,4
+PROBES_AND_HEALTHCHECKS,kube-score,pod-probes," Container has the same readiness and liveness probe",16
+SECURITY_CONTEXT,kube-score,container-security-context-user-group-id,lb-tcp-80 The container is running with a low user ID,52
+SECURITY_CONTEXT,kubescape,C-0013,Non-root containers,4
+SECURITY_CONTEXT,kubescape,C-0016,Allow privilege escalation,4
+SECURITY_CONTEXT,kubescape,C-0055,Linux hardening,4
+SECURITY_CONTEXT,trivy,KSV012,Runs as root user,6
+SECURITY_CONTEXT,kubescape,C-0046,Insecure capabilities,1
+SECURITY_CONTEXT,kube-score,container-security-context-readonlyrootfilesystem,lb-tcp-80 The pod has a container with a writable root filesystem,22
+SECURITY_CONTEXT,trivy,KSV026,Unsafe sysctl options set,1
+SECURITY_CONTEXT,trivy,KSV104,Seccomp policies disabled,8
+SECURITY_CONTEXT,trivy,KSV022,Specific capabilities added,3
+SECURITY_CONTEXT,trivy,KSV001,Can elevate its own privileges,5
+RBAC,kubescape,C-0035,"Access restriction to infrastructure - admin access (CC6.1 ,CC6.2, CC6.7, CC6.8)",2
+RBAC,kubescape,C-0015,List Kubernetes secrets,3
+RBAC,kubescape,C-0053,Access container service account,4
+RBAC,kubescape,C-0031,Delete Kubernetes events,2
+RBAC,kubescape,C-0034,Automatic mapping of service account,5
+RBAC,kubescape,C-0063,Portforwarding privileges,2
+RBAC,kubescape,C-0002,Exec into container,2
+RBAC,kubescape,C-0065,No impersonation,2
+RBAC,kubescape,C-0262,Anonymous access enabled,1
+RBAC,trivy,KSV049,Manage configmaps,4
+RBAC,kubescape,C-0007,Data Destruction,4
+SENSITIVE_DATA,kubescape,C-0012,"Cryptographic key management - misplaced secrets (CC6.1,CC6.6,CC6.7)",2
+SENSITIVE_DATA,trivy,KSV113,Manage namespace secrets,2
+SENSITIVE_DATA,trivy,AVD-KSV-01010,ConfigMap with sensitive content,1
+BUGS,kube-score,service-targets-pod," The services selector does not match any pods",1
+BUGS,kube-score,pod-topology-spread-constraints," Pod Topology Spread Constraints",20

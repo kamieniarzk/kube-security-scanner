@@ -1,0 +1,39 @@
+category,origin,originId,title,count
+IMAGE,kube-score,container-image-pull-policy,ebs-plugin ImagePullPolicy is not set to Always,42
+PORT_BINDING,trivy,KSV117,Prevent binding to privileged ports,2
+HOST_ACCESS,kubescape,C-0041,HostNetwork access,1
+HOST_ACCESS,trivy,KSV121,Kubernetes resource with disallowed volumes mounted,1
+HOST_ACCESS,trivy,KSV023,hostPath volumes mounted,4
+HOST_ACCESS,trivy,KSV009,Access to host network,3
+NETWORK_POLICIES,kubescape,C-0030,Ingress and Egress blocked,1
+NETWORK_POLICIES,kubescape,C-0054,Cluster internal networking,1
+NETWORK_POLICIES,kube-score,pod-networkpolicy," The pod does not have a matching NetworkPolicy",16
+RESOURCE_LIMITS_AND_REQUESTS,kubescape,C-0050,Resources CPU limit and request,1
+RESOURCE_LIMITS_AND_REQUESTS,kube-score,container-resources,ebs-plugin CPU limit is not set,74
+RESOURCE_LIMITS_AND_REQUESTS,kube-score,container-ephemeral-storage-request-and-limit,ebs-plugin Ephemeral Storage limit is not set,46
+RESOURCE_LIMITS_AND_REQUESTS,kubescape,C-0004,Resources memory limit and request,1
+RESOURCE_LIMITS_AND_REQUESTS,kubescape,C-0009,Resource limits,1
+PROBES_AND_HEALTHCHECKS,kube-score,pod-probes," Container has the same readiness and liveness probe",12
+SECURITY_CONTEXT,kube-score,container-security-context-user-group-id,ebs-plugin The container is running with a low user ID,92
+SECURITY_CONTEXT,kubescape,C-0013,Non-root containers,1
+SECURITY_CONTEXT,kubescape,C-0016,Allow privilege escalation,1
+SECURITY_CONTEXT,kubescape,C-0055,Linux hardening,1
+SECURITY_CONTEXT,kube-score,container-security-context-privileged,eks-pod-identity-agent-init The container is privileged,10
+SECURITY_CONTEXT,trivy,KSV012,Runs as root user,13
+SECURITY_CONTEXT,trivy,KSV017,Privileged,5
+SECURITY_CONTEXT,trivy,KSV119,NET_RAW capability added,1
+SECURITY_CONTEXT,kube-score,container-security-context-readonlyrootfilesystem,eks-pod-identity-agent-init The pod has a container with a writable root filesystem,12
+SECURITY_CONTEXT,trivy,KSV104,Seccomp policies disabled,19
+SECURITY_CONTEXT,trivy,KSV022,Specific capabilities added,4
+SECURITY_CONTEXT,trivy,KSV001,Can elevate its own privileges,12
+RBAC,kubescape,C-0034,Automatic mapping of service account,1
+RBAC,trivy,KSV056,Manage Kubernetes networking,1
+RBAC,kubescape,C-0262,Anonymous access enabled,1
+RBAC,trivy,KSV048,Manage Kubernetes workloads and pods,2
+RBAC,trivy,KSV049,Manage configmaps,13
+SENSITIVE_DATA,trivy,KSV113,Manage namespace secrets,2
+SENSITIVE_DATA,trivy,KSV115,Manage EKS IAM Auth ConfigMap,3
+SENSITIVE_DATA,trivy,AVD-KSV-01010,ConfigMap with sensitive content,2
+BUGS,kube-score,service-targets-pod," The services selector does not match any pods",1
+BUGS,kube-score,pod-topology-spread-constraints," Pod Topology Spread Constraints",16
+BUGS,kubescape,C-0039,Validate admission controller (mutating),2
