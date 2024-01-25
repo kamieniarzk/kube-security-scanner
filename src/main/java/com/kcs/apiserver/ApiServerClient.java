@@ -164,6 +164,11 @@ public class ApiServerClient {
         .toList();
   }
 
+  public V1Job createJob(String jobDefinitionAsYaml) throws IOException {
+    V1Job kubeBenchJob = (V1Job) Yaml.load(jobDefinitionAsYaml);
+    return apiCall(() -> batchApi.createNamespacedJob(getCurrentNamespace(), kubeBenchJob, null, null, null, null));
+  }
+
   public V1Job createJobFromYamlWithServiceAccount(String jobDefinitionAsYaml, String serviceAccountName) throws IOException {
     V1Job kubeBenchJob = (V1Job) Yaml.load(jobDefinitionAsYaml);
     kubeBenchJob.getSpec().getTemplate().getSpec().setServiceAccountName(serviceAccountName);
@@ -181,8 +186,29 @@ public class ApiServerClient {
     }
   }
 
+  public V1Job createJobFromYamlUrl(String yamlUrl) {
+    try {
+      V1Job kubeBenchJob = (V1Job) Yaml.load(getFileFromUrl(yamlUrl));
+      return apiCall(() -> batchApi.createNamespacedJob(getCurrentNamespace(), kubeBenchJob, null, null, null, null));
+    } catch (IOException ioException) {
+      log.error("Could not obtain kube-bench job definition from URL: {}", yamlUrl, ioException);
+      throw new RuntimeException();
+    }
+  }
+
   public InputStream streamPodLogs(String name) {
     return apiCall(() -> podLogs.streamNamespacedPodLog(getCurrentNamespace(), name, null));
+  }
+
+  public V1Job createJobFromDefinitionWithContainerZeroArgs(String yaml, List<String> args) {
+    try {
+      V1Job job = (V1Job) Yaml.load(yaml);
+      job.getSpec().getTemplate().getSpec().getContainers().get(0).setArgs(args);
+      return apiCall(() -> batchApi.createNamespacedJob(getCurrentNamespace(), job, null, null, null, null));
+    } catch (IOException ioException) {
+      log.error("Could not obtain job definition from URL: {}", yaml, ioException);
+      throw new RuntimeException();
+    }
   }
 
   public V1Job createJobWithContainerZeroArgs(String yamlUrl, List<String> args) {

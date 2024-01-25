@@ -20,7 +20,7 @@ class InClusterJobTrivyRunner implements TrivyRunner {
   @Override
   public TrivyScanDto run(TrivyRunRequest runRequest) {
     var command = buildCommand(runRequest);
-    var jobRunDto = jobService.runJobFromUrlDefinitionWithContextServiceAccount(getJobDefinitionWithCommand(command), "trivy-scan-job");
+    var jobRunDto = jobService.runWithContextServiceAccount(getJobDefinitionWithCommand(command), "trivy-scan-job");
     return saveTrivyRun(runRequest, jobRunDto, command);
   }
 

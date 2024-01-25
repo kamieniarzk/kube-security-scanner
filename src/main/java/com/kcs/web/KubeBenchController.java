@@ -2,6 +2,7 @@ package com.kcs.web;
 
 import com.kcs.kubebench.KubeBenchFacade;
 import com.kcs.kubebench.KubeBenchJsonResultDto;
+import com.kcs.kubebench.KubeBenchRunRequest;
 import com.kcs.kubebench.persistence.KubeBenchScanDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,8 @@ class KubeBenchController {
   }
 
   @PostMapping
-  KubeBenchScanDto runBench(@RequestBody BenchRunRequest runRequest) {
-    return kubeBenchFacade.run();
+  KubeBenchScanDto runBench(@RequestBody KubeBenchRunRequest runRequest) {
+    return kubeBenchFacade.run(runRequest);
   }
 
   @GetMapping("/{id}/result")
@@ -34,6 +35,4 @@ class KubeBenchController {
   String getOriginalResult(@PathVariable String id) {
     return kubeBenchFacade.getOriginalResult(id);
   }
-
-  record BenchRunRequest() {}
 }

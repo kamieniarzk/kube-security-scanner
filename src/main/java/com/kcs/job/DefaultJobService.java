@@ -20,6 +20,13 @@ class DefaultJobService implements JobService {
   private final ContextHolder contextHolder;
 
   @Override
+  public JobDto runJobFromUrl(String url, String podNamePrefix) {
+    deleteExistingJobIfNecessary(podNamePrefix);
+    k8sApi.createJobFromYamlUrl(url);
+    return persistRunData(podNamePrefix);
+  }
+
+  @Override
   public JobDto runJobFromUrlDefinitionWithModifiedCommand(String url, String podNamePrefix, String command) {
     deleteExistingJobIfNecessary(podNamePrefix);
     k8sApi.createJobFromYamlUrlWithModifiedCommand(url, command);
@@ -34,13 +41,31 @@ class DefaultJobService implements JobService {
   }
 
   @Override
-  public JobDto runJobFromUrlDefinitionWithContextServiceAccount(String yaml, String podNamePrefix) {
+  public JobDto runWithContextServiceAccount(String yaml, String podNamePrefix) {
     deleteExistingJobIfNecessary(podNamePrefix);
     try {
       k8sApi.createJobFromYamlWithServiceAccount(yaml, MiscUtils.constructServiceAccountName(contextHolder.getHelmReleaseName()));
     } catch (IOException ioException) {
       throw new RuntimeException(ioException);
     }
+    return persistRunData(podNamePrefix);
+  }
+
+  @Override
+  public JobDto run(String yaml, String podNamePrefix) {
+    deleteExistingJobIfNecessary(podNamePrefix);
+    try {
+      k8sApi.createJob(yaml);
+    } catch (IOException ioException) {
+      throw new RuntimeException(ioException);
+    }
+    return persistRunData(podNamePrefix);
+  }
+
+  @Override
+  public JobDto runWithArgs(String yaml, String podNamePrefix, String args) {
+    deleteExistingJobIfNecessary(podNamePrefix);
+    k8sApi.createJobFromDefinitionWithContainerZeroArgs(yaml, Arrays.stream(args.split(" ")).toList());
     return persistRunData(podNamePrefix);
   }
 

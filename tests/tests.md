@@ -38,3 +38,5 @@ curl -X 'GET' \
   https://aquasecurity.github.io/trivy/v0.22.0/vulnerability/examples/filter/
 * 83 checks have been categorized
 * storage in each cluster
+* write about unit tests
+* capitalization of `Node` and other resource names

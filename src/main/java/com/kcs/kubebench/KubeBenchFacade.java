@@ -15,8 +15,8 @@ public class KubeBenchFacade {
   private final KubeBenchRepository benchRepository;
   private final BenchLogRepository logRepository;
 
-  public KubeBenchScanDto run() {
-    return runner.run();
+  public KubeBenchScanDto run(KubeBenchRunRequest runRequest) {
+    return runner.run(runRequest);
   }
 
   public List<KubeBenchScanDto> getAllRuns() {
