@@ -8,11 +8,9 @@ import com.kcs.aggregated.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Component
@@ -35,11 +33,11 @@ class TrivyResultMapper implements ResultMapper<TrivyResult> {
   }
 
   static Optional<KubernetesResource> map(TrivyResult.Resource trivyResource) {
-    var vulnerabilities = map(trivyResource.getResults());
-    if (vulnerabilities.isEmpty()) {
+    var checks = map(trivyResource.getResults());
+    if (checks.isEmpty()) {
       return Optional.empty();
     }
-    return Optional.of(new KubernetesResource(trivyResource.getKind(), trivyResource.getNamespace(), trivyResource.getName(), vulnerabilities));
+    return Optional.of(new KubernetesResource(trivyResource.getKind(), trivyResource.getNamespace(), trivyResource.getName(), checks));
   }
 
   static List<Check> map(List<TrivyResult.Result> trivyResults) {
@@ -47,27 +45,17 @@ class TrivyResultMapper implements ResultMapper<TrivyResult> {
       return Collections.emptyList();
     }
 
-    var filteredResults = trivyResults.stream()
-        .filter(result -> result.getMisconfigurations() != null && result.getMisconfSummary() != null)
-        .collect(Collectors.toCollection(ArrayList::new));
+    var allMisconfigurations = trivyResults.stream().map(TrivyResult.Result::getMisconfigurations).filter(Objects::nonNull).flatMap(Collection::stream).map(TrivyResultMapper::map);
+    var allVulnerabilities = trivyResults.stream().map(TrivyResult.Result::getVulnerabilities).filter(Objects::nonNull).flatMap(Collection::stream).map(TrivyResultMapper::map);
+    return Stream.concat(allVulnerabilities, allMisconfigurations).toList();
+  }
 
-    if (filteredResults.isEmpty()) {
-      return Collections.emptyList();
-    }
-
-    if (filteredResults.size() > 1) {
-      log.warn("Found more than one result but only taking one into account");
-    }
-
-    var result = filteredResults.get(0);
-
-    if (result.getMisconfigurations() == null) {
-      return Collections.emptyList();
-    }
-
-    return result.getMisconfigurations().stream()
-        .map(TrivyResultMapper::map)
-        .toList();
+  static Check map(TrivyResult.Vulnerability trivyVulnerability) {
+    return new Check(Severity.valueOf(trivyVulnerability.getSeverity()),
+        trivyVulnerability.getTitle(),
+        trivyVulnerability.getPkgName(),
+        null,
+        ORIGIN, trivyVulnerability.vulnerabilityId);
   }
 
   static Check map(TrivyResult.Misconfiguration trivyMisconfiguration) {

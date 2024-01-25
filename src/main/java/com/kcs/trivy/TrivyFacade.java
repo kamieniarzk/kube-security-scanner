@@ -1,6 +1,5 @@
 package com.kcs.trivy;
 
-import com.kcs.shared.NoDataFoundException;
 import com.kcs.aggregated.ResultMapper;
 import com.kcs.shared.ResultSearchParams;
 import com.kcs.shared.ScanResult;
@@ -29,10 +28,10 @@ public class TrivyFacade {
   }
 
   public ScanResult getResult(String runId, ResultSearchParams searchParams) {
-    var runDto = repository.findById(runId).orElseThrow(NoDataFoundException::new);
-    if (runDto.getCompliance() != null) {
-      throw new UnsupportedOperationException("Not possible to aggregate trivy compliance scans, as they do not show result namespace");
-    }
+//    var runDto = repository.findById(runId).orElseThrow(NoDataFoundException::new);
+//    if (runDto.getCompliance() != null) {
+//      throw new UnsupportedOperationException("Not possible to aggregate trivy compliance scans, as they do not show result namespace");
+//    }
     var logs = logRepository.getAsString(runId);
     var rawResult = TrivyResultParser.parseFullResult(logs);
     var mappedResult = resultMapper.map(rawResult).setScanId(runId);

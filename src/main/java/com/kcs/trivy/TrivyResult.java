@@ -22,6 +22,7 @@ public class TrivyResult {
   public static class Result {
     private Summary misconfSummary;
     private List<Misconfiguration> misconfigurations;
+    private List<Vulnerability> vulnerabilities;
   }
 
   @Data
@@ -57,5 +58,15 @@ public class TrivyResult {
     private String provider;
     private Integer startLine;
     private Integer endLine;
+  }
+
+  @Data
+  public static class Vulnerability {
+    @JsonProperty("VulnerabilityID")
+    String vulnerabilityId;
+    String severity;
+    String title;
+    String description;
+    String pkgName;
   }
 }
