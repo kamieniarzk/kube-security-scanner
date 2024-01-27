@@ -1,0 +1,9 @@
+namespace,kind,name,low,medium,high,critical
+kube-system,Deployment,local-path-provisioner,0,24,6,0
+kube-system,Deployment,coredns,0,4,3,0
+kube-system,Deployment,metrics-server,0,4,4,0
+kube-system,Deployment,traefik,0,14,3,0
+kube-system,DaemonSet,svclb-traefik-6bae028c,0,14,2,3
+kube-system,DaemonSet,svclb-traefik-6bae028c,0,14,2,3
+kube-system,Job,helm-install-traefik,0,33,11,0
+kube-system,Job,helm-install-traefik-crd,0,33,11,0

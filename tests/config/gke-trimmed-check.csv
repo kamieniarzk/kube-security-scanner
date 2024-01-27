@@ -1,0 +1,40 @@
+category,origin,originId,title,count
+IMAGE,kube-score,container-image-pull-policy,konnectivity-agent ImagePullPolicy is not set to Always,74
+PORT_BINDING,trivy,KSV117,Prevent binding to privileged ports,1
+PORT_BINDING,kube-score,service-type," The service is of type NodePort",1
+HOST_ACCESS,trivy,KSV024,Access to host ports,11
+HOST_ACCESS,trivy,KSV121,Kubernetes resource with disallowed volumes mounted,2
+HOST_ACCESS,trivy,KSV023,hostPath volumes mounted,6
+HOST_ACCESS,trivy,KSV009,Access to host network,5
+NETWORK_POLICIES,kubescape,C-0030,Ingress and Egress blocked,4
+NETWORK_POLICIES,kubescape,C-0054,Cluster internal networking,3
+NETWORK_POLICIES,kube-score,pod-networkpolicy," The pod does not have a matching NetworkPolicy",36
+RESOURCE_LIMITS_AND_REQUESTS,kubescape,C-0050,Resources CPU limit and request,4
+RESOURCE_LIMITS_AND_REQUESTS,kube-score,container-resources,konnectivity-agent CPU limit is not set,150
+RESOURCE_LIMITS_AND_REQUESTS,kube-score,container-ephemeral-storage-request-and-limit,konnectivity-agent Ephemeral Storage limit is not set,76
+RESOURCE_LIMITS_AND_REQUESTS,kubescape,C-0009,Resource limits,4
+PROBES_AND_HEALTHCHECKS,kubescape,C-0056,Configured liveness probe,4
+PROBES_AND_HEALTHCHECKS,kube-score,pod-probes," The pod is not targeted by a service, skipping probe checks.",32
+SECURITY_CONTEXT,kube-score,container-security-context-user-group-id,konnectivity-agent The container is running with a low user ID,152
+SECURITY_CONTEXT,kube-score,container-security-context-privileged,gce-pd-driver The container is privileged,12
+SECURITY_CONTEXT,trivy,KSV012,Runs as root user,25
+SECURITY_CONTEXT,trivy,KSV017,Privileged,6
+SECURITY_CONTEXT,kube-score,container-security-context-readonlyrootfilesystem,konnectivity-agent The pod has a container with a writable root filesystem,60
+SECURITY_CONTEXT,trivy,KSV104,Seccomp policies disabled,37
+SECURITY_CONTEXT,trivy,KSV120,SYS_MODULE capability added,1
+SECURITY_CONTEXT,trivy,KSV022,Specific capabilities added,6
+SECURITY_CONTEXT,trivy,KSV001,Can elevate its own privileges,17
+RBAC,kubescape,C-0015,List Kubernetes secrets,17
+RBAC,kubescape,C-0053,Access container service account,25
+RBAC,kubescape,C-0034,Automatic mapping of service account,14
+RBAC,kubescape,C-0262,Anonymous access enabled,1
+RBAC,trivy,KSV048,Manage Kubernetes workloads and pods,2
+RBAC,trivy,KSV049,Manage configmaps,11
+RBAC,kubescape,C-0007,Data Destruction,11
+SENSITIVE_DATA,trivy,AVD-KSV-0109,ConfigMap with secrets,1
+SENSITIVE_DATA,kubescape,C-0012,"Cryptographic key management - misplaced secrets (CC6.1,CC6.6,CC6.7)",1
+SENSITIVE_DATA,trivy,KSV113,Manage namespace secrets,5
+SENSITIVE_DATA,trivy,AVD-KSV-01010,ConfigMap with sensitive content,2
+BUGS,kube-score,service-targets-pod," The services selector does not match any pods",2
+BUGS,kube-score,pod-topology-spread-constraints," Pod Topology Spread Constraints",36
+BUGS,kubescape,C-0039,Validate admission controller (mutating),2
