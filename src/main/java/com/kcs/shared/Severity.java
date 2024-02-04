@@ -1,5 +1,5 @@
 package com.kcs.shared;
 
 public enum Severity {
-  LOW, MEDIUM, HIGH, CRITICAL, UNKNOWN
+  LOW, MEDIUM, HIGH, CRITICAL, KUBE_SCORE
 }
