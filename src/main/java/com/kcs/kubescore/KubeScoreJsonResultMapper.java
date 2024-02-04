@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -33,41 +34,38 @@ class KubeScoreJsonResultMapper implements ResultMapper<List<KubeScoreJsonResult
     var namespace = scoreResult.getObjectMeta().getNamespace();
     var kind = ownerReferencesEmpty(scoreResult) ? scoreResult.getTypeMeta().getKind() : scoreResult.getObjectMeta().getOwnerReferences().get(0).getKind();
     var name = ownerReferencesEmpty(scoreResult) ? scoreResult.getObjectMeta().getName() : scoreResult.getObjectMeta().getOwnerReferences().get(0).getName();
-    var vulnerabilities = mapChecksToVulnerabilities(scoreResult.getChecks());
-    return new KubernetesResource(kind, namespace, name, vulnerabilities);
+    var checks = mapChecks(scoreResult.getChecks());
+    return new KubernetesResource(kind, namespace, name, checks);
   }
 
   private static boolean ownerReferencesEmpty(KubeScoreJsonResultDto scoreResult) {
     return scoreResult.getObjectMeta().getOwnerReferences() == null || scoreResult.getObjectMeta().getOwnerReferences().isEmpty();
   }
 
-  private static List<Check> mapChecksToVulnerabilities(List<KubeScoreJsonResultDto.Check> checks) {
+  private static List<Check> mapChecks(List<KubeScoreJsonResultDto.Check> checks) {
     return checks.stream()
-        .map(KubeScoreJsonResultMapper::mapCheckToVulnerabilities)
+        .map(KubeScoreJsonResultMapper::mapChecks)
         .flatMap(Collection::stream)
         .toList();
   }
 
   @NotNull
-  private static List<Check> mapCheckToVulnerabilities(KubeScoreJsonResultDto.Check check) {
+  private static List<Check> mapChecks(KubeScoreJsonResultDto.Check check) {
     return check.getComments().stream()
-        .map(comment -> mapCommentToVulnerability(check, comment))
+        .map(comment -> mapCommentToCheckInstance(check, comment))
+        .filter(Optional::isPresent)
+        .map(Optional::get)
         .toList();
   }
 
   @NotNull
-  private static Check mapCommentToVulnerability(KubeScoreJsonResultDto.Check check, KubeScoreJsonResultDto.Comment comment) {
+  private static Optional<Check> mapCommentToCheckInstance(KubeScoreJsonResultDto.Check check, KubeScoreJsonResultDto.Comment comment) {
+    if (check.getGrade() > 1) {
+      return Optional.empty();
+    }
     var title = comment.getPath().concat(" ").concat(comment.getSummary());
     var description = check.getCheck().getComment();
     var remediation = comment.getDescription();
-    return new Check(map(check.getGrade()), title, description, remediation, ORIGIN, check.getCheck().getId());
-  }
-
-  private static Severity map(int grade) {
-    return switch (grade) {
-      case 1 -> Severity.MEDIUM;
-      case 5 -> Severity.HIGH;
-      default -> Severity.CRITICAL;
-    };
+    return Optional.of(new Check(Severity.KUBE_SCORE, title, description, remediation, ORIGIN, check.getCheck().getId()));
   }
 }
