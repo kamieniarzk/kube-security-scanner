@@ -74,7 +74,7 @@ public final class ScanResultFilter {
   @NotNull
   private Predicate<Check> checkOriginAndSeverityPredicate() {
     return check ->
-        (searchParams.origin() == null || searchParams.origin().equals(check.origin())) &&
+        (searchParams.origin() == null || searchParams.origin().contains(check.origin())) &&
         (searchParams.originId() == null || searchParams.originId().equals(check.originId())) &&
         (searchParams.severity() == null || searchParams.severity().isEmpty() || searchParams.severity().contains(check.severity()));
   }

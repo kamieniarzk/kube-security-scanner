@@ -19,6 +19,10 @@ public class CheckSummary implements Comparable<CheckSummary> {
     return new CheckSummary(category, check.origin(), check.originId(), check.title(), 1L);
   }
 
+  static CheckSummary from(CheckCategory category, Long count) {
+    return new CheckSummary(category, null, null, null, count);
+  }
+
   public void incrementCount() {
     this.count += 1;
   }
