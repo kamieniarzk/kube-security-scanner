@@ -8,7 +8,6 @@ import com.kcs.aggregated.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,40 +31,25 @@ class KubeScoreJsonResultMapper implements ResultMapper<List<KubeScoreJsonResult
 
   private static KubernetesResource map(KubeScoreJsonResultDto scoreResult) {
     var namespace = scoreResult.getObjectMeta().getNamespace();
-    var kind = ownerReferencesEmpty(scoreResult) ? scoreResult.getTypeMeta().getKind() : scoreResult.getObjectMeta().getOwnerReferences().get(0).getKind();
-    var name = ownerReferencesEmpty(scoreResult) ? scoreResult.getObjectMeta().getName() : scoreResult.getObjectMeta().getOwnerReferences().get(0).getName();
+    var kind = scoreResult.getTypeMeta().getKind();
+    var name = scoreResult.getObjectMeta().getName();
     var checks = mapChecks(scoreResult.getChecks());
     return new KubernetesResource(kind, namespace, name, checks);
-  }
-
-  private static boolean ownerReferencesEmpty(KubeScoreJsonResultDto scoreResult) {
-    return scoreResult.getObjectMeta().getOwnerReferences() == null || scoreResult.getObjectMeta().getOwnerReferences().isEmpty();
   }
 
   private static List<Check> mapChecks(List<KubeScoreJsonResultDto.Check> checks) {
     return checks.stream()
         .map(KubeScoreJsonResultMapper::mapChecks)
-        .flatMap(Collection::stream)
-        .toList();
-  }
-
-  @NotNull
-  private static List<Check> mapChecks(KubeScoreJsonResultDto.Check check) {
-    return check.getComments().stream()
-        .map(comment -> mapCommentToCheckInstance(check, comment))
         .filter(Optional::isPresent)
         .map(Optional::get)
         .toList();
   }
 
   @NotNull
-  private static Optional<Check> mapCommentToCheckInstance(KubeScoreJsonResultDto.Check check, KubeScoreJsonResultDto.Comment comment) {
+  private static Optional<Check> mapChecks(KubeScoreJsonResultDto.Check check) {
     if (check.getGrade() > 1) {
       return Optional.empty();
     }
-    var title = comment.getPath().concat(" ").concat(comment.getSummary());
-    var description = check.getCheck().getComment();
-    var remediation = comment.getDescription();
-    return Optional.of(new Check(Severity.KUBE_SCORE, title, description, remediation, ORIGIN, check.getCheck().getId()));
+    return Optional.of(new Check(Severity.KUBE_SCORE, check.getCheck().getName(), check.getCheck().getComment(), null, ORIGIN, check.getCheck().getId()));
   }
 }
