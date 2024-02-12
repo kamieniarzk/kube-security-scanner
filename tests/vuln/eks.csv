@@ -1,9 +1,0 @@
-namespace,kind,name,low,medium,high,critical
-kube-system,Deployment,coredns,0,4,2,0
-kube-system,DaemonSet,ebs-csi-node,0,1,0,0
-kube-system,Deployment,ebs-csi-controller,0,1,0,0
-kube-system,DaemonSet,ebs-csi-node-windows,0,1,0,0
-kube-system,DaemonSet,kube-proxy,0,8,4,0
-kube-system,DaemonSet,aws-node,0,11,6,0
-kube-system,DaemonSet,aws-node,18,69,27,0
-kube-system,DaemonSet,aws-node,0,4,0,0
