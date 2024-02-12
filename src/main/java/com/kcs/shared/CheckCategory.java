@@ -8,7 +8,7 @@ import java.util.Set;
 
 @AllArgsConstructor
 public enum CheckCategory {
-  IMAGE(Set.of("KSV013", "container-image-tag", "container-image-pull-policy")),
+  IMAGE(Set.of("KSV013", "container-image-tag", "container-image-pull-policy", "C-0075")),
   PORT_BINDING(Set.of("KSV117", "service-type")),
   HOST_ACCESS(Set.of("KSV121", "C-0041", "KSV024", "C-0044", "KSV023", "KSV009", "KSV010", "C-0048", "C-0045", "C-0038")),
   NETWORK_POLICIES(Set.of("C-0049", "C-0030", "pod-networkpolicy", "C-0054")),
@@ -18,7 +18,7 @@ public enum CheckCategory {
   RBAC(Set.of("C-0002", "C-0035", "C-0031", "C-0034", "C-0015", "C-0053", "KSV049", "C-0007", "C-0063", "C-0262", "C-0065", "KSV056", "KSV048", "KCV0001")),
   SENSITIVE_DATA(Set.of("AVD-KSV-0109", "KSV113", "AVD-KSV-01010", "C-0012", "KSV115")),
   LABELS(Set.of("C-0076", "C-0077")),
-  BUGS(Set.of("service-targets-pod", "DS005", "C-0073", "C-0021", "pod-topology-spread-constraints", "C-0039")),
+  BUGS(Set.of("service-targets-pod", "DS005", "C-0073", "C-0021", "pod-topology-spread-constraints", "C-0039", "C-0067", "C-0066")),
   UNCATEGORIZED(Collections.emptySet());
 
   private final Set<String> originIds;

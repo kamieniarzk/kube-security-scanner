@@ -44,4 +44,9 @@ class AggregatedScanController {
   List<CheckSummary> getAggregatedChecks(@PathVariable String id, ResultSearchParams searchParams) {
     return resultFacade.getChecksAggregated(id, searchParams);
   }
+
+  @GetMapping(path = "/{id}/result/checks/compacted", produces = {"application/json", "text/csv"})
+  List<CheckSummary> getAggregatedChecksCompacted(@PathVariable String id, ResultSearchParams searchParams) {
+    return resultFacade.getChecksAggregatedCompacted(id, searchParams);
+  }
 }

@@ -31,4 +31,9 @@ public class AggregatedResultFacade {
     var aggregatedResult = aggregateResult(runId, searchParams);
     return CheckAggregator.aggregateChecks(aggregatedResult);
   }
+
+  public List<CheckSummary> getChecksAggregatedCompacted(String runId, ResultSearchParams searchParams) {
+    var aggregatedResult = aggregateResult(runId, searchParams);
+    return CheckAggregator.getCheckSummaryCompacted(aggregatedResult);
+  }
 }

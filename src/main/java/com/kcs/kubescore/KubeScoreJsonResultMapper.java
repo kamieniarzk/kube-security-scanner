@@ -50,6 +50,6 @@ class KubeScoreJsonResultMapper implements ResultMapper<List<KubeScoreJsonResult
     if (check.getGrade() > 1) {
       return Optional.empty();
     }
-    return Optional.of(new Check(Severity.KUBE_SCORE, check.getCheck().getName(), check.getCheck().getComment(), null, ORIGIN, check.getCheck().getId()));
+    return Optional.of(new Check(Severity.UNKNOWN, check.getCheck().getName(), check.getCheck().getComment(), null, ORIGIN, check.getCheck().getId()));
   }
 }

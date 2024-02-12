@@ -6,13 +6,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CheckAggregator {
   public static List<CheckSummary> aggregateChecks(ScanResult scanResult) {
     var allNamespacedChecks = scanResult.getNamespacedResources().values().stream().flatMap(Collection::stream).map(KubernetesResource::getChecks).flatMap(Collection::stream);
-//    var allNonNamespacedChecks = scanResult.getNonNamespacedResources().stream().map(KubernetesResource::getChecks).flatMap(Collection::stream);
-    var allChecks = allNamespacedChecks.toList();
+    var allNonNamespacedChecks = scanResult.getNonNamespacedResources().stream().map(KubernetesResource::getChecks).flatMap(Collection::stream);
+    var allChecks = Stream.concat(allNamespacedChecks, allNonNamespacedChecks).toList();
 
     var checkMap = new HashMap<String, CheckSummary>();
 
@@ -39,7 +40,7 @@ public final class CheckAggregator {
     return entry.getValue().stream().reduce((summary1, summary2) -> CheckSummary.from(summary1.getCategory(), summary1.getCount() + summary2.getCount(), summary1.getLowCount() + summary2.getLowCount(), summary1.getMediumCount() + summary2.getMediumCount(), summary1.getHighCount() + summary2.getHighCount(), summary1.getCriticalCount() + summary2.getCriticalCount(), summary1.getUnknownCount() + summary2.getUnknownCount())).orElse(CheckSummary.from(null, null, null, null, null, null, null));
   }
 
-  public static List<CheckSummary> getSummary(ScanResult scanResult) {
+  public static List<CheckSummary> getCheckSummaryCompacted(ScanResult scanResult) {
     return checkCountMap(scanResult).values().stream().toList();
   }
 }

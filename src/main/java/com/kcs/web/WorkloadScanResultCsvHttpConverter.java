@@ -83,7 +83,7 @@ class WorkloadScanResultCsvHttpConverter implements GenericHttpMessageConverter<
          var printWriter = new PrintWriter(byteArrayOutputStream);
          var csvPrinter = new CSVPrinter(printWriter, CSVFormat.DEFAULT)) {
 
-      csvPrinter.printRecord("namespace", "kind", "name", "low", "medium", "high", "critical");
+      csvPrinter.printRecord("namespace", "kind", "name", "low", "medium", "high", "critical", "unknown");
       for (var entry : scanResult.getNamespacedResources().entrySet()) {
         var namespace = entry.getKey();
         printAllResourcesInNamespace(entry.getValue(), csvPrinter, namespace);
@@ -103,7 +103,8 @@ class WorkloadScanResultCsvHttpConverter implements GenericHttpMessageConverter<
       var medium = countChecksWithSeverity(resource, Severity.MEDIUM);
       var high = countChecksWithSeverity(resource, Severity.HIGH);
       var critical = countChecksWithSeverity(resource, Severity.CRITICAL);
-      csvPrinter.printRecord(namespace, resource.getKind(), resource.getName(), low, medium, high, critical);
+      var kubeScore = countChecksWithSeverity(resource, Severity.UNKNOWN);
+      csvPrinter.printRecord(namespace, resource.getKind(), resource.getName(), low, medium, high, critical, kubeScore);
     }
   }
 
